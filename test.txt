@@ -1,1 +1,2 @@
-test
+set DEBUG=myapp:* & npm start
+pour démarer le serveur
