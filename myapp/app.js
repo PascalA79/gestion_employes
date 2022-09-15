@@ -37,14 +37,4 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-//debut session
-var session = require('express-session')
-app.set('trust proxy', 1) // trust first proxy
-app.use(session({
-  secret: 'keyboard cat',
-  resave: false,
-  saveUninitialized: true,
-  //store: database  https://www.youtube.com/watch?v=J1qXK66k1y4&ab_channel=ZachGollwitzer 8:54
-  cookie: { maxAge: 60000 }
-}))
 module.exports = app;
