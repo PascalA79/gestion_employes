@@ -8,11 +8,11 @@ class ConnectionMYSQL{
             user: user,
             password: password,
             database :database
-          });}
+          });
+          this.connectionMySQL.connect()
+        }
     excecute(query,fonction_error_results_fields){
-        this.connectionMySQL.connect();
         this.connectionMySQL.query(query, fonction_error_results_fields)
-        this.connectionMySQL.end();
     }
     async excecuteSync(query){
         let promiseResult= new Promise((resolve, reject)=>this.excecute(query,(error,results)=>{
@@ -20,6 +20,9 @@ class ConnectionMYSQL{
             resolve(results)
         }))
         return promiseResult;
+    }
+    end(){
+        this.connectionMySQL.destroy();
     }
 }
 module.exports = ConnectionMYSQL;
