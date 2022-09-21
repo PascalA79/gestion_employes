@@ -1,0 +1,13 @@
+extends layout
+
+block content
+    .center-v
+        .container-dark
+            form(action="")
+                p.lbl-light Nom d'utilisateur
+                input(type="text" name="username" id="username").input-dark
+                span.lbl-error Nom d'utilisateur invalide
+                p.lbl-light Mot de passe
+                input(type="password" name="password" id="password").input-dark
+                span.lbl-error Mot de passe invalide
+                input(type="submit", value="Envoyer").btn-dark

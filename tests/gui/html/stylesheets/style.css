@@ -1,0 +1,142 @@
+/* body {
+    padding: 50px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  }
+  
+  a {
+    color: #00B7FF;
+  } */
+  
+  
+  
+  :root{
+    /* Colors */
+    --bg-header: hsl(212, 70%, 62%);
+    --bg-light: hsl(206, 96%, 74%);
+    --bg-dark: hsl(206, 74%, 65%);
+    --txt-light: hsl(208, 38%, 85%);
+    --txt-medium: hsl(206, 68%, 72%);
+    --txt-dark: hsl(213, 43%, 38%);
+    --yellow: hsl(50, 100%, 50%);
+    --red: hsl(0, 100%, 50%);
+  
+  
+    --fnt-header: Calibri 20 bold;
+    --fnt-default: Calibri 16 bold;
+  
+    --border-light: 2px solid var(--txt-light);
+  
+  
+    --transition-time: 0.1s;
+  }
+  
+  
+  
+  *{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    transition: var(--transition-time);
+    font: var(--fnt-default);
+    font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
+    font-size: 1rem;
+    font-weight: bold;
+  }
+  body{
+    height: 100vh;
+    background-image: linear-gradient(var(--bg-dark), var(--bg-light));
+  }
+  
+  .container-dark{
+    background-color: var(--txt-dark);
+    border: 2px solid var(--txt-light);
+    padding: 0.75rem;
+    width: fit-content;
+  }
+  
+  .container-dark > form{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .lbl-light{
+    color: var(--txt-light);
+  }
+  .lbl-error{
+    color: var(--red);
+  }
+  .input-dark, .btn-dark{
+    color: var(--txt-light);
+    background-color: var(--txt-dark);
+    padding: 0.25rem;
+    border: 2px solid var(--txt-light);
+  }
+  .btn-dark:hover{
+    color: var(--txt-dark);
+    background-color: var(--txt-light);
+  }
+  
+  .hidden{
+    opacity: 0;
+    cursor:default;
+  }
+  .center-v, .center-h{
+    display: flex;
+    justify-content: center;
+  }
+  
+  .center-h{
+    height: 100%;
+    flex-direction: row;
+  }
+  
+  .center-v{
+    flex-direction: column;
+  }
+
+  .tuile{
+    color: var(--txt-light);
+    background-color: var(--txt-dark);
+    border: var(--border-light);
+    padding: 1.5rem;
+    position: relative;
+    text-decoration: none;
+  }
+
+  .tuile:hover, .tuile.selected{
+    color: var(--txt-dark);
+    background-color: var(--txt-light);
+  }
+
+  nav{
+    background-color: var(--bg-header);
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    padding: 0.5rem;
+  }
+
+  .tuile>.alert{
+    color: var(--yellow);
+    background-color: var(--red);
+    border-radius: 50%;
+    width: 1.5rem;
+    height: 1.5rem;
+
+    position: absolute;
+    top: -0.5rem;
+    right: -0.5rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .logo{
+    fill: var(--txt-dark);
+    cursor: pointer;
+  }
+
+  .logo:hover, .logo.selected{fill: var(--txt-light);}
