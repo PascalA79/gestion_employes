@@ -1,3 +1,4 @@
+// Classe js qui met en place une session qui a le comportement semblable à $__SESSION de php
 var session = require('express-session')
 class Session{
     constructor(router){
@@ -14,11 +15,15 @@ class Session{
     start(req){
         this.req=req
     }
+    destroy(){
+        this.req.session.destroy()
+    }
     set(key,value){
-        this.req.session[key]=value
+        this.req.session[key]=value;
+        return this.req.session[key];
     }
     get(key){
-        return this.req.session[key]
+        return this.req.session[key];
     }
     fSet(key,fonction,defaut){
         if(this.get(key)!=undefined){
