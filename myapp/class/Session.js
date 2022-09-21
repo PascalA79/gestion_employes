@@ -23,7 +23,9 @@ class Session{
         return this.req.session[key];
     }
     get(key){
+        if(this.req && this.req.session)
         return this.req.session[key];
+        else return undefined
     }
     fSet(key,fonction,defaut){
         if(this.get(key)!=undefined){
