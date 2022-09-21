@@ -3,7 +3,7 @@ extends layout
 block content
     .center-v
         .container-dark
-            form(action="")
+            form(action="./login",method="POST" )
                 p.lbl-light Nom d'utilisateur
                 input(type="text" name="username" id="username").input-dark
                 span.lbl-error Nom d'utilisateur invalide
