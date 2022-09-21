@@ -18,7 +18,11 @@ const connectionMySQL= new ConnectionMYSQL({
 })*/
 /* GET id listing. */
 //router.get('/', (req, res, next)=>res.send('respond with a resource'));
+
+
+
 router.get('/*', appelApi);
+
 async function appelApi(req, res, next){
   //TODO droit d'accès avec la session
 
@@ -33,9 +37,8 @@ async function appelApi(req, res, next){
   console.log(results)
   connectionMySQL.excecute('SELECT * FROM Utilisateurs',(error,r,fiellds)=>console.log(r))
   console.log(Object.values(arrayPath))
-  if(Object.values(arrayPath).length==3){
-    let action=arrayPath[1].toLowerCase()
-    let champs=arrayPath[2].toLowerCase()
+  if(Object.values(arrayPath).length==2){
+    let champs=arrayPath[1].toLowerCase()
     
     console.log(action,champs)
     console.log(req.query)
