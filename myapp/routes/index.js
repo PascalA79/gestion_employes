@@ -8,7 +8,6 @@ var session=new Session(router);
 router.use('/', function(req, res, next) {
     session.start(req);
     let redirect= new Redirect(session,res);
-    console.log(req.path)
     if(req.path=='/login' || redirect.access('user')){
       next();
     }
@@ -21,6 +20,6 @@ router.get(['/','/index'], function(req, res, next) {
 router.use('/disconnect',function(req, res, next) {
   let redirect= new Redirect(session,res);
   session.destroy();
-  redirect.access('user')
+  redirect.access('user');//,()=>true,"/login")
 })
 module.exports = router;
