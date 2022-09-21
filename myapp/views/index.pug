@@ -2,7 +2,9 @@ extends layout
 
 
 block content
-  h1= title
-  p Welcome to #{title}
-  script console.log('hi'); console.log('hi2');
-  div(style='color:red',class='none') texte
+  include navbar
+  //- - const user = {alias: "Pascal"};
+  //- - const alerts = {messages: 12};
+  - const selected = "home";
+  +navbar(user, alerts, selected);
+  

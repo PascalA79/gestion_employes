@@ -1,13 +1,23 @@
+//- 2022-09-19
+//- Philippe C. Léger
+//- Page login: Page utilisée pour 
+
 extends layout
 
 block content
-    .center-v
-        .container-dark
-            form(action="./login",method="POST" )
-                p.lbl-light Nom d'utilisateur
-                input(type="text" name="username" id="username").input-dark
-                span.lbl-error Nom d'utilisateur invalide
-                p.lbl-light Mot de passe
-                input(type="password" name="password" id="password").input-dark
-                span.lbl-error Mot de passe invalide
-                input(type="submit", value="Envoyer").btn-dark
+    include utilities
+    //- - const errorUsername = "Nom d'utilisateur invalide";
+    //- - const errorPassword = "Mot de passe invalide";
+    //- - const username = "MyUsername";
+    //- - const password = "MyPassword";
+    .center-h
+        .center-v
+            .container-dark
+                form(action="./login.html" method="post")
+                    p.lbl-light Nom d'utilisateur
+                    input(type="text" name="username" id="username" value=username).input-dark
+                    +errorLabel(errorUsername)
+                    p.lbl-light Mot de passe
+                    input(type="password" name="password" id="password" value=password).input-dark
+                    +errorLabel(errorPassword)
+                    input(type="submit", value="Envoyer").btn-dark
