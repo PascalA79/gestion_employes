@@ -33,9 +33,12 @@ async function post(req, res, next){
 
             res.render('index', { user: {alias:username},alert:{} });
         }
+        else{
+            res.render('login', { username: username});
+        }
     }
     else{
-        res.render('login', { user: username});
+        res.render('login', { username: username});
     }
     //username
     //password

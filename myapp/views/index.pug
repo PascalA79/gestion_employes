@@ -3,8 +3,5 @@ extends layout
 
 block content
   include navbar
-  //- - const user = {alias: "Pascal"};
-  //- - const alerts = {messages: 12};
-  - const selected = "home";
-  +navbar(user, alerts, selected);
+  +navbar(user, alerts, "home")
   

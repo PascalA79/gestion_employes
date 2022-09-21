@@ -13,11 +13,11 @@ block content
     .center-h
         .center-v
             .container-dark
-                form(action="./login.html" method="post")
+                form(action="./login" method="post")
                     p.lbl-light Nom d'utilisateur
                     input(type="text" name="username" id="username" value=username).input-dark
                     +errorLabel(errorUsername)
                     p.lbl-light Mot de passe
-                    input(type="password" name="password" id="password" value=password).input-dark
+                    input(type="password" name="password" id="password" ).input-dark
                     +errorLabel(errorPassword)
                     input(type="submit", value="Envoyer").btn-dark
