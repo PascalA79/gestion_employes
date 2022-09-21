@@ -24,7 +24,7 @@ mixin navbar(user, alerts, selected)
         +tuile(user.alias, "#", null, selected == "profil")
         +tuile("Courriels", "#", alerts.courriels, selected == "courriels")
         +tuile("Messages", "#", alerts.messages, selected == "messages")
-        +tuile("Déconnecter", "#")
+        +tuile("Déconnecter", "/disconnect")
 
         
 

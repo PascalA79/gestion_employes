@@ -17,6 +17,10 @@ router.use('/', function(req, res, next) {
 router.get(['/','/index'], function(req, res, next) {
   session.start(req);
     res.render('index',{user:{alias:session.get('user')},alerts:{}});
-  //res.render('index', { title: 'Express' });
+})
+router.use('/disconnect',function(req, res, next) {
+  let redirect= new Redirect(session,res);
+  session.destroy();
+  redirect.access('user')
 })
 module.exports = router;
