@@ -31,13 +31,38 @@ async function post(req, res, next){
             res.redirect('index')
         }
         else{
-            res.render('login', { username: username});
+            var {username,password}=validArray
+            const errorUsername = loginValidation.getUsernameValidationText(password);
+            const errorPassword = loginValidation.getPasswordValidationText(password);
+            if(errorUsername != "" || errorPassword != ""){
+                res.render('login', { username: username, errorUsername: errorUsername, errorPassword: errorPassword });
+            } else {
+                console.log('traitement...');
+                var ConnectionMYSQL=require('../class/ConnectionMYSQL');
+                const connectionMySQL= new ConnectionMYSQL({
+                    host: "173.176.94.124",
+                    user: "projet",
+                    password: "qwerty12345",
+                    database :"projet"
+                });
+                let authorized= await connectionMySQL.excecuteSync(`SELECT CheckPassword('${username}', '${password}') AS value`)
+                console.log(authorized[0].value)
+                connectionMySQL.end()
+                if(authorized[0].value){
+                    let session= new Session(router)
+                    session.start(req)
+                    session.set('user',username)
+                    res.redirect('index');
+                } else {
+                    res.render('login', { username: username, errorPassword:loginValidation.ERROR_TEXTS.PASSWORD[loginValidation.ERROR_CODES.PASSWORD.UNKNOWN]});
+                }
+            }
         }
     }
     else{
         res.render('login', { username: username});
     }
-    //username
+//username
     //password
 
     //errorUsername

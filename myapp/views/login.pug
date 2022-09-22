@@ -13,11 +13,32 @@ block content
     .center-h
         .center-v
             .container-dark
-                form(action="./login" method="post")
+                form(action="./login" method="post" id="loginForm")
                     p.lbl-light Nom d'utilisateur
                     input(type="text" name="username" id="username" value=username).input-dark
-                    +errorLabel(errorUsername)
+                    +errorLabel(errorUsername, "errorUsername")
                     p.lbl-light Mot de passe
-                    input(type="password" name="password" id="password" ).input-dark
-                    +errorLabel(errorPassword)
+                    input(type="password" name="password" id="password").input-dark
+                    +errorLabel(errorPassword, "errorPassword")
                     input(type="submit", value="Envoyer").btn-dark
+    script(src="./scripts/login.js") 
+    script.
+        const validationLogin = this.loginValidation;
+        $(document).ready(() => {
+            setOnSubmit();
+        });
+
+        function setOnSubmit(){
+            console.log("setOnSubmit()")
+            $("#loginForm").submit((e) => {
+                const username = $("#username").val();
+                const password = $("#password").val();
+                const errorUsername = validationLogin.getUsernameValidationText(username);
+                const errorPassword = validationLogin.getPasswordValidationText(password);
+                if(errorUsername != "" || errorPassword != ""){
+                    e.preventDefault();
+                    $("#errorUsername").text(errorUsername + " local")
+                    $("#errorPassword").text(errorPassword + " local");
+                }
+            })
+        }
