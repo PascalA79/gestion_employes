@@ -1,6 +1,4 @@
 (function(exports){
-
-    console.log(exports);
     const ERROR_CODES={
         USERNAME: {
             OK: 0,
@@ -18,7 +16,7 @@
 
     const MIN_LENGTH_USERNAME = 5;
     const MAX_LENGTH_USERNAME = 45;
-    const MIN_LENGTH_PASSWORD = 10;
+    const MIN_LENGTH_PASSWORD = 5;
     const MAX_LENGTH_PASSWORD = 45;
 
     const ERROR_TEXTS = {};
@@ -56,8 +54,8 @@
     }
 
     function validatePassword(password){
-        if(password.length < 10) return ERROR_CODES.PASSWORD.TOO_SHORT;
-        if(password.length > 45) return ERROR_CODES.PASSWORD.TOO_LONG;
+        if(password.length < MIN_LENGTH_PASSWORD) return ERROR_CODES.PASSWORD.TOO_SHORT;
+        if(password.length > MAX_LENGTH_PASSWORD) return ERROR_CODES.PASSWORD.TOO_LONG;
         if(!REGEXP_PASSWORD.test(password)) return ERROR_CODES.PASSWORD.NEEDS_VARIETY;
         return ERROR_CODES.PASSWORD.OK;
     }
@@ -92,14 +90,14 @@
         },
         "validatePassword": {
             "OK": () => validatePassword("Password123") == ERROR_CODES.PASSWORD.OK,
-            "TOO_SHORT": () => validatePassword("Password1") == ERROR_CODES.PASSWORD.TOO_SHORT,
+            "TOO_SHORT": () => validatePassword("Pas1") == ERROR_CODES.PASSWORD.TOO_SHORT,
             "TOO_LONG": () => validatePassword("Password1Password1Password1Password1Password12") == ERROR_CODES.PASSWORD.TOO_LONG,
             "MISSING_NUMBER": () => validatePassword("Passwordasdfasd") == ERROR_CODES.PASSWORD.NEEDS_VARIETY,
             "MISSING_CAPITAL_LETTER": () => validatePassword("passwordasdfasd123") == ERROR_CODES.PASSWORD.NEEDS_VARIETY
         },
         "getPasswordValidationText": {
             "OK": () => getPasswordValidationText("Password123") == ERROR_TEXTS.PASSWORD[ERROR_CODES.PASSWORD.OK],
-            "TOO_SHORT": () => getPasswordValidationText("Password1") == ERROR_TEXTS.PASSWORD[ERROR_CODES.PASSWORD.TOO_SHORT],
+            "TOO_SHORT": () => getPasswordValidationText("Pas1") == ERROR_TEXTS.PASSWORD[ERROR_CODES.PASSWORD.TOO_SHORT],
             "TOO_LONG": () => getPasswordValidationText("Password1Password1Password1Password1Password12") == ERROR_TEXTS.PASSWORD[ERROR_CODES.PASSWORD.TOO_LONG],
             "MISSING_NUMBER": () => getPasswordValidationText("Passwordasdfasd") == ERROR_TEXTS.PASSWORD[ERROR_CODES.PASSWORD.NEEDS_VARIETY],
             "MISSING_CAPITAL_LETTER": () => getPasswordValidationText("passwordasdfasd123") == ERROR_TEXTS.PASSWORD[ERROR_CODES.PASSWORD.NEEDS_VARIETY]
