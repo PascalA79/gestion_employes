@@ -4,6 +4,23 @@ var Session=require('../class/Session')
 var Redirect=require('../class/Redirect')
 var Utilities=require('../class/Utilities')
 var session=new Session(router);
+const loginValidation = require('../public/scripts/login');
+
+// router.get('/', (req, res, next) => {
+//     res.render('login');
+// })
+// router.post('/', (req, res, next) => {
+//     const {username="", password=""} = Utilities.getValidArray(req.body,'username','password');
+//     const errorUsername = loginValidation.getUsernameValidationText(username);
+//     const errorPassword = loginValidation.getPasswordValidationText(password);
+//     if(errorUsername == "" && errorPassword == ""){
+//         res.render('login', {username:username, errorPassword:"Valid!!!"});
+//     } else {
+//         res.render('login', {username: username, errorUsername: errorUsername, errorPassword: errorPassword});
+//     }
+// })
+
+
 router.get('/', function(req, res, next) {
     session.start(req);
     let redirect= new Redirect(session,res)
