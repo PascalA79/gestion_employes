@@ -2,10 +2,10 @@
 //- Philippe C. Léger
 //- Fichier contenant des mixins réutilisés dans plusieurs pages
 
-mixin errorLabel(errorMessage)
+mixin errorLabel(errorMessage, ctrlId)
     - let classes = [];
     - if(!error-message) classes.append("hidden");
-    span.lbl-error(class=classes)=errorMessage
+    span.lbl-error(class=classes id=ctrlId)=errorMessage
 
 mixin test(testMessage)
     p= testMessage
