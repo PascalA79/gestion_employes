@@ -13,7 +13,7 @@ block content
     .center-h
         .center-v
             .container-dark
-                form(action="./login.html" method="post")
+                form(action="./login" method="post")
                     p.lbl-light Nom d'utilisateur
                     input(type="text" name="username" id="username" value=username).input-dark
                     +errorLabel(errorUsername, "errorUsername")
