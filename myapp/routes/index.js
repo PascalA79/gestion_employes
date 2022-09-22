@@ -17,6 +17,7 @@ router.get(['/','/index'], function(req, res, next) {
   session.start(req);
     res.render('index',{user:{alias:session.get('user')},alerts:{}});
 })
+
 router.use('/disconnect',function(req, res, next) {
   let redirect= new Redirect(session,res);
   session.destroy();

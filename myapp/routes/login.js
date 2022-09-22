@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var Session=require('../class/Session')
 var Redirect=require('../class/Redirect')
+var Utilities=require('../class/Utilities')
 var session=new Session(router);
 router.get('/', function(req, res, next) {
     session.start(req);
@@ -12,19 +13,9 @@ router.get('/', function(req, res, next) {
 });
 router.post("/",post);
 async function post(req, res, next){
-    let username=req.body['username'];
-    let password=req.body['password'];
-    let errorUsername=0;
-    let errorPassword=0;
-    if(!username)
-    {
-        errorUsername=1;
-    }
-    if(!password)
-    {
-        errorPassword=1;
-    }
-    if(!(errorUsername+errorPassword)){
+    const validArray=Utilities.getValidArray(req.body,'username','password')
+    if(validArray){
+        var {username,password}=validArray
         console.log('traitement...');
         var ConnectionMYSQL=require('../class/ConnectionMYSQL');
         const connectionMySQL= new ConnectionMYSQL({
