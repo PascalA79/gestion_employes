@@ -10,6 +10,7 @@ class Utilities{
     }
     // transforme un dictionnaire en tableau avec comme index
     static getArray(dictionnaire){
+        if(!dictionnaire) return undefined
         let array=[];
         let keys=Object.keys(dictionnaire);
         keys.forEach(key=>array[key]=dictionnaire[key])

@@ -27,6 +27,7 @@ class Session{
         return this.req.session[key];
         else return undefined
     }
+    
     fSet(key,fonction,defaut){
         if(this.get(key)!=undefined){
             let value=fonction(this.get(key));

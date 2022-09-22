@@ -16,10 +16,11 @@ class ConnectionMYSQL{
     }
     async excecuteSync(query){
         let promiseResult= new Promise((resolve, reject)=>this.excecute(query,(error,results)=>{
-            if(error) reject(error);
+            if(error)
+            reject(error);
             resolve(results)
         }))
-        return promiseResult;
+        return await promiseResult;
     }
     end(){
         this.connectionMySQL.destroy();

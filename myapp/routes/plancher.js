@@ -5,7 +5,7 @@ var session=new Session(router);
 
 router.get('/', function(req, res, next) {
     session.start(req);
-    res.render('plancher');
+    res.render('plancher',{user:{alias:session.get('user')},alerts:{}});
 })
 router.post('/',(req, res, next)=>{
 
