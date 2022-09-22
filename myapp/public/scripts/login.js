@@ -11,6 +11,7 @@
             TOO_SHORT: 1,
             TOO_LONG: 2,
             NEEDS_VARIETY: 3,
+            UNKNOWN:4
         }
     }
 
@@ -31,6 +32,7 @@
     ERROR_TEXTS.PASSWORD[ERROR_CODES.PASSWORD.TOO_SHORT] = `Mot de passe trop court. Doit contenir au moins ${MIN_LENGTH_PASSWORD} caractères.`;
     ERROR_TEXTS.PASSWORD[ERROR_CODES.PASSWORD.TOO_LONG] = `Mot de passe trop long. Doit contenir au plus ${MAX_LENGTH_PASSWORD} caractères.`;;
     ERROR_TEXTS.PASSWORD[ERROR_CODES.PASSWORD.NEEDS_VARIETY] = "Mot de passe doit contenir au moins une lettre majuscule et un chiffre";
+    ERROR_TEXTS.PASSWORD[ERROR_CODES.PASSWORD.UNKNOWN] = "Combinaison de nom d'utilisateur et mot de passe inconnue";
 
 
     const REGEXP_TEMPLATE_USERNAME = "^\[A-Za-z0-9_]{" + MIN_LENGTH_USERNAME + "," + MAX_LENGTH_USERNAME + "}$";
