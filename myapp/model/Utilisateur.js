@@ -1,4 +1,5 @@
-var DAL = require('c:/Users/Pascal/OneDrive/Documents/Session5/projet/gestion_employes/gestion_employes/myapp/class/DAL');
+var DAL = require('../class/DAL');
+// var DAL = require('c:/Users/Pascal/OneDrive/Documents/Session5/projet/gestion_employes/gestion_employes/myapp/class/DAL');
 class Utilisateur{
     static #DAL
     static connect(DAL){

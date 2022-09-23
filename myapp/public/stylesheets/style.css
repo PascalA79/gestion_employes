@@ -140,3 +140,8 @@
   }
 
   .logo:hover, .logo.selected{fill: var(--txt-light);}
+
+  .disabled{
+    background-color: var(--txt-medium);
+    cursor:default;
+  }
