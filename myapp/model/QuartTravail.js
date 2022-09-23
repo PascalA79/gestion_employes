@@ -4,21 +4,26 @@ class QuartTravail{
         QuartTravail.#DAL=DAL;
     }
     constructor({idQuartTravail,idPlancher,idUtilisateur,idRoleUtilisateur,debut,fin,confirme}){
-        this.idQuartTravail=idQuartTravail//-1
+        this.idQuartTravail=idQuartTravail?idQuartTravail:-1
         this.idPlancher=idPlancher
         this.idUtilisateur=idUtilisateur
         this.idRoleUtilisateur=idRoleUtilisateur
         this.debut=debut
         this.fin=fin
-        this.confirme=confirme
+        this.confirme=confirme;
     }
-    add(){
+    async add(DAL){
+        return await DAL.addQuartTravail({...this})
         //ajoute a la BD
     }
 
-    update(){}
+    async update(){
+        await DAL.updateQuartTravail({...this})
+    }
 
-    delete(){}
+    async delete(){
+        await DAL.removeQuartTravail(this.idQuartTravail)
+    }
 
 }
-module.exports = QuartsTravail;
+module.exports = QuartTravail;

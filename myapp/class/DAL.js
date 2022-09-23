@@ -1,5 +1,5 @@
 const Utilisateur = require("../model/Utilisateur");
-const QuartsTravail = require("../model/QuartsTravail");
+const QuartTravail = require("../model/QuartTravail");
 var ConnectionMYSQL = require("./ConnectionMYSQL");
 var Utilities = require("./Utilities")
 
@@ -32,18 +32,18 @@ class DAL{
     }
     async getHoraire(idUtilisateur,debut=undefined,fin=undefined){
         const sqlHoraire=`SELECT idQuartTravail,
-            idPlancher,
-            idUtilisateur,
-            idRoleUtilisateur,
-            debut,
-            fin,
-            confirme 
+        idPlancher,
+        idUtilisateur,
+        idRoleUtilisateur,
+        debut,
+        fin,
+        confirme 
             FROM QuartsTravail WHERE idUtilisateur='${idUtilisateur}' ${debut?`AND debut>='${debut}'`:''} ${debut?`AND fin<='${fin}'`:''}`;
             let quartsTravail= await this.#connectionMYSQL.excecuteSync(sqlHoraire);
-            return Utilities.getArray(quartsTravail).map(quart=>new QuartsTravail(Utilities.getArray(quart)))
-    }
-    async getHoraires(idPlancher,debut,fin){
-        const sqlHoraire=`SELECT idQuartTravail,
+            return Utilities.getArray(quartsTravail).map(quart=>new QuartTravail(Utilities.getArray(quart)))
+        }
+        async getHoraires(idPlancher,debut,fin){
+            const sqlHoraire=`SELECT idQuartTravail,
             idPlancher,
             idUtilisateur,
             idRoleUtilisateur,
@@ -52,13 +52,17 @@ class DAL{
             confirme 
             FROM QuartsTravail WHERE idPlancher='${idPlancher}' AND debut>='${debut}' AND fin<='${fin}'`;
             let quartsTravail= await this.#connectionMYSQL.excecuteSync(sqlHoraire);
-            return quartsTravail.map(quart=>new QuartsTravail(Utilities.getArray(quart)))
+            return quartsTravail.map(quart=>new QuartTravail(Utilities.getArray(quart)))
+        }
+        async addQuartTravail({idPlancher,idUtilisateur,idRoleUtilisateur,debut,fin,confirme}){
+            let idQuart=await this.#connectionMYSQL.excecuteSync(`Call AddQuartTravail('${idPlancher}','${idUtilisateur}','${idRoleUtilisateur}','${debut}','${fin}','${confirme}')`)
+            return idQuart[0][0].id;
+        }
+        async updateQuartTravail({idQuartTravail,idPlancher,idUtilisateur,idRoleUtilisateur,debut,fin,confirme}){
+            await this.#connectionMYSQL.excecuteSync(`Call UpdateQuartTravail('${idQuartTravail}','${idPlancher}','${idUtilisateur}','${idRoleUtilisateur}','${debut}','${fin}','${confirme}')`)
+        }
+        async removeQuartTravail(idQuartTravail){
+            await this.#connectionMYSQL.excecuteSync(`Call RemoveQuartTravail('${idQuartTravail}')`)
+        }
     }
-    addQuartTravail(idPlancher,idUtilisateur,idRoleUtilisateur,debut,fin,confirme){
-        this.#connectionMYSQL.excecuteSync(`INSERT INTO QuartsTravail(idPlancher,idUtilisateur,idRoleUtilisateur,debut,fin,confirme)
-            VALUES(idPlancher='${idPlancher}',idUtilisateur='${idUtilisateur}',
-            idRoleUtilisateur='${idRoleUtilisateur}',debut='${debut}',fin='${fin}',
-            confirme='${confirme}')`)
-    }
-}
-module.exports = DAL;
+    module.exports = DAL;

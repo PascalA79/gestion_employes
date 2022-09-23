@@ -6,7 +6,7 @@ var Redirect=require('../class/Redirect')
 var Utilities=require('../class/Utilities');
 var DAL = require('../class/DAL');
 const Utilisateur = require('../model/Utilisateur');
-const QuartsTravail = require('../model/QuartsTravail');
+const QuartsTravail = require('../model/QuartTravail');
 var session=new Session(router);
 router.get('/', get);
 async function get(req, res, next){
@@ -15,8 +15,7 @@ async function get(req, res, next){
     if(redirect.access('user',(value)=>value,'/index')){
         const DAL_PASCAL=new DAL();
         Horaire.connect(DAL_PASCAL)
-        console.log((await Horaire.getPlancher(-1,'2022-09-14 09:00:00','2022-09-30 09:00:00')))
-        console.log((await Horaire.gethoraire(2,'2022-09-14 09:00:00','2022-09-30 09:00:00')))
+        DAL_PASCAL.addQuartTravail({idPlancher:-1,idUtilisateur:2,idRoleUtilisateur:1,debut:'2022-09-14 18:00:00',fin:'2022-09-14 22:00:00',confirme:1})
         res.render('login'); 
     }
 

@@ -1,5 +1,5 @@
 const DAL = require("../class/DAL");
-const QuartsTravail = require("./QuartsTravail");
+const QuartTravail = require("./QuartTravail");
 
 
 class Horaire{
@@ -20,8 +20,7 @@ class Horaire{
     }
     set(){}
     static async gethoraire(idUtilisateur,debut,fin){
-        if(!Horaire.#DAL)Horaire.connect(new DAL())
-        return new Horaire(await Horaire.#DAL.getHoraire((idUtilisateur,debut,fin)))
+        return new Horaire(await Horaire.#DAL.getHoraire(idUtilisateur,debut,fin))
     }
     // retourne un tableau qui a la clé idUtilisateur qui contient un tableau de QuartsTravail
     static async getPlancher(idPlancher,debut,fin){
@@ -30,7 +29,7 @@ class Horaire{
         let quarts=[];
         horaires.forEach(quart=>{
             if(!quarts[quart.idUtilisateur])quarts[quart.idUtilisateur]=[]
-            quarts[quart.idUtilisateur].push(new QuartsTravail(quart))
+            quarts[quart.idUtilisateur].push(new QuartTravail(quart))
         })
         plancher['quartsTravail']=quarts
         plancher['disponibilites']=[]
