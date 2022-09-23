@@ -30,7 +30,7 @@ class DAL{
         let users= await this.#connectionMYSQL.excecuteSync(sqlUser);
         return users.map(user=>new Utilisateur(Utilities.getArray(user)))
     }
-    async getHoraire(idUtilisateur,debut,fin){
+    async getHoraire(idUtilisateur,debut=undefined,fin=undefined){
         const sqlHoraire=`SELECT idQuartTravail,
             idPlancher,
             idUtilisateur,
@@ -38,7 +38,7 @@ class DAL{
             debut,
             fin,
             confirme 
-            FROM QuartsTravail WHERE idUtilisateur='${idUtilisateur}' AND debut>='${debut}' AND fin<='${fin}'`;
+            FROM QuartsTravail WHERE idUtilisateur='${idUtilisateur}' ${debut?`AND debut>='${debut}'`:''} ${debut?`AND fin<='${fin}'`:''}`;
             let quartsTravail= await this.#connectionMYSQL.excecuteSync(sqlHoraire);
             return Utilities.getArray(quartsTravail).map(quart=>new QuartsTravail(Utilities.getArray(quart)))
     }
@@ -53,6 +53,12 @@ class DAL{
             FROM QuartsTravail WHERE idPlancher='${idPlancher}' AND debut>='${debut}' AND fin<='${fin}'`;
             let quartsTravail= await this.#connectionMYSQL.excecuteSync(sqlHoraire);
             return quartsTravail.map(quart=>new QuartsTravail(Utilities.getArray(quart)))
+    }
+    addQuartTravail(idPlancher,idUtilisateur,idRoleUtilisateur,debut,fin,confirme){
+        this.#connectionMYSQL.excecuteSync(`INSERT INTO QuartsTravail(idPlancher,idUtilisateur,idRoleUtilisateur,debut,fin,confirme)
+            VALUES(idPlancher='${idPlancher}',idUtilisateur='${idUtilisateur}',
+            idRoleUtilisateur='${idRoleUtilisateur}',debut='${debut}',fin='${fin}',
+            confirme='${confirme}')`)
     }
 }
 module.exports = DAL;
