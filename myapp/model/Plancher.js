@@ -1,4 +1,8 @@
 class Plancher{
+    static #DAL
+    static connect(DAL){
+        Plancher.#DAL=DAL;
+    }
     constructor(connectionMySQL){
         this.#connectionMySQL=connectionMySQL
     }

@@ -4,6 +4,8 @@ var Session=require('../class/Session')
 var Redirect=require('../class/Redirect')
 var Utilities=require('../class/Utilities');
 var DAL = require('../class/DAL');
+const Utilisateur = require('../model/Utilisateur');
+const QuartsTravail = require('../model/QuartsTravail');
 var session=new Session(router);
 router.get('/', get);
 async function get(req, res, next){
@@ -28,6 +30,8 @@ async function post(req, res, next){
             let session= new Session(router)
             session.start(req)
             session.set('user',user.alias)
+            QuartsTravail.connect(DAL_PASCAL)
+            console.log(await DAL_PASCAL.getHoraires(-1,'2022-09-14 09:00:00','2022-09-20 09:00:00'))
             res.redirect('index')
         }
         else{
@@ -38,16 +42,9 @@ async function post(req, res, next){
                 res.render('login', { username: username, errorUsername: errorUsername, errorPassword: errorPassword });
             } else {
                 console.log('traitement...');
-                var ConnectionMYSQL=require('../class/ConnectionMYSQL');
-                const connectionMySQL= new ConnectionMYSQL({
-                    host: "173.176.94.124",
-                    user: "projet",
-                    password: "qwerty12345",
-                    database :"projet"
-                });
-                let authorized= await connectionMySQL.excecuteSync(`SELECT CheckPassword('${username}', '${password}') AS value`)
-                console.log(authorized[0].value)
-                connectionMySQL.end()
+                const DAL_PASCAL=new DAL();
+                let authorized= await DAL_PASCAL.checkPassword(username,password);
+
                 if(authorized[0].value){
                     let session= new Session(router)
                     session.start(req)
