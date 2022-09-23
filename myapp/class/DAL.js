@@ -1,5 +1,5 @@
 const Utilisateur = require("../model/Utilisateur");
-const QuartsTravail = require("../model/QuartsTravail");
+const QuartTravail = require("../model/QuartTravail");
 var ConnectionMYSQL = require("./ConnectionMYSQL");
 var Utilities = require("./Utilities")
 
@@ -30,20 +30,20 @@ class DAL{
         let users= await this.#connectionMYSQL.excecuteSync(sqlUser);
         return users.map(user=>new Utilisateur(Utilities.getArray(user)))
     }
-    async getHoraire(idUtilisateur,debut,fin){
+    async getHoraire(idUtilisateur,debut=undefined,fin=undefined){
         const sqlHoraire=`SELECT idQuartTravail,
-            idPlancher,
-            idUtilisateur,
-            idRoleUtilisateur,
-            debut,
-            fin,
-            confirme 
-            FROM QuartsTravail WHERE idUtilisateur='${idUtilisateur}' AND debut>='${debut}' AND fin<='${fin}'`;
+        idPlancher,
+        idUtilisateur,
+        idRoleUtilisateur,
+        debut,
+        fin,
+        confirme 
+            FROM QuartsTravail WHERE idUtilisateur='${idUtilisateur}' ${debut?`AND debut>='${debut}'`:''} ${debut?`AND fin<='${fin}'`:''}`;
             let quartsTravail= await this.#connectionMYSQL.excecuteSync(sqlHoraire);
-            return Utilities.getArray(quartsTravail).map(quart=>new QuartsTravail(Utilities.getArray(quart)))
-    }
-    async getHoraires(idPlancher,debut,fin){
-        const sqlHoraire=`SELECT idQuartTravail,
+            return Utilities.getArray(quartsTravail).map(quart=>new QuartTravail(Utilities.getArray(quart)))
+        }
+        async getHoraires(idPlancher,debut,fin){
+            const sqlHoraire=`SELECT idQuartTravail,
             idPlancher,
             idUtilisateur,
             idRoleUtilisateur,
@@ -52,7 +52,17 @@ class DAL{
             confirme 
             FROM QuartsTravail WHERE idPlancher='${idPlancher}' AND debut>='${debut}' AND fin<='${fin}'`;
             let quartsTravail= await this.#connectionMYSQL.excecuteSync(sqlHoraire);
-            return quartsTravail.map(quart=>new QuartsTravail(Utilities.getArray(quart)))
+            return quartsTravail.map(quart=>new QuartTravail(Utilities.getArray(quart)))
+        }
+        async addQuartTravail({idPlancher,idUtilisateur,idRoleUtilisateur,debut,fin,confirme}){
+            let idQuart=await this.#connectionMYSQL.excecuteSync(`Call AddQuartTravail('${idPlancher}','${idUtilisateur}','${idRoleUtilisateur}','${debut}','${fin}','${confirme}')`)
+            return idQuart[0][0].id;
+        }
+        async updateQuartTravail({idQuartTravail,idPlancher,idUtilisateur,idRoleUtilisateur,debut,fin,confirme}){
+            await this.#connectionMYSQL.excecuteSync(`Call UpdateQuartTravail('${idQuartTravail}','${idPlancher}','${idUtilisateur}','${idRoleUtilisateur}','${debut}','${fin}','${confirme}')`)
+        }
+        async removeQuartTravail(idQuartTravail){
+            await this.#connectionMYSQL.excecuteSync(`Call RemoveQuartTravail('${idQuartTravail}')`)
+        }
     }
-}
-module.exports = DAL;
+    module.exports = DAL;

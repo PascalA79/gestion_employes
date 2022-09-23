@@ -1,17 +1,21 @@
 var express = require('express');
 var router = express.Router();
 var Session=require('../class/Session')
+var Horaire=require('../model/Horaire')
 var Redirect=require('../class/Redirect')
 var Utilities=require('../class/Utilities');
 var DAL = require('../class/DAL');
 const Utilisateur = require('../model/Utilisateur');
-const QuartsTravail = require('../model/QuartsTravail');
+const QuartsTravail = require('../model/QuartTravail');
 var session=new Session(router);
 router.get('/', get);
 async function get(req, res, next){
     session.start(req);
     let redirect= new Redirect(session,res)
     if(redirect.access('user',(value)=>value,'/index')){
+        const DAL_PASCAL=new DAL();
+        Horaire.connect(DAL_PASCAL)
+        DAL_PASCAL.addQuartTravail({idPlancher:-1,idUtilisateur:2,idRoleUtilisateur:1,debut:'2022-09-14 18:00:00',fin:'2022-09-14 22:00:00',confirme:1})
         res.render('login'); 
     }
 
@@ -30,8 +34,6 @@ async function post(req, res, next){
             let session= new Session(router)
             session.start(req)
             session.set('user',user.alias)
-            QuartsTravail.connect(DAL_PASCAL)
-            console.log(await DAL_PASCAL.getHoraires(-1,'2022-09-14 09:00:00','2022-09-20 09:00:00'))
             res.redirect('index')
         }
         else{
