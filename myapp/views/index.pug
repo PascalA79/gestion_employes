@@ -2,6 +2,72 @@ extends layout
 
 
 block content
+  //- mixin tuile(text, alerts, url)
+  //-   p.tuile= text
   include navbar
   +navbar(user, alerts, "home")
+  - const tuile={};
+
+  - tuile['HorairePerso']={};
+  - tuile['HorairePerso']['text']='Horaire Personnel';
+  - tuile['HorairePerso']['nombreAlerte']=0;
+  - tuile['HorairePerso']['url']='/horaire-perso';
+
+  - tuile['Horaire']={};
+  - tuile['Horaire']['text']='Horaire';
+  - tuile['Horaire']['nombreAlerte']=0;
+  - tuile['Horaire']['url']='#';
+
+  - tuile['Disponibilité']={};
+  - tuile['Disponibilité']['text']='Disponibilité';
+  - tuile['Disponibilité']['nombreAlerte']=0;
+  - tuile['Disponibilité']['url']='#';
+
+  - tuile['Employés']={};
+  - tuile['Employés']['text']="Employés";
+  - tuile['Employés']['nombreAlerte']=0;
+  - tuile['Employés']['url']='#';
+
+  - tuile['Dépenses']={};
+  - tuile['Dépenses']['text']="Dépenses";
+  - tuile['Dépenses']['nombreAlerte']=0;
+  - tuile['Dépenses']['url']='#';
+
+  - tuile['Planchers']={};
+  - tuile['Planchers']['text']="Planchers";
+  - tuile['Planchers']['nombreAlerte']=12;
+  - tuile['Planchers']['url']='/plancher';
+
+  - tuile['Utilisateurs']={};
+  - tuile['Utilisateurs']['text']="Utilisateurs";
+  - tuile['Utilisateurs']['nombreAlerte']=0;
+  - tuile['Utilisateurs']['url']='#';
+
+  - tuile['Départements']={};
+  - tuile['Départements']['text']="Départements";
+  - tuile['Départements']['nombreAlerte']=0;
+  - tuile['Départements']['url']='#';
+
+  - tuile['Paies']={};
+  - tuile['Paies']['text']="Paies";
+  - tuile['Paies']['nombreAlerte']=2;
+  - tuile['Paies']['url']='#';
+
+  - tuile['Punch']={};
+  - tuile['Punch']['text']="Punch";
+  - tuile['Punch']['nombreAlerte']=0;
+  - tuile['Punch']['url']='#';
+
+  mixin tuile(text, alert, url)
+    a(href=`${url}`).tuile.tuile-sq
+        p=text
+        if alert
+            .alert
+                p= alert
+
+  .container
+    .index-row
+      each val in tuile
+        +tuile(val['text'], val['nombreAlerte'], val['url'])
+      //- p= `b: ${b}`
   
