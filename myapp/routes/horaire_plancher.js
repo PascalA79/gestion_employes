@@ -2,20 +2,26 @@ var express = require('express');
 var router = express.Router();
 var Session=require('../class/Session')
 var Redirect=require('../class/Redirect')
+const { BuildPlancherTableData } = require('../class/Utilities/TableDataBuilder');
+const DateUtilities = require('../class/Utilities/DateUtilities');
 const fs = require('fs');
 /* GET home page. */
 var session=new Session(router);
 
   router.get(['/','/index'], function(req, res, next) {
     session.start(req);
-    const data = JSON.parse(fs.readFileSync('../BD/data-users-horaire-plancher.json'));
-    const tableData = BuildTableData(data);
+    const data = GetData(null, null);
+    const tableData = BuildTableData(data, null);
     res.render('horaire-plancher', {data:data, tableData:tableData});
   })
 
-function BuildTableData(data){
+function BuildTableData(data, date){
   // En cours (PCL)
-  return [];
+  const day = DateUtilities.getDateObj({year: 2022, month: 9, day: 25});
+  return BuildPlancherTableData(day, data.users, data.roles);
 }
 
+function GetData(idPlancher, date){
+  return JSON.parse(fs.readFileSync('../BD/data-users-horaire-plancher.json'));
+}
 module.exports = router;
