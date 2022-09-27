@@ -9,6 +9,7 @@ var apiRouter = require('./routes/api');
 var loginRouter = require('./routes/login');
 var plancherRouter = require('./routes/plancher');
 var horairePersoRouter = require('./routes/horaire_perso');
+var horairePlancherRouter = require('./routes/horaire_plancher');
 
 var app = express();
 
@@ -27,6 +28,7 @@ app.use('/api/', apiRouter);
 app.use('/login', loginRouter);
 app.use('/plancher', plancherRouter);
 app.use('/horaire-perso', horairePersoRouter);
+app.use('/horaire-plancher', horairePlancherRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

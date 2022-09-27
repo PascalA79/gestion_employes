@@ -1,0 +1,154 @@
+{
+    "plancher":{
+        "id":1,
+        "name":"Nom du plancher"
+    },
+    "jour":{
+        "year": 2022,
+        "month": 9,
+        "day":25
+    },
+    "users": [
+        {
+            "id": 1,
+            "firstName": "Pascal",
+            "lastName": "Arès",
+            "roles": [1, 2, 3],
+            "quarts":[
+                {
+                    "id": 1,
+                    "start":{
+                        "year": 2022,
+                        "month": 9,
+                        "day": 25,
+                        "hour": 9,
+                        "minute": 0
+                    },
+                    "end":{
+                        "year": 2022,
+                        "month": 9,
+                        "day": 25,
+                        "hour": 12,
+                        "minute": 30
+                    },
+                    "role": 1
+                },
+                {
+                    "id": 2,
+                    "start":{
+                        "year": 2022,
+                        "month": 9,
+                        "day": 28,
+                        "hour": 12,
+                        "minute": 0
+                    },
+                    "end":{
+                        "year": 2022,
+                        "month": 9,
+                        "day": 25,
+                        "hour": 17,
+                        "minute": 0
+                    },
+                    "role": 1
+                },
+                {
+                    "id": 3,
+                    "start":{
+                        "year": 2022,
+                        "month": 9,
+                        "day": 30,
+                        "hour": 11,
+                        "minute": 0
+                    },
+                    "end":{
+                        "year": 2022,
+                        "month": 9,
+                        "day": 30,
+                        "hour": 19,
+                        "minute": 0
+                    },
+                    "role": 2
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "firstName": "Philippe C.",
+            "lastName": "Léger",
+            "roles": [1, 2, 3],
+            "quarts":[
+                {
+                    "id": 4,
+                    "start":{
+                        "year": 2022,
+                        "month": 9,
+                        "day": 25,
+                        "hour": 9,
+                        "minute": 0
+                    },
+                    "end":{
+                        "year": 2022,
+                        "month": 9,
+                        "day": 25,
+                        "hour": 12,
+                        "minute": 30
+                    },
+                    "role": 2
+                },
+                {
+                    "id": 5,
+                    "start":{
+                        "year": 2022,
+                        "month": 9,
+                        "day": 28,
+                        "hour": 12,
+                        "minute": 0
+                    },
+                    "end":{
+                        "year": 2022,
+                        "month": 9,
+                        "day": 25,
+                        "hour": 17,
+                        "minute": 0
+                    },
+                    "role": 2
+                },
+                {
+                    "id": 6,
+                    "start":{
+                        "year": 2022,
+                        "month": 9,
+                        "day": 30,
+                        "hour": 11,
+                        "minute": 0
+                    },
+                    "end":{
+                        "year": 2022,
+                        "month": 9,
+                        "day": 30,
+                        "hour": 19,
+                        "minute": 0
+                    },
+                    "role": 3
+                }
+            ]
+        }
+    ],
+    "roles":[
+        {
+            "id": 1,
+            "name": "Cuisinier",
+            "color": "red"
+        },
+        {
+            "id": 2,
+            "name": "Serveur",
+            "color": "palegreen"
+        },
+        {
+            "id": 3,
+            "name": "Plongeur",
+            "color": "blueviolet"
+        }
+    ]
+}
