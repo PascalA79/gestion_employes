@@ -9,7 +9,7 @@ class Session{
             resave: false,
             saveUninitialized: true,
             //store: database  https://www.youtube.com/watch?v=J1qXK66k1y4&ab_channel=ZachGollwitzer 8:54
-            cookie: { maxAge: 60000 }
+            //cookie: { maxAge: 600000 }
           }))
     }
     start(req){

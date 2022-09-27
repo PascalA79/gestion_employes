@@ -7,6 +7,7 @@ var session=new Session(router);
 
   router.get(['/','/index'], function(req, res, next) {
     session.start(req);
+    
     res.render('horaire-perso',{user:{alias:session.get('user')},alerts:{}});
   })
 
