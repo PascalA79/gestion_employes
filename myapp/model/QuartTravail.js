@@ -24,6 +24,8 @@ class QuartTravail{
     async delete(){
         await DAL.removeQuartTravail(this.idQuartTravail)
     }
-
+    static async get(){
+        
+    }
 }
 module.exports = QuartTravail;

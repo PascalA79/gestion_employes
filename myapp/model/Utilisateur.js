@@ -1,4 +1,6 @@
 var DAL = require('../class/DAL');
+const TYPE_UTILISATEUR = require('./TYPE_UTILISATEUR');
+const TUILES = require("./TUILES").tuiles
 // var DAL = require('c:/Users/Pascal/OneDrive/Documents/Session5/projet/gestion_employes/gestion_employes/myapp/class/DAL');
 class Utilisateur{
     static #DAL
@@ -37,62 +39,18 @@ class Utilisateur{
     getMainOption(){
         let acces=[]
         //creation tuiles
-        const tuile=[]
-        tuile['Horaire']=[]
-        tuile['Horaire']['text']='Horaire';
-        tuile['Horaire']['nombreAlerte']=0;
-        tuile['Horaire']['url']='#';
-        
-        tuile['Disponibilité']=[]
-        tuile['Disponibilité']['text']='Disponibilité';
-        tuile['Disponibilité']['nombreAlerte']=0;
-        tuile['Disponibilité']['url']='#';
-        
-        tuile['Employés']=[]
-        tuile['Employés']['text']="Employés";
-        tuile['Employés']['nombreAlerte']=0;
-        tuile['Employés']['url']='#';
-        
-        tuile['Dépenses']=[]
-        tuile['Dépenses']['text']="Dépenses";
-        tuile['Dépenses']['nombreAlerte']=0;
-        tuile['Dépenses']['url']='#';
-        
-        tuile['Planchers']=[]  
-        tuile['Planchers']['text']="Planchers";
-        tuile['Planchers']['nombreAlerte']=0;
-        tuile['Planchers']['url']='/plancher';
-        
-        tuile['Utilisateurs']=[]  
-        tuile['Utilisateurs']['text']="Utilisateurs";
-        tuile['Utilisateurs']['nombreAlerte']=0;
-        tuile['Utilisateurs']['url']='#';
-        
-        tuile['Départements']=[]
-        tuile['Départements']['text']="Départements";
-        tuile['Départements']['nombreAlerte']=0;
-        tuile['Départements']['url']='#';
-        
-        tuile['Paies']=[]
-        tuile['Paies']['text']="Paies";
-        tuile['Paies']['nombreAlerte']=0;
-        tuile['Paies']['url']='#';
-        
-        tuile['Punch']=[]    
-        tuile['Punch']['text']="Punch";
-        tuile['Punch']['nombreAlerte']=0;
-        tuile['Punch']['url']='#';
+        const tuile=TUILES;
         
         switch (this.idTypeUtilisateur){
-            case exports.TYPE_UTILISATEUR.NULL: {
+            case TYPE_UTILISATEUR.NULL: {
                 break
             }
-            case exports.TYPE_UTILISATEUR.EMPLOYÉ:{
+            case TYPE_UTILISATEUR.EMPLOYÉ:{
                 acces.push(tuile['Horaire'])
                 acces.push(tuile['Disponibilité'])
                 break
             }
-            case exports.TYPE_UTILISATEUR.SUPERVISEUR:{
+            case TYPE_UTILISATEUR.SUPERVISEUR:{
                 acces.push(tuile['Employés'])
                 acces.push(tuile['Horaire'])
                 acces.push(tuile['Punch'])
@@ -100,7 +58,7 @@ class Utilisateur{
                 acces.push(tuile['Planchers'])
                 break;
             }
-            case exports.TYPE_UTILISATEUR.DIRECTEUR:{
+            case TYPE_UTILISATEUR.DIRECTEUR:{
                 acces.push(tuile['Employés'])
                 acces.push(tuile['Horaire'])
                 acces.push(tuile['Punch'])
@@ -112,8 +70,8 @@ class Utilisateur{
                 acces.push(tuile['Paies'])
                 break
             }
-            case exports.TYPE_UTILISATEUR.ADMINISTRATEUR:{
-                acces.push(tuile['ListEmpoyés'])
+            case TYPE_UTILISATEUR.ADMINISTRATEUR:{
+                acces.push(tuile['Employés'])
                 acces.push(tuile['Horaire'])
                 acces.push(tuile['Punch'])
                 acces.push(tuile['Dépenses'])
@@ -131,11 +89,3 @@ class Utilisateur{
     
 }
 module.exports = Utilisateur;
-
-module.exports.TYPE_UTILISATEUR={
-    EMPLOYÉ:0,
-    SUPERVISEUR:1,
-    DIRECTEUR:2,
-    ADMINISTRATEUR:3,
-    NULL:-1
-}

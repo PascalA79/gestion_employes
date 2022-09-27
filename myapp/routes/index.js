@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var Session=require('../class/Session')
 var Redirect=require('../class/Redirect')
+var DAL = require('../class/DAL');
+const Utilisateur = require('../model/Utilisateur');
 /* GET home page. */
 var session=new Session(router);
 //redirection automatique vers /login si non connecté
@@ -13,9 +15,13 @@ router.use('/', function(req, res, next) {
     }
   })
 
-  router.get(['/','/index'], function(req, res, next) {
+  router.get(['/','/index'], async function(req, res, next) {
     session.start(req);
-    res.render('index',{user:{alias:session.get('user')},alerts:{}});
+    let DAL_PASCAL=new DAL();
+    Utilisateur.connect(DAL_PASCAL)
+    let user=(await Utilisateur.getUserByAlias(session.get('user')))[0];
+    let mainOption=user.getMainOption();
+    res.render('index',{user:{alias:session.get('user')},alerts:{},tuiles:mainOption});
   })
 
 router.use('/disconnect',function(req, res, next) {
