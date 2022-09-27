@@ -8,8 +8,14 @@ var session=new Session(router);
 
   router.get(['/','/index'], function(req, res, next) {
     session.start(req);
-    const data = fs.readFileSync('../BD/data-users-horaire-plancher.json');
-    res.render('horaire-plancher', data);
+    const data = JSON.parse(fs.readFileSync('../BD/data-users-horaire-plancher.json'));
+    const tableData = BuildTableData(data);
+    res.render('horaire-plancher', {data:data, tableData:tableData});
   })
+
+function BuildTableData(data){
+  // En cours (PCL)
+  return [];
+}
 
 module.exports = router;
