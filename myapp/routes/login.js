@@ -10,10 +10,10 @@ async function get(req, res, next){
     session.start(req);
     let redirect= new Redirect(session,res)
     if(redirect.access('user',(value)=>value,'/index')){
-        // const DAL_PASCAL= new DAL();
-        // const DateUtilities = require('../class/Utilities/DateUtilities')
-        // console.log(await DAL_PASCAL.getQuartsByUser(2,DateUtilities.getDate('2022','09','14'),DateUtilities.getDate('2023','09','14')))
-        // console.log(await DAL_PASCAL.getQuartsByPlancher(-1,DateUtilities.getDate('2022','09','14')))
+        const DAL_PASCAL= new DAL();
+        const DateUtilities = require('../class/Utilities/DateUtilities')
+        console.log(await DAL_PASCAL.getQuartsByUser(2,DateUtilities.getDate('2022','09','15'),DateUtilities.getDate('2024','09','30')))
+        console.log(await DAL_PASCAL.getQuartsByPlancher(-1,DateUtilities.getDate('2022','09','14')))
 
         res.render('login'); 
     }

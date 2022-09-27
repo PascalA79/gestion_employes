@@ -65,13 +65,15 @@ class DAL{
             await this.#connectionMYSQL.excecuteSync(`Call RemoveQuartTravail('${idQuartTravail}')`)
         }
         async getQuartsByUser(idUtilisateur,debut, fin){
-            return await this.#connectionMYSQL.excecuteSync(`Call GetQuartsByUser('${idUtilisateur}','${debut.toLocaleDateString()}','${fin.toLocaleDateString()}')`)
+            return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`Call GetQuartsByUser('${idUtilisateur}','${debut.toLocaleDateString()}','${fin.toLocaleDateString()}')`))[0])
+            .map(x=>Utilities.getArray(x))
         }
         async getQuartsByPlancher(idPlancher, date){
             let dateDebut=new Date(date);
             let dateFin=new Date(dateDebut);
             dateFin.setDate(dateFin.getDate() + 1);
-            return await this.#connectionMYSQL.excecuteSync(`Call GetQuartsByPlancher('${idPlancher}','${dateDebut.toLocaleDateString()}','${dateFin.toLocaleDateString()}')`)
+            return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`Call GetQuartsByPlancher('${idPlancher}','${dateDebut.toLocaleDateString()}','${dateFin.toLocaleDateString()}')`))[0])
+            .map(x=>Utilities.getArray(x))
         }
     }
     module.exports = DAL;
