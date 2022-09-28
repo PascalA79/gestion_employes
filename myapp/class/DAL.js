@@ -80,5 +80,8 @@ class DAL{
         async getPlanchersBySuperviseur(idUtilisateur){
             return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`CALL GetPlanchersBySuperviseur('${idUtilisateur}');`))[0]).map(x => Utilities.getArray(x));
         }
+        async getSuperviseurOfPlancher(idPlancher){
+            return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`CALL getSuperviseurOfPlancher('${idPlancher}');`))[0]).map(x => Utilities.getArray(x));
+        }
     }
     module.exports = DAL;

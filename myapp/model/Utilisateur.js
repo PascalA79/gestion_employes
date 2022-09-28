@@ -35,6 +35,9 @@ class Utilisateur{
         .map(plancher=>plancher.idPlancher);
         return arrayIdPlancher.includes(idPlancher);
     }
+    static async getSuperviseurOfPlancher(idPlancher){
+        return await Utilisateur.#DAL.getSuperviseurOfPlancher(idPlancher);
+    }
     async isSuperviseurOfUtilisateur(idUtilisateur){
         if(!this.isSuperviseur()) return false
         let user = await Utilisateur.getUserById(idUtilisateur)
