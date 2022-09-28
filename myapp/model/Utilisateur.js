@@ -1,6 +1,6 @@
 var DAL = require('../class/DAL');
 const TYPE_UTILISATEUR = require('./TYPE_UTILISATEUR');
-const TUILES = require("./TUILES").tuiles
+const {TUILES, TITRES} = require("./TUILES")
 // var DAL = require('c:/Users/Pascal/OneDrive/Documents/Session5/projet/gestion_employes/gestion_employes/myapp/class/DAL');
 class Utilisateur{
     static #DAL
@@ -46,42 +46,48 @@ class Utilisateur{
                 break
             }
             case TYPE_UTILISATEUR.EMPLOYÉ:{
-                acces.push(tuile['Horaire'])
-                acces.push(tuile['Disponibilité'])
+                acces.push(tuile[TITRES.HORAIRE_PERSO])
+                acces.push(tuile[TITRES.DISPONIBILITE])
                 break
             }
             case TYPE_UTILISATEUR.SUPERVISEUR:{
-                acces.push(tuile['Employés'])
-                acces.push(tuile['Horaire'])
-                acces.push(tuile['Punch'])
-                acces.push(tuile['Dépenses'])
-                acces.push(tuile['Planchers'])
+                acces.push(tuile[TITRES.EMPLOYES])
+                acces.push(tuile[TITRES.HORAIRE_PERSO])
+                acces.push(tuile[TITRES.HORAIRE_PLANCHER])
+                acces.push(tuile[TITRES.PUNCH])
+                acces.push(tuile[TITRES.DEPENSES])
+                acces.push(tuile[TITRES.PLANCHERS])
+                // acces.push(tuile['Planchers'])
                 break;
             }
-            case TYPE_UTILISATEUR.DIRECTEUR:{
-                acces.push(tuile['Employés'])
-                acces.push(tuile['Horaire'])
-                acces.push(tuile['Punch'])
-                acces.push(tuile['Dépenses'])
-                acces.push(tuile['Planchers'])
-                acces.push(tuile['Disponibilité'])
-                acces.push(tuile['Utilisateurs'])
-                acces.push(tuile['Départements'])
-                acces.push(tuile['Paies'])
-                break
-            }
+            case TYPE_UTILISATEUR.DIRECTEUR:
             case TYPE_UTILISATEUR.ADMINISTRATEUR:{
-                acces.push(tuile['Employés'])
-                acces.push(tuile['Horaire'])
-                acces.push(tuile['Punch'])
-                acces.push(tuile['Dépenses'])
-                acces.push(tuile['Planchers'])
-                acces.push(tuile['Disponibilité'])
-                acces.push(tuile['Utilisateurs'])
-                acces.push(tuile['Départements'])
-                acces.push(tuile['Paies'])
+                acces.push(tuile[TITRES.EMPLOYES])
+                acces.push(tuile[TITRES.HORAIRE_PERSO])
+                acces.push(tuile[TITRES.HORAIRE_PLANCHER])
+                acces.push(tuile[TITRES.PUNCH])
+                acces.push(tuile[TITRES.DEPENSES])
+                acces.push(tuile[TITRES.PLANCHERS])
+                acces.push(tuile[TITRES.DISPONIBILITE])
+                acces.push(tuile[TITRES.UTILISATEURS])
+                acces.push(tuile[TITRES.DEPARTEMENTS])
+                acces.push(tuile[TITRES.PAIES])
+                // acces.push(tuile['Paies'])
                 break
             }
+            // case TYPE_UTILISATEUR.ADMINISTRATEUR:{
+            //     acces.push(tuile[TITRES.EMPLOYES])
+            //     acces.push(tuile[TITRES.HORAIRE_PERSO])
+            //     acces.push(tuile['Horaire'])
+            //     acces.push(tuile['Punch'])
+            //     acces.push(tuile['Dépenses'])
+            //     acces.push(tuile['Planchers'])
+            //     acces.push(tuile['Disponibilité'])
+            //     acces.push(tuile['Utilisateurs'])
+            //     acces.push(tuile['Départements'])
+            //     acces.push(tuile['Paies'])
+            //     break
+            // }
         }
         return acces;
         //option dans index [{text:,nombreAlerte:0,url:#},,]
