@@ -6,13 +6,17 @@ const { BuildPlancherTableData } = require('../class/Utilities/TableDataBuilder'
 const DateUtilities = require('../class/Utilities/DateUtilities');
 const fs = require('fs');
 const querystring = require('querystring');
-
-
+const Plancher = require('../model/Plancher');
+const DAL = require('../class/DAL');
 /* GET home page. */
 var session=new Session(router);
 
-  router.get(['/','/index'], function(req, res, next) {
-    session.start(req);
+router.get(['/','/index'], async function(req, res, next) {
+  session.start(req);
+    Plancher.connect(new DAL());
+    const currentUser = session.get('fullUser');
+    const planchers = await Plancher.getPlanchersBySuperviseur(currentUser.id);
+
     const data = GetData(null, null);
     data.date = DateUtilities.objToDateString(data.jour);
     data.datePrev = DateUtilities.objToDateString(DateUtilities.deltaDaysObj(data.jour, -1));
