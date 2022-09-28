@@ -7,6 +7,7 @@ class Redirect{
     // access retourne 0 dans ce cas, sinon 1
     async access(key,expr=(value)=>!value,cible='/login'){
         if(await expr(this.session.get(key))){
+            console.log(`response.redirect(${cible})`)
             this.response.redirect(cible);
             return 0;
         }
