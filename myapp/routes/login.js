@@ -5,6 +5,7 @@ var Redirect=require('../class/Redirect')
 var Utilities=require('../class/Utilities');
 var DAL = require('../class/DAL');
 const Utilisateur = require('../model/Utilisateur');
+const loginValidation = require('../public/scripts/login');
 var session=new Session(router);
 router.get('/', get);
 async function get(req, res, next){
@@ -60,7 +61,7 @@ async function post(req, res, next){
         }
         else{
             var {username,password}=validArray
-            const errorUsername = loginValidation.getUsernameValidationText(password);
+            const errorUsername = loginValidation.getUsernameValidationText(username);
             const errorPassword = loginValidation.getPasswordValidationText(password);
             if(errorUsername != "" || errorPassword != ""){
                 res.render('login', { username: username, errorUsername: errorUsername, errorPassword: errorPassword });
