@@ -3,8 +3,15 @@ class Plancher{
     static connect(DAL){
         Plancher.#DAL=DAL;
     }
-    constructor(connectionMySQL){
-        this.#connectionMySQL=connectionMySQL
+    constructor(idUtilisateur,idPlancher){
+        this.idUtilisateur=idUtilisateur
+        this.idPlancher=idPlancher
+    }
+    static async getSuperviseurByPlancher(idPlancher){
+        
+    }
+    static async getPlancherBySuperviseur(idUtilisateur){
+
     }
     static async get(id,date_debut, date_fin){
         const sqlSuperviseur='';
