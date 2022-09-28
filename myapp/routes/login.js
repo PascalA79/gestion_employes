@@ -11,7 +11,7 @@ router.get('/', get);
 async function get(req, res, next){
     session.start(req);
     let redirect= new Redirect(session,res)
-    if(redirect.access('user',(value)=>value,'/index')){
+    if(await redirect.access('user',(value)=>value,'/index')){
         const DAL_PASCAL= new DAL();
 
         Utilisateur.connect(DAL_PASCAL);

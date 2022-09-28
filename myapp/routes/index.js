@@ -7,10 +7,10 @@ const Utilisateur = require('../model/Utilisateur');
 /* GET home page. */
 var session=new Session(router);
 //redirection automatique vers /login si non connecté
-router.use('/', function(req, res, next) {
+router.use('/', async function(req, res, next) {
     session.start(req);
     let redirect= new Redirect(session,res);
-    if(req.path=='/login' || redirect.access('user')){
+    if(req.path=='/login' || await redirect.access('user')){
       next();
     }
   })
