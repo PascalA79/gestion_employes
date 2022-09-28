@@ -25,8 +25,12 @@ class QuartTravail{
         await DAL.removeQuartTravail(this.idQuartTravail)
     }
     static async getByUser(idUtilisateur,debut, fin){
-        return await QuartTravail.#DAL.getQuartsByUser(idUtilisateur,debut, fin)
-    }static async getByPlancher(idPlancher,date){
+        const data=await QuartTravail.#DAL.getQuartsByUser(idUtilisateur, debut, fin);
+        if(!data) return []
+        return data.map(quart=>new QuartTravail(quart));
+    }
+    
+    static async getByPlancher(idPlancher,date){
         return await QuartTravail.#DAL.getQuartsByPlancher(idPlancher,date)
     }
 }

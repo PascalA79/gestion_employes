@@ -92,4 +92,9 @@ module.exports = class DateUtilities{
         const newDate = DateUtilities.deltaDaysDate(date, deltaDays);
         return DateUtilities.getObj(newDate);
     }
+
+    static parseDate(str){
+        const cells = str.split("-");
+        return DateUtilities.getDate(cells[0], cells[1], cells[2]);
+    }
 };

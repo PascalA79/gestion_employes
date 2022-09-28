@@ -34,7 +34,7 @@ module.exports.BuildPlancherTableData =
     
     function BuildUserCell(user, day){
         const cell = {};
-        cell.content= `${user.firstName} ${user.lastName}`
+        cell.content= `${user.prenom} ${user.nom}`
         cell.id = user.id
         cell.attributes = {class: "clickable-dark tuile-sm"};
         cell.attributes.onClick = `window.location.href = '/horaire-perso?id=${user.id}&date=${DateUtilities.dateToDateString(day)}'`;
@@ -47,7 +47,7 @@ module.exports.BuildPlancherTableData =
     
     function BuildShiftCell(workShift, roles){
         const shiftCell = {};
-        const role = GetRole(workShift.role, roles);
+        const role = GetRole(workShift.idRoleUtilisateur, roles);
         shiftCell.id = workShift.id
         // shiftCell.attributes = {colspan: 2 * DateUtilities.getDurationH(workShift)};
         shiftCell.attributes = BuildShiftAttributes(workShift, role)
@@ -60,7 +60,7 @@ module.exports.BuildPlancherTableData =
     function BuildShiftAttributes(workShift, role){
         const attributes = {};
         attributes.colspan = 2 * DateUtilities.getDurationH(workShift);
-        attributes.style = `background-color: ${role.color}; font-weight: bold;`;
+        attributes.style = `background-color: ${role.couleur}; font-weight: bold;`;
         // attributes.class = "tuile-sm";
         return attributes;
     }
@@ -71,7 +71,7 @@ module.exports.BuildPlancherTableData =
 
     function GetShiftText(workShift, role){
         if(DateUtilities.areSameDay(workShift.start, workShift.end))
-            return `${role.name}: ${DateUtilities.dateToHoursString(workShift.start)} - ${DateUtilities.dateToHoursString(workShift.end)}`
-        return `${role.name}: ${DateUtilities.dateToFullDateString(workShift.start)} - ${DateUtilities.dateToFullDateString(workShift.end)}`
+            return `${role.nom}: ${DateUtilities.dateToHoursString(workShift.start)} - ${DateUtilities.dateToHoursString(workShift.end)}`
+        return `${role.nom}: ${DateUtilities.dateToFullDateString(workShift.start)} - ${DateUtilities.dateToFullDateString(workShift.end)}`
     }
     

@@ -9,6 +9,7 @@ var session=new Session(router);
 //redirection automatique vers /login si non connecté
 router.use('/', function(req, res, next) {
     session.start(req);
+    console.log(req.path);
     let redirect= new Redirect(session,res);
     if(req.path=='/login' || redirect.access('user')){
       next();

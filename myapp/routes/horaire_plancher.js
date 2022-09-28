@@ -9,24 +9,24 @@ var Utilisateur = require('../model/Utilisateur')
 const querystring = require('querystring');
 const Plancher = require('../model/Plancher');
 const DAL = require('../class/DAL');
+const QuartTravail = require('../model/QuartTravail');
+const RoleUtilisateur = require('../model/RoleUtilisateur');
+
 /* GET home page. */
 var session=new Session(router);
-  const idPlancher = 1;
-
-  const conditRedirect = (userId) =>{
-    if (!userId || userId < 0) return false;
-    return Utilisateur.isSupervisorOfFloor(idPlancher, userId) || Utilisateur.isDirector(userId) || Utilisateur.isAdmin(userId)
-  }
   router.use('/', async function(req, res, next) {
     session.start(req);
     let redirect= new Redirect(session,res);
     let acces= await  redirect.access('user',async (userId)=>{
+      if(!userId) return false;
       const DAL_PASCAL=new DAL()
+      const query = req.query
+      console.log(query);
       Utilisateur.connect(DAL_PASCAL)
       let user=await Utilisateur.getUserByAlias(userId)
       let isAdmin=user.isAdministrateur();
       let isDirecteur=user.isDirecteur();
-      let isSuperviseur=user.isSuperviseur();
+      let isSuperviseur= !!query.id ? await user.isSuperviseurOfPlancher(query.id) : user.isSuperviseur();
       let resultat=isAdmin || isDirecteur || isSuperviseur
       return !resultat}
     ,'./index')
@@ -37,25 +37,59 @@ var session=new Session(router);
 router.get(['/','/index'], async function(req, res, next) {
   session.start(req);
     Plancher.connect(new DAL());
-    const currentUser = session.get('fullUser');
-    const planchers = await Plancher.getPlanchersBySuperviseur(currentUser.id);
-
-    const data = GetData(null, null);
+    let currentUser = session.get('fullUser');
+    if(!currentUser) return;
+    currentUser = new Utilisateur(currentUser);
+    const qs = req.query;
+    const data = await GetData(currentUser, qs.id, qs.date);
     data.date = DateUtilities.objToDateString(data.jour);
     data.datePrev = DateUtilities.objToDateString(DateUtilities.deltaDaysObj(data.jour, -1));
     data.dateNext = DateUtilities.objToDateString(DateUtilities.deltaDaysObj(data.jour, 1));
-    const tableData = BuildTableData(data, null);
+    const tableData = BuildTableData(data, data.jour);
     res.render('horaire-plancher', {data:data, tableData:tableData, user:{alias:session.get('user')}, alerts:{}});
   })
 
 function BuildTableData(data, date){
-  // En cours (PCL)
-  const day = DateUtilities.getDateObj({year: 2022, month: 9, day: 25});
+  const day = DateUtilities.getDateObj(date);
   return BuildPlancherTableData(day, data.users, data.roles);
 }
 
-function GetData(idPlancher, date){
-  console.log(process.cwd());
-  return JSON.parse(fs.readFileSync('./BD/data-users-horaire-plancher.json'));
+async function GetPlanchers(currentUser){
+  return currentUser.isSuperviseur() ? 
+  await Plancher.getPlanchersBySuperviseur(currentUser.id) : 
+  await Plancher.getAllPlanchers();  
+}
+
+async function GetData(currentUser, idPlancher, date){
+  if(!date) date = new Date();
+  else date = DateUtilities.parseDate(date);
+
+
+  const debut = DateUtilities.getDate(date.getFullYear(), date.getMonth() + 1, date.getDate());
+  const fin = DateUtilities.deltaDaysDate(debut, 1);
+
+  const data = {};
+  data.planchers = await GetPlanchers(currentUser);
+  data.plancherSelectionne ={id: !idPlancher ? data.planchers[0].id : idPlancher};
+  data.users = await Utilisateur.getUserByPlancher(data.plancherSelectionne.id);
+  data.jour = DateUtilities.getObj(debut);
+
+  const myDAL = new DAL();
+
+  QuartTravail.connect(myDAL);
+  for(user of data.users){
+    user.quarts = await QuartTravail.getByUser(user.id, debut, fin);
+    user.quarts = user.quarts.map(q => {
+      return {
+        ...q,
+        start: DateUtilities.getObj(q.debut),
+        end: DateUtilities.getObj(q.fin)
+      }
+    });
+  }
+
+  RoleUtilisateur.connect(myDAL);
+  data.roles = await RoleUtilisateur.getAll();
+  return data;
 }
 module.exports = router;

@@ -76,10 +76,20 @@ class DAL{
             .map(x=>Utilities.getArray(x))
         }
 
+        async getAllRolesUtilisateurs(){
+            return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`CALL GetAllRoles();`))[0])
+            .map(x=>Utilities.getArray(x))
+        }
+
 
         async getPlanchersBySuperviseur(idUtilisateur){
             return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`CALL GetPlanchersBySuperviseur('${idUtilisateur}');`))[0]).map(x => Utilities.getArray(x));
         }
+
+        async getAllPlanchers(){
+            return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`CALL GetAllPlanchers();`))[0]).map(x => Utilities.getArray(x));
+        }
+
         async getSuperviseurOfPlancher(idPlancher){
             return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`CALL getSuperviseurOfPlancher('${idPlancher}');`))[0]).map(x => Utilities.getArray(x));
         }
