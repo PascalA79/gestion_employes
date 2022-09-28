@@ -61,7 +61,7 @@ async function post(req, res, next){
         }
         else{
             var {username,password}=validArray
-            const errorUsername = loginValidation.getUsernameValidationText(password);
+            const errorUsername = loginValidation.getUsernameValidationText(username);
             const errorPassword = loginValidation.getPasswordValidationText(password);
             if(errorUsername != "" || errorPassword != ""){
                 res.render('login', { username: username, errorUsername: errorUsername, errorPassword: errorPassword });
