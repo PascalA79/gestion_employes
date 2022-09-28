@@ -1,21 +1,20 @@
 var express = require('express');
 var router = express.Router();
 var Session=require('../class/Session')
-var Horaire=require('../model/Horaire')
 var Redirect=require('../class/Redirect')
 var Utilities=require('../class/Utilities');
 var DAL = require('../class/DAL');
-const Utilisateur = require('../model/Utilisateur');
-const QuartsTravail = require('../model/QuartTravail');
 var session=new Session(router);
 router.get('/', get);
 async function get(req, res, next){
     session.start(req);
     let redirect= new Redirect(session,res)
     if(redirect.access('user',(value)=>value,'/index')){
-        const DAL_PASCAL=new DAL();
-        Horaire.connect(DAL_PASCAL)
-        DAL_PASCAL.addQuartTravail({idPlancher:-1,idUtilisateur:2,idRoleUtilisateur:1,debut:'2022-09-14 18:00:00',fin:'2022-09-14 22:00:00',confirme:1})
+        const DAL_PASCAL= new DAL();
+        const DateUtilities = require('../class/Utilities/DateUtilities')
+        console.log(await DAL_PASCAL.getQuartsByUser(2,DateUtilities.getDate('2022','09','15'),DateUtilities.getDate('2024','09','30')))
+        console.log(await DAL_PASCAL.getQuartsByPlancher(-1,DateUtilities.getDate('2022','09','14')))
+
         res.render('login'); 
     }
 
