@@ -1,6 +1,7 @@
 var DAL = require('../class/DAL');
 const TYPE_UTILISATEUR = require('./TYPE_UTILISATEUR');
-const {TUILES, TITRES} = require("./TUILES")
+const {TUILES, TITRES} = require("./TUILES");
+const Utilities = require('../class/Utilities');
 // var DAL = require('c:/Users/Pascal/OneDrive/Documents/Session5/projet/gestion_employes/gestion_employes/myapp/class/DAL');
 class Utilisateur{
     static #DAL
@@ -28,20 +29,22 @@ class Utilisateur{
     isSuperviseur(){
         return this.idTypeUtilisateur == TYPE_UTILISATEUR.SUPERVISEUR;
     }
-    isSuperviseurOfPlancher(idPlancher){
+    async isSuperviseurOfPlancher(idPlancher){
         if(!this.isSuperviseur()) return false
-        let userByIdPlancher=Utilisateur.getUserByIdPlancher(idPlancher)
+        let arrayIdPlancher=Utilities.getArray(await Utilisateur.#DAL.getPlanchersBySuperviseur(this.id))
+        .map(plancher=>plancher.idPlancher);
+        return arrayIdPlancher.includes(idPlancher);
     }
-    isSuperviseurOfUtilisateur(idUtilisateur){
+    async isSuperviseurOfUtilisateur(idUtilisateur){
         if(!this.isSuperviseur()) return false
-        let userByIdPlancher=Utilisateur.getUserByIdPlancher(idPlancher)
-
+        let user = await Utilisateur.getUserById(idUtilisateur)
+        return await this.isSuperviseurOfPlancher(user.idPlancher)
     }
 
     static async getUserById(id){
         const data=await Utilisateur.#get(id,'idUtilisateur');
         if(!data) return []
-        return data.map(user=>new Utilisateur(user));
+        return data.map(user=>new Utilisateur(user))[0];
     }
     static async getUserByAlias(alias){
         const data=await Utilisateur.#get(alias,'alias');

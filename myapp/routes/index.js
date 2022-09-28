@@ -21,6 +21,9 @@ router.use('/', function(req, res, next) {
     Utilisateur.connect(DAL_PASCAL)
     let user=(await Utilisateur.getUserByAlias(session.get('user')))[0];
     let mainOption=user.getMainOption();
+    console.log( await user.isSuperviseurOfUtilisateur(2) )
+    console.log( await user.isSuperviseurOfUtilisateur(3) )
+    console.log( await user.isSuperviseurOfUtilisateur(5) )
     res.render('index',{user:{alias:session.get('user')},alerts:{},tuiles:mainOption});
   })
 
