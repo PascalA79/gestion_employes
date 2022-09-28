@@ -49,7 +49,7 @@ class Utilisateur{
     static async getUserByAlias(alias){
         const data=await Utilisateur.#get(alias,'alias');
         if(!data) return []
-        return data.map(user=>new Utilisateur(user));
+        return data.map(user=>new Utilisateur(user))[0];
     }
     static async getUserByPlancher(idPlancher){
         const data=await Utilisateur.#get(idPlancher,'idPlancher');
