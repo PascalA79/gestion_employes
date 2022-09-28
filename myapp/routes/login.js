@@ -55,6 +55,7 @@ async function post(req, res, next){
             let session= new Session(router)
             session.start(req)
             session.set('user',user.alias)
+            session.set('fullUser', user);
             res.redirect('index')
         }
         else{

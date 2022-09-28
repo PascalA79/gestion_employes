@@ -23,5 +23,11 @@ class Plancher{
         const sqlQuartsTravail='';
     }
 
+
+    static async getPlanchersBySuperviseur(userId){
+        const data = await Plancher.#DAL.getPlanchersBySuperviseur(userId);
+        return !data ? [] : data.map(p => new Plancher(p['idPlancher'], p['nomPlancher']));
+    }
+
 }
 module.exports = Plancher;

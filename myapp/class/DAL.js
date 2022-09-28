@@ -75,5 +75,10 @@ class DAL{
             return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`Call GetQuartsByPlancher('${idPlancher}','${dateDebut.toLocaleDateString()}','${dateFin.toLocaleDateString()}')`))[0])
             .map(x=>Utilities.getArray(x))
         }
+
+
+        async getPlanchersBySuperviseur(idUtilisateur){
+            return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`CALL GetPlanchersBySuperviseur('${idUtilisateur}');`))[0]).map(x => Utilities.getArray(x));
+        }
     }
     module.exports = DAL;
