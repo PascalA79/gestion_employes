@@ -4,6 +4,7 @@ var Session=require('../class/Session')
 var Redirect=require('../class/Redirect')
 var Utilities=require('../class/Utilities');
 var DAL = require('../class/DAL');
+const loginValidation = require('../public/scripts/login');
 var session=new Session(router);
 router.get('/', get);
 async function get(req, res, next){
@@ -11,9 +12,9 @@ async function get(req, res, next){
     let redirect= new Redirect(session,res)
     if(redirect.access('user',(value)=>value,'/index')){
         const DAL_PASCAL= new DAL();
-        const DateUtilities = require('../class/Utilities/DateUtilities')
-        console.log(await DAL_PASCAL.getQuartsByUser(2,DateUtilities.getDate('2022','09','15'),DateUtilities.getDate('2024','09','30')))
-        console.log(await DAL_PASCAL.getQuartsByPlancher(-1,DateUtilities.getDate('2022','09','14')))
+        // const DateUtilities = require('../class/Utilities/DateUtilities')
+        // console.log(await DAL_PASCAL.getQuartsByUser(2,DateUtilities.getDate('2022','09','15'),DateUtilities.getDate('2024','09','30')))
+        // console.log(await DAL_PASCAL.getQuartsByPlancher(-1,DateUtilities.getDate('2022','09','14')))
 
         res.render('login'); 
     }
