@@ -3,9 +3,9 @@ class Plancher{
     static connect(DAL){
         Plancher.#DAL=DAL;
     }
-    constructor(idUtilisateur,idPlancher){
-        this.idUtilisateur=idUtilisateur
-        this.idPlancher=idPlancher
+    constructor(idPlancher,nomPlancher){
+        this.nom=nomPlancher
+        this.id=idPlancher
     }
     static async getSuperviseurByPlancher(idPlancher){
         
