@@ -37,8 +37,8 @@ block content
                 const errorPassword = validationLogin.getPasswordValidationText(password);
                 if(errorUsername != "" || errorPassword != ""){
                     e.preventDefault();
-                    $("#errorUsername").text(errorUsername + " local")
-                    $("#errorPassword").text(errorPassword + " local");
+                    $("#errorUsername").text(errorUsername)
+                    $("#errorPassword").text(errorPassword);
                 }
             })
         }
