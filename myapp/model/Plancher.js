@@ -3,9 +3,15 @@ class Plancher{
     static connect(DAL){
         Plancher.#DAL=DAL;
     }
-    constructor(data){
-        this.id = data['idPlancher'];
-        this.nom = data['nomPlancher'];
+    constructor(idPlancher,nomPlancher){
+        this.nom=nomPlancher
+        this.id=idPlancher
+    }
+    static async getSuperviseurByPlancher(idPlancher){
+        
+    }
+    static async getPlancherBySuperviseur(idUtilisateur){
+
     }
     static async get(id,date_debut, date_fin){
         const sqlSuperviseur='';
@@ -20,7 +26,7 @@ class Plancher{
 
     static async getPlanchersBySuperviseur(userId){
         const data = await Plancher.#DAL.getPlanchersBySuperviseur(userId);
-        return !data ? [] : data.map(p => new Plancher(p));
+        return !data ? [] : data.map(p => new Plancher(p['idPlancher'], p['nomPlancher']));
     }
 
 }

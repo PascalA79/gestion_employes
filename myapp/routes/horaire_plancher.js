@@ -5,11 +5,18 @@ var Redirect=require('../class/Redirect')
 const { BuildPlancherTableData } = require('../class/Utilities/TableDataBuilder');
 const DateUtilities = require('../class/Utilities/DateUtilities');
 const fs = require('fs');
+var Utilisateur = require('../model/Utilisateur')
 const querystring = require('querystring');
 const Plancher = require('../model/Plancher');
 const DAL = require('../class/DAL');
 /* GET home page. */
 var session=new Session(router);
+  const idPlancher = 1;
+
+  const conditRedirect = (userId) =>{
+    if (!userId || userId < 0) return false;
+    return Utilisateur.isSupervisorOfFloor(idPlancher, userId) || Utilisateur.isDirector(userId) || Utilisateur.isAdmin(userId)
+  }
 
 router.get(['/','/index'], async function(req, res, next) {
   session.start(req);

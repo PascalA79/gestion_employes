@@ -19,12 +19,37 @@ class Utilisateur{
         this.courriel=data['courriel'];
         this.actif=data['actif'];
     }
+    isAdministrateur(){
+        return this.idTypeUtilisateur == TYPE_UTILISATEUR.ADMINISTRATEUR;
+    }
+    isDirecteur(){
+        return this.idTypeUtilisateur == TYPE_UTILISATEUR.DIRECTEUR;
+    }
+    isSuperviseur(){
+        return this.idTypeUtilisateur == TYPE_UTILISATEUR.SUPERVISEUR;
+    }
+    isSuperviseurOfPlancher(idPlancher){
+        if(!this.isSuperviseur()) return false
+        let userByIdPlancher=Utilisateur.getUserByIdPlancher(idPlancher)
+    }
+    isSuperviseurOfUtilisateur(idUtilisateur){
+        if(!this.isSuperviseur()) return false
+        let userByIdPlancher=Utilisateur.getUserByIdPlancher(idPlancher)
+
+    }
+
     static async getUserById(id){
         const data=await Utilisateur.#get(id,'idUtilisateur');
         if(!data) return []
         return data.map(user=>new Utilisateur(user));
-    }static async getUserByAlias(alias){
+    }
+    static async getUserByAlias(alias){
         const data=await Utilisateur.#get(alias,'alias');
+        if(!data) return []
+        return data.map(user=>new Utilisateur(user));
+    }
+    static async getUserByPlancher(idPlancher){
+        const data=await Utilisateur.#get(idPlancher,'idPlancher');
         if(!data) return []
         return data.map(user=>new Utilisateur(user));
     }
