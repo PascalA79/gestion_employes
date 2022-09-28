@@ -1,7 +1,20 @@
 {
-    "plancher":{
-        "id":1,
-        "name":"Nom du plancher"
+    "planchers":[
+        {
+            "id": 2,
+            "name": "Deuxième plancher"
+        },
+        {
+            "id": 3,
+            "name": "Troisième plancher"
+        },
+        {
+            "id": 13,
+            "name": "Treizième plancher"
+        }
+    ],
+    "plancherSelectionne":{
+        "id":13
     },
     "jour":{
         "year": 2022,
@@ -83,14 +96,14 @@
                         "year": 2022,
                         "month": 9,
                         "day": 25,
-                        "hour": 9,
+                        "hour": 10,
                         "minute": 0
                     },
                     "end":{
                         "year": 2022,
                         "month": 9,
                         "day": 25,
-                        "hour": 12,
+                        "hour": 19,
                         "minute": 30
                     },
                     "role": 2

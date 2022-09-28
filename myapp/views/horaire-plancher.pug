@@ -4,4 +4,52 @@ extends layout
 block content
   include navbar
   +navbar(user, alerts, "horaire-plancher")
-  h1 Horaire plancher
+
+  mixin buildCell(celldata)
+    td&attributes(celldata.attributes)= celldata.content
+  
+  mixin buildRow(rowdata)
+    tr 
+      - for(celldata of rowdata){
+        +buildCell(celldata)
+      - }
+  
+  mixin buildTable(data)
+    table
+      -for(rowdata of data){
+        +buildRow(rowdata)
+      -}
+
+  mixin dateSelector(id, date, datePrev, dateNext)
+    .dateSelector 
+      a(href=`horaire-plancher?id=${id}&date=${datePrev}`).tuile.tuile-sm
+          p= "<<"
+      p.input-dark.tuile-sm= date
+      a(href=`horaire-plancher?id=${id}&date=${dateNext}`).tuile.tuile-sm
+          p= ">>"
+
+  mixin floorSelector(floors)
+    label(for=floorSelector) Plancher sélectionné 
+    select.floor-selector.input-dark#floorSelector
+      -for(floor of floors){
+        - console.log(floor);
+        option(value=floor.id)= floor.name
+      -}
+  
+  .container.table-container-plancher
+    h1 Horaire plancher
+    +floorSelector(data.planchers)
+    +dateSelector(data.plancherSelectionne.id, data.date, data.datePrev, data.dateNext)
+    +buildTable(tableData)
+    - console.log(data.date);
+    - const dateLoc = data.date;
+    script.
+      const date = !{JSON.stringify(data.date)};
+      $(() => {
+        const floorSelector = $("#floorSelector")
+        floorSelector.val(!{JSON.stringify(data.plancherSelectionne.id)});
+        floorSelector.change(() => {
+          console.log(floorSelector.val());
+          window.location.href = `horaire-plancher?id=${floorSelector.val()}&date=${date}`
+        })
+      });

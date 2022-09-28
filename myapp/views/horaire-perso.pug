@@ -6,10 +6,7 @@ block content
   +navbar(user, alerts, "horaire-perso")
 
   mixin buildcell(celldata)
-    //- - const content = JSON.stringify(celldata.content);
-    - const att = celldata.attributes ? celldata.attributes : {}
     td&attributes(celldata.attributes)= celldata.content
-    //- td(celldata.attributes)= celldata.content
 
   mixin buildrow(rowdata)
     tr
@@ -23,25 +20,23 @@ block content
         +buildrow(data[i])
       - }
   
-  mixin selector(id, start, end)
-    .selector 
-      .tuile.tuile-sm
-        a(href=`horaire-perso?id=${id}&start=${start}&op=prev`)
-          p= "<<"
+  mixin dateSelector(id, start, end)
+    .dateSelector 
+      a(href=`horaire-perso?id=${id}&start=${start}&op=prev`).tuile.tuile-sm
+        p= "<<"
       .input-dark.tuile-sm
         p= start
         p= " - "
         p= end
-      .tuile.tuile-sm
-        a(href=`horaire-perso?id=${id}&end=${end}&op=next`)
-          p= ">>"
+      a(href=`horaire-perso?id=${id}&end=${end}&op=next`).tuile.tuile-sm
+        p= ">>"
 
   .container.table-container
     - const start = "2022-09-25"
     - const end = "2022-10-01"
     - const currentPeriod = `${start} - ${end}`
     - const id = -1;
-    +selector(id, start, end)
+    +dateSelector(id, start, end)
     - const allo = {};
     - allo['key0'] = 'value0';
     - allo['key1'] = 'value1';

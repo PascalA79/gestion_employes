@@ -11,8 +11,11 @@ var session=new Session(router);
   router.get(['/','/index'], function(req, res, next) {
     session.start(req);
     const data = GetData(null, null);
+    data.date = DateUtilities.objToDateString(data.jour);
+    data.datePrev = DateUtilities.objToDateString(DateUtilities.deltaDaysObj(data.jour, -1));
+    data.dateNext = DateUtilities.objToDateString(DateUtilities.deltaDaysObj(data.jour, 1));
     const tableData = BuildTableData(data, null);
-    res.render('horaire-plancher', {data:data, tableData:tableData});
+    res.render('horaire-plancher', {data:data, tableData:tableData, user:{alias:session.get('user')}, alerts:{}});
   })
 
 function BuildTableData(data, date){
@@ -22,6 +25,7 @@ function BuildTableData(data, date){
 }
 
 function GetData(idPlancher, date){
-  return JSON.parse(fs.readFileSync('../BD/data-users-horaire-plancher.json'));
+  console.log(process.cwd());
+  return JSON.parse(fs.readFileSync('./BD/data-users-horaire-plancher.json'));
 }
 module.exports = router;
