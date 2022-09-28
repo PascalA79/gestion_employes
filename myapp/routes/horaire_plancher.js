@@ -17,7 +17,23 @@ var session=new Session(router);
     if (!userId || userId < 0) return false;
     return Utilisateur.isSupervisorOfFloor(idPlancher, userId) || Utilisateur.isDirector(userId) || Utilisateur.isAdmin(userId)
   }
-
+  router.use('/', async function(req, res, next) {
+    session.start(req);
+    let redirect= new Redirect(session,res);
+    let acces= await  redirect.access('user',async (userId)=>{
+      const DAL_PASCAL=new DAL()
+      Utilisateur.connect(DAL_PASCAL)
+      let user=await Utilisateur.getUserByAlias(userId)
+      let isAdmin=user.isAdministrateur();
+      let isDirecteur=user.isDirecteur();
+      let isSuperviseur=user.isSuperviseur();
+      let resultat=isAdmin || isDirecteur || isSuperviseur
+      return !resultat}
+    ,'./index')
+    if(acces){
+      next();
+    }
+  })
 router.get(['/','/index'], async function(req, res, next) {
   session.start(req);
     Plancher.connect(new DAL());

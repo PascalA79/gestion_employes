@@ -15,7 +15,7 @@ async function get(req, res, next){
         const DAL_PASCAL= new DAL();
 
         Utilisateur.connect(DAL_PASCAL);
-        console.log(await Utilisateur.getUserByPlancher(-1));
+        console.log(await Utilisateur.getUserByPlancher(-3));
 
         // const DateUtilities = require('../class/Utilities/DateUtilities')
         // let dateDebut=DateUtilities.getDate('2022','09','14');
