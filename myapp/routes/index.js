@@ -9,6 +9,7 @@ var session=new Session(router);
 //redirection automatique vers /login si non connecté
 router.use('/', async function(req, res, next) {
     session.start(req);
+    console.log(req.path);
     let redirect= new Redirect(session,res);
     if(req.path=='/login' || await redirect.access('user')){
       next();
@@ -21,9 +22,10 @@ router.use('/', async function(req, res, next) {
     Utilisateur.connect(DAL_PASCAL)
     let user=(await Utilisateur.getUserByAlias(session.get('user')));
     let mainOption=user.getMainOption();
-    console.log( await user.isSuperviseurOfUtilisateur(2) )
-    console.log( await user.isSuperviseurOfUtilisateur(3) )
-    console.log( await user.isSuperviseurOfUtilisateur(5) )
+    // console.log( await user.isSuperviseurOfUtilisateur(2) )
+    // console.log( await user.isSuperviseurOfUtilisateur(3) )
+    // console.log( await user.isSuperviseurOfUtilisateur(5) )
+    console.log("res.render('index')");
     res.render('index',{user:{alias:session.get('user')},alerts:{},tuiles:mainOption});
   })
 

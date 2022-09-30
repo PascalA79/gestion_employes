@@ -33,7 +33,7 @@ class Utilisateur{
         if(!this.isSuperviseur()) return false
         let arrayIdPlancher=Utilities.getArray(await Utilisateur.#DAL.getPlanchersBySuperviseur(this.id))
         .map(plancher=>plancher.idPlancher);
-        return arrayIdPlancher.includes(idPlancher);
+        return arrayIdPlancher.includes(parseInt(idPlancher));
     }
     static async getSuperviseurOfPlancher(idPlancher){
         return await Utilisateur.#DAL.getSuperviseurOfPlancher(idPlancher);

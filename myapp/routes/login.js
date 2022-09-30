@@ -37,7 +37,7 @@ async function get(req, res, next){
         // console.log(journees)
 
         // console.log(await DAL_PASCAL.getQuartsByPlancher(-1,DateUtilities.getDate('2022','09','14')))
-
+        console.log("res.render('login')");
         res.render('login'); 
     }
 

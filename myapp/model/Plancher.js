@@ -29,5 +29,10 @@ class Plancher{
         return !data ? [] : data.map(p => new Plancher(p['idPlancher'], p['nomPlancher']));
     }
 
+    static async getAllPlanchers(){
+        const data = await Plancher.#DAL.getAllPlanchers();
+        return !data ? [] : data.map(p => new Plancher(p['idPlancher'], p['nomPlancher']));
+    }
+
 }
 module.exports = Plancher;

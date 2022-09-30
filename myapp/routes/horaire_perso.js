@@ -4,6 +4,10 @@ var Session=require('../class/Session')
 var Redirect=require('../class/Redirect');
 var DAL = require('../class/DAL');
 const Utilisateur = require('../model/Utilisateur');
+const BuildUserTableData = require('../class/Utilities/UserTableBuilder').BuildUserTableData;
+const DateUtilities = require('../class/Utilities/DateUtilities');
+const QuartTravail = require('../model/QuartTravail');
+const RoleUtilisateur = require('../model/RoleUtilisateur');
 
 /* GET home page. */
 var session=new Session(router);
@@ -14,11 +18,12 @@ router.use('/', async function(req, res, next) {
     const DAL_PASCAL=new DAL()
     Utilisateur.connect(DAL_PASCAL)
     let user=await Utilisateur.getUserByAlias(userId)
-    let idQueryString=user.id;/* user.id==id QueryString */
+    let idQueryString=parseInt(req.query.id);/* user.id==id QueryString */
     let isAdmin=user.isAdministrateur();
     let isDirecteur=user.isDirecteur();
-    let isSuperviseurOfUtilisateur=await user.isSuperviseurOfUtilisateur(user.id);
-    let resultat=idQueryString ==user.id || user.id || isAdmin || isDirecteur || isSuperviseurOfUtilisateur
+    let isSuperviseurOfUtilisateur=await user.isSuperviseurOfUtilisateur(idQueryString);
+    let resultat= isNaN(idQueryString) || idQueryString ==user.id || isAdmin || isDirecteur || isSuperviseurOfUtilisateur;
+    // let resultat=idQueryString ==user.id || user.id || isAdmin || isDirecteur || isSuperviseurOfUtilisateur
     return !resultat}
   ,'./index')
   if(acces){
@@ -27,9 +32,32 @@ router.use('/', async function(req, res, next) {
 })
   router.get(['/'], async function(req, res, next) {
     session.start(req);
-    
-    
-    res.render('horaire-perso',{user:{alias:session.get('user')},alerts:{}});
+    const user = new Utilisateur(session.get('fullUser'));
+    const date = req.query.date ? DateUtilities.parseDate(req.query.date) : new Date();
+    const id = req.query.id ? parseInt(req.query.id) : user.id;
+    const start = DateUtilities.getWeekDay(date, 0);
+    const end = DateUtilities.getWeekDay(date, 7);
+    const data = await GetData(id, start, end);
+    res.render('horaire-perso',
+    {
+      user:{alias:session.get('user')},
+      alerts:{}, 
+      data:data, 
+      start:DateUtilities.dateToDateString(start), 
+      end:DateUtilities.dateToDateString(DateUtilities.deltaDaysDate(end, -1)),
+      prev: DateUtilities.dateToDateString(DateUtilities.deltaDaysDate(start, -7)),
+      next: DateUtilities.dateToDateString(DateUtilities.deltaDaysDate(start, 7)),
+      id: user.id});
   })
+
+
+async function GetData(userId, debut, fin){
+  const myDAL = new DAL();
+  RoleUtilisateur.connect(myDAL);
+  const roles = await RoleUtilisateur.getAll();
+  QuartTravail.connect(myDAL);
+  const quarts = await QuartTravail.getByUser(userId, debut, fin);
+  return BuildUserTableData(roles, quarts, debut, fin);
+} 
 
 module.exports = router;

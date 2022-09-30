@@ -10,6 +10,16 @@ module.exports = class DateUtilities{
         return hours;
     }
 
+    static getDaysDate(start, end){
+        start = DateUtilities.removeHoursDate(start);
+        const days = [];
+        while(start < end){
+            days.push(start);
+            start = DateUtilities.deltaDaysDate(start, 1);
+        }
+        return days;
+    }
+
     static getDate(year, month, day, hour=0, minute=0, second=0, ms=0){
         const newDate = new Date();
         newDate.setFullYear(year, month-1, day);
@@ -43,15 +53,27 @@ module.exports = class DateUtilities{
     }
 
     static areSameDay(d0, d1){
-        return d0.getFullYear() == d1.getFullYear() &&
-            d0.getMonth() == d1.getMonth() && 
-            d0.getDate() == d1.getDate();
+        return this.areSameDayObj(DateUtilities.getObj(d0), DateUtilities.getObj(d1))
+        // return d0.getFullYear() == d1.getFullYear() &&
+        //     d0.getMonth() == d1.getMonth() && 
+        //     d0.getDate() == d1.getDate();
     }
 
     static areSameDayObj(d0, d1){
-        return d0.year == d1.year && 
+        return d0.year == d1.year &&  
             d0.month == d1.month && 
-            d0.day == d1.day
+            (d0.day == d1.day || 
+                Math.abs(d0.day - d1.day) == 1 && 
+                (DateUtilities.isMidnightObj(d0) || 
+                DateUtilities.isMidnightObj(d1)));
+    }
+
+    static isMidnightObj(d){
+        return d.hour == 0 && d.minute == 0 && d.second == 0 && ms == 0;
+    }
+
+    static isMidnightDate(date){
+        return DateUtilities.isMidnightObj(DateUtilities.getObj(date));
     }
 
     static objToHoursString(obj){
@@ -91,5 +113,27 @@ module.exports = class DateUtilities{
         const date = DateUtilities.getDateObj(obj);
         const newDate = DateUtilities.deltaDaysDate(date, deltaDays);
         return DateUtilities.getObj(newDate);
+    }
+
+    static parseDate(str){
+        const cells = str.split("-");
+        return DateUtilities.getDate(cells[0], cells[1], cells[2]);
+    }
+
+    static removeHoursDate(date){
+        const obj = DateUtilities.getObj(date);
+        return this.getDate(obj.year, obj.month, obj.day);
+    }
+
+    static removeHoursObj(obj){
+        return {...obj, hour:0, minute:0, second:0, ms:0};
+    }
+
+    static getWeekDay(date, desiredDayOfWeek){
+        // const date = new Date();
+        const currentDayOfWeek = date.getDay();
+        const sunday = DateUtilities.deltaDaysDate(date, desiredDayOfWeek-currentDayOfWeek);
+        // console.log(`${DateUtilities.dateToDateString(sunday)}: ${i}`)
+        return sunday;
     }
 };

@@ -2,15 +2,15 @@
     "planchers":[
         {
             "id": 2,
-            "name": "Deuxième plancher"
+            "nom": "Deuxième plancher"
         },
         {
             "id": 3,
-            "name": "Troisième plancher"
+            "nom": "Troisième plancher"
         },
         {
             "id": 13,
-            "name": "Treizième plancher"
+            "nom": "Treizième plancher"
         }
     ],
     "plancherSelectionne":{
@@ -24,8 +24,8 @@
     "users": [
         {
             "id": 1,
-            "firstName": "Pascal",
-            "lastName": "Arès",
+            "prenom": "Pascal",
+            "nom": "Arès",
             "roles": [1, 2, 3],
             "quarts":[
                 {
@@ -44,7 +44,7 @@
                         "hour": 12,
                         "minute": 30
                     },
-                    "role": 1
+                    "idRoleUtilisateur": 1
                 },
                 {
                     "id": 2,
@@ -62,7 +62,7 @@
                         "hour": 17,
                         "minute": 0
                     },
-                    "role": 1
+                    "idRoleUtilisateur": 1
                 },
                 {
                     "id": 3,
@@ -80,14 +80,14 @@
                         "hour": 19,
                         "minute": 0
                     },
-                    "role": 2
+                    "idRoleUtilisateur": 2
                 }
             ]
         },
         {
             "id": 2,
-            "firstName": "Philippe C.",
-            "lastName": "Léger",
+            "prenom": "Philippe C.",
+            "nom": "Léger",
             "roles": [1, 2, 3],
             "quarts":[
                 {
@@ -106,7 +106,7 @@
                         "hour": 19,
                         "minute": 30
                     },
-                    "role": 2
+                    "idRoleUtilisateur": 2
                 },
                 {
                     "id": 5,
@@ -124,7 +124,7 @@
                         "hour": 17,
                         "minute": 0
                     },
-                    "role": 2
+                    "idRoleUtilisateur": 2
                 },
                 {
                     "id": 6,
@@ -142,7 +142,7 @@
                         "hour": 19,
                         "minute": 0
                     },
-                    "role": 3
+                    "idRoleUtilisateur": 3
                 }
             ]
         }
@@ -150,18 +150,18 @@
     "roles":[
         {
             "id": 1,
-            "name": "Cuisinier",
-            "color": "red"
+            "nom": "Cuisinier",
+            "couleur": "red"
         },
         {
             "id": 2,
-            "name": "Serveur",
+            "nom": "Serveur",
             "color": "palegreen"
         },
         {
             "id": 3,
-            "name": "Plongeur",
-            "color": "blueviolet"
+            "nom": "Plongeur",
+            "couleur": "blueviolet"
         }
     ]
 }
