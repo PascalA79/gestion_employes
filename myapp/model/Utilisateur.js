@@ -20,6 +20,9 @@ class Utilisateur{
         this.courriel=data['courriel'];
         this.actif=data['actif'];
     }
+    update(/*{id,name,nom,...}*/){
+        //this.nom=name ? name : this.nom;
+    }
     isAdministrateur(){
         return this.idTypeUtilisateur == TYPE_UTILISATEUR.ADMINISTRATEUR;
     }

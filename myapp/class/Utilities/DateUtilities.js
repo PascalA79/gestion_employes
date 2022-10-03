@@ -67,9 +67,9 @@ module.exports = class DateUtilities{
                 (DateUtilities.isMidnightObj(d0) || 
                 DateUtilities.isMidnightObj(d1)));
     }
-
+    // correctif
     static isMidnightObj(d){
-        return d.hour == 0 && d.minute == 0 && d.second == 0 && ms == 0;
+        return d.hour == 0 && d.minute == 0 && d.second == 0 && d.ms == 0;
     }
 
     static isMidnightDate(date){

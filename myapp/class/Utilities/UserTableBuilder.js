@@ -39,8 +39,9 @@ function BuildShiftCell(quart, dateTime, roles){
     const role = GetRole(quart.idRoleUtilisateur, roles);
     let td = {};
     const sameDay = DateUtilities.areSameDay(quart.debut, quart.fin);
-    const strDebut = sameDay ? DateUtilities.dateToHoursString(quart.debut) : DateUtilities.dateToFullDateString(role.debut);
-    const strFin   = sameDay ? DateUtilities.dateToHoursString(quart.fin) : DateUtilities.dateToFullDateString(role.fin);
+    // correctif ?
+    const strDebut = sameDay ? DateUtilities.dateToHoursString(quart.debut) : DateUtilities.dateToFullDateString(quart.debut);
+    const strFin   = sameDay ? DateUtilities.dateToHoursString(quart.fin) : DateUtilities.dateToFullDateString(quart.fin);
     td.content = `${role.nom}: ${strDebut} - ${strFin}`;
     td.attributes = {rowspan: GetRowSpan(sameDay, quart, dateTime)}
     td.attributes.style = `background-color:${role.couleur}; font-weight:bold;`;
@@ -51,9 +52,10 @@ function GetRowSpan(sameDay, quart, dateTime){
     let start = quart.debut;
     let end = quart.fin;
     if(!sameDay){
-        if(DateUtilities.sameDay(start, dateTime)){
+        //correctif ?
+        if(DateUtilities.areSameDay(start, dateTime)){
             end = DateUtilities.removeHoursDate(quart.fin);
-        }else if(DateUtilities.sameDay(end, dateTime)){
+        }else if(DateUtilities.areSameDay(end, dateTime)){
             start = DateUtilities.removeHoursDate(quart.fin);
         }
     }
