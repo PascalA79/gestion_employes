@@ -61,8 +61,11 @@ async function GetPlanchers(currentUser){
 }
 
 async function GetData(currentUser, idPlancher, date){
-  if(!date) date = new Date();
-  else date = DateUtilities.parseDate(date);
+    try {
+      date = DateUtilities.parseDate(date);
+    } catch (error) {
+      date = new Date()
+    }
 
 
   const debut = DateUtilities.getDate(date.getFullYear(), date.getMonth() + 1, date.getDate());

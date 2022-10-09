@@ -1,3 +1,4 @@
+const DateError =require('../Error/DateError')
 module.exports = class DateUtilities{
     
     static getHours({year=0, month=0, day=0}){
@@ -24,7 +25,9 @@ module.exports = class DateUtilities{
         const newDate = new Date();
         newDate.setFullYear(year, month-1, day);
         newDate.setHours(hour, minute, second, ms);
-        return newDate;
+        if(newDate=='Invalid Date')
+            throw new DateError()
+        return newDate
     }
 
     static getDateObj({year, month, day, hour=0, minute=0, second=0, ms=0}){

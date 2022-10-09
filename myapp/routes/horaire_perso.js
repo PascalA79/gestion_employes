@@ -33,8 +33,16 @@ router.use('/', async function(req, res, next) {
   router.get(['/'], async function(req, res, next) {
     session.start(req);
     const user = new Utilisateur(session.get('fullUser'));
-    const date = req.query.date ? DateUtilities.parseDate(req.query.date) : new Date();
-    const id = req.query.id ? parseInt(req.query.id) : user.id;
+    let date;
+    try
+    {
+      date = req.query.date ? DateUtilities.parseDate(req.query.date) : new Date();
+    }
+    catch(error)
+    {
+      date = new Date()
+    }
+    const id = req.query.id && !isNaN(parseInt(req.query.id)) ? parseInt(req.query.id) : user.id;
     const start = DateUtilities.getWeekDay(date, 0);
     const end = DateUtilities.getWeekDay(date, 7);
     const data = await GetData(id, start, end);

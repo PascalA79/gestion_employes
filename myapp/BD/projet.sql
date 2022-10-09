@@ -1,12 +1,9 @@
--- Contient la création des tables et des procédures stocké de la base de donnée
-
-
 -- phpMyAdmin SQL Dump
 -- version 4.6.6deb5
 -- https://www.phpmyadmin.net/
 --
 -- Client :  localhost:3306
--- Généré le :  Mer 28 Septembre 2022 à 15:00
+-- Généré le :  Dim 09 Octobre 2022 à 11:30
 -- Version du serveur :  10.3.36-MariaDB-0+deb10u1
 -- Version de PHP :  7.3.31-1~deb10u1
 
@@ -22,61 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Base de données :  `projet`
 --
-USE projet
-
-
-DELIMITER $$
---
--- Procédures
---
-CREATE DEFINER=`projet`@`%` PROCEDURE `AddQuartTravail` (IN `_idPlancher` INT, IN `_idUtilisateur` INT, IN `_idRoleUtilisateur` INT, IN `_debut` DATETIME, IN `_fin` DATETIME, IN `_confirme` TINYINT)  NO SQL
-BEGIN
-INSERT INTO QuartsTravail(idPlancher, idUtilisateur, idRoleUtilisateur, debut ,fin ,confirme) VALUES(_idPlancher, _idUtilisateur, _idRoleUtilisateur, _debut, _fin, _confirme);
-SELECT LAST_INSERT_ID() as id;
-END$$
-
-CREATE DEFINER=`projet`@`%` PROCEDURE `AddUser` (IN `_prenomUtilisateur` VARCHAR(45), IN `_nomUtilisateur` VARCHAR(45), IN `_alias` VARCHAR(45), IN `_motDePasse` VARCHAR(45), IN `_idTypeUtilisateur` INT, IN `_idPlancher` INT, IN `_age` INT, IN `_telephone` VARCHAR(11), IN `_courriel` VARCHAR(150))  NO SQL
-BEGIN
-DECLARE hash_password varchar(255);
-SET hash_password=PASSWORD(_motDePasse);
-INSERT INTO Utilisateurs(prenomUtilisateur, nomUtilisateur, alias, motDePasse, idTypeUtilisateur, idPlancher, age, telephone, courriel) VALUES(_prenomUtilisateur,_nomUtilisateur,_alias,hash_password,_idTypeUtilisateur,_idPlancher,_age,_telephone,_courriel);
-END$$
-
-CREATE DEFINER=`projet`@`%` PROCEDURE `GetAllPlanchers` ()  NO SQL
-SELECT * FROM Planchers$$
-
-CREATE DEFINER=`projet`@`%` PROCEDURE `GetPlanchersBySuperviseur` (IN `userid` INT)  NO SQL
-SELECT Planchers.idPlancher, Planchers.nomPlancher FROM Planchers
-INNER JOIN SuperviseursPlanchers
-ON Planchers.idPlancher = SuperviseursPlanchers.idPlancher
-INNER JOIN Utilisateurs
-ON SuperviseursPlanchers.idUtilisateur = Utilisateurs.idUtilisateur
-WHERE Utilisateurs.idUtilisateur = userid$$
-
-CREATE DEFINER=`projet`@`%` PROCEDURE `GetQuartsByPlancher` (IN `_idPlancher` INT, IN `_debut` DATETIME, IN `_fin` DATETIME)  NO SQL
-SELECT Utilisateurs.idUtilisateur,Utilisateurs.alias,Utilisateurs.prenomUtilisateur as prenom,Utilisateurs.nomUtilisateur as nom, debut,fin FROM QuartsTravail INNER JOIN Utilisateurs
-ON Utilisateurs.idUtilisateur = QuartsTravail.idUtilisateur
-WHERE QuartsTravail.idPlancher=_idPlancher AND debut>=_debut AND fin<=_fin$$
-
-CREATE DEFINER=`projet`@`%` PROCEDURE `GetQuartsByUser` (IN `_idUtilisateur` INT, IN `_debut` DATETIME, IN `_fin` DATETIME)  NO SQL
-SELECT debut,fin FROM QuartsTravail WHERE idUtilisateur=_idUtilisateur AND debut>=_debut AND fin<=_fin$$
-
-CREATE DEFINER=`projet`@`%` PROCEDURE `getSuperviseurOfPlancher` (IN `_idPlancher` INT)  NO SQL
-SELECT Utilisateurs.idUtilisateur,idTypeUtilisateur,prenomUtilisateur as prenom, nomUtilisateur as nom, alias, age,telephone,courriel,actif FROM `SuperviseursPlanchers` INNER JOIN Utilisateurs ON Utilisateurs.idUtilisateur=SuperviseursPlanchers.idUtilisateur
-WHERE SuperviseursPlanchers.`idPlancher`= _idPlancher$$
-
-CREATE DEFINER=`projet`@`%` PROCEDURE `RemoveQuartTravail` (IN `_idQuartTravail` INT)  NO SQL
-DELETE FROM QuartsTravail WHERE idQuartTravail=_idQuartTravail$$
-
-CREATE DEFINER=`projet`@`%` PROCEDURE `UpdateQuartTravail` (IN `_idQuartTravail` INT, IN `_idPlancher` INT, IN `_idUtilisateur` INT, IN `_idRoleUtilisateur` INT, IN `_debut` DATETIME, IN `_fin` DATETIME, IN `_confirme` TINYINT)  NO SQL
-UPDATE QuartsTravail SET idPlancher=_idPlancher, idUtilisateur=_idUtilisateur, idRoleUtilisateur = _idRoleUtilisateur, debut = _debut, fin = _fin, confirme =_confirme
-WHERE idQuartTravail=_idQuartTravail$$
-
---
--- Fonctions
---
-CREATE DEFINER=`projet`@`%` FUNCTION `CheckPassword` (`_alias` VARCHAR(45), `_motDePasse` VARCHAR(45)) RETURNS TINYINT(1) NO SQL
-RETURN PASSWORD(_motDePasse) = (SELECT Utilisateurs.motDePasse FROM Utilisateurs WHERE Utilisateurs.alias=_alias)$$
 
 DELIMITER ;
 
@@ -315,7 +257,7 @@ CREATE TABLE `Utilisateurs` (
   `actif` bit(1) NOT NULL DEFAULT b'1'
 ) ;
 
---
+
 --
 -- Index pour les tables exportées
 --
@@ -467,7 +409,7 @@ ALTER TABLE `Conversations`
 -- AUTO_INCREMENT pour la table `Departements`
 --
 ALTER TABLE `Departements`
-  MODIFY `idDepartement` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idDepartement` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT pour la table `Disponibilites`
 --
@@ -487,7 +429,7 @@ ALTER TABLE `MessagesInternes`
 -- AUTO_INCREMENT pour la table `Planchers`
 --
 ALTER TABLE `Planchers`
-  MODIFY `idPlancher` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idPlancher` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT pour la table `Poincons`
 --
@@ -497,7 +439,7 @@ ALTER TABLE `Poincons`
 -- AUTO_INCREMENT pour la table `PostesDepenses`
 --
 ALTER TABLE `PostesDepenses`
-  MODIFY `idPosteDepenses` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idPosteDepenses` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT pour la table `QuartsTravail`
 --
@@ -512,7 +454,7 @@ ALTER TABLE `RequisPlancher`
 -- AUTO_INCREMENT pour la table `RolesUtilisateurs`
 --
 ALTER TABLE `RolesUtilisateurs`
-  MODIFY `idRoleUtilisateur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idRoleUtilisateur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT pour la table `TypesUtilisateurs`
 --
@@ -624,5 +566,3 @@ ALTER TABLE `Utilisateurs`
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-
