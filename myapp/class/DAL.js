@@ -2,15 +2,20 @@ const Utilisateur = require("../model/Utilisateur");
 const QuartTravail = require("../model/QuartTravail");
 var ConnectionMYSQL = require("./ConnectionMYSQL");
 var Utilities = require("./Utilities");
+const config = require("config");
 
 class DAL{
     #connectionMYSQL
     constructor(host=undefined,user=undefined,password=undefined,database=undefined){
         this.#connectionMYSQL=new ConnectionMYSQL({
-            host: host?host:"173.176.94.124",
-            user: user?user:"projet",
-            password: password?password:"qwerty12345",
-            database :database?database:"projet"
+            // host: host?host:"173.176.94.124",
+            // user: user?user:"projet",
+            // password: password?password:"qwerty12345",
+            // database :database?database:"projet"
+            host: host?host:config.get("dbserver.host"),
+            user: user?user:config.get("dbserver.user"),
+            password: password?password:config.get("dbserver.password"),
+            database :database?database:config.get("dbserver.database")
         });
     }
     async checkPassword(username,password){

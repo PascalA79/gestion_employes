@@ -13,6 +13,9 @@ var horairePlancherRouter = require('./routes/horaire_plancher');
 
 var app = express();
 
+const config = require('config');
+console.log(config.get("name"));
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
