@@ -5,13 +5,37 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "node",
-            "request": "launch",
             "name": "Launch Program",
+            "program": "${workspaceFolder}/app.js",
+            "request": "launch",
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}\\bin\\www"
+            "type": "node"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Development Pascal",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}\\bin\\www",
+            "env": {
+                "NODE_ENV": "dev_pascal"
+            }
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Development Phil",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}\\bin\\www",
+            "env": {
+                "NODE_ENV": "dev_phil"
+            }
         }
     ]
 }

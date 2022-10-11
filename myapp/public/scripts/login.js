@@ -73,37 +73,4 @@
     exports.getUsernameValidationText = getUsernameValidationText;
     exports.getPasswordValidationText = getPasswordValidationText;
 
-
-
-
-    // Unit tests
-    const unitTests = {
-        "validateUsername": {
-            "OK": () => validateUsername("asd_asd") == ERROR_CODES.USERNAME.OK,
-            "TOO_SHORT": () => validateUsername("asda") == ERROR_CODES.USERNAME.TOO_SHORT,
-            "TOO_LONG": () => validateUsername("asdasdasdasdasdasdasdasdasdasdasdasdasdasdasda") == ERROR_CODES.USERNAME.TOO_LONG,
-            "INVALID_CHAR": () => validateUsername("asdasd@") == ERROR_CODES.USERNAME.INVALID_CHAR
-        },
-        "getUsernameValidationText": {
-            "OK": () => getUsernameValidationText("asd_asd") == ERROR_TEXTS.USERNAME[ERROR_CODES.USERNAME.OK],
-            "TOO_SHORT": () => getUsernameValidationText("asda") == ERROR_TEXTS.USERNAME[ERROR_CODES.USERNAME.TOO_SHORT],
-            "TOO_LONG": () => getUsernameValidationText("asdasdasdasdasdasdasdasdasdasdasdasdasdasdasda") == ERROR_TEXTS.USERNAME[ERROR_CODES.USERNAME.TOO_LONG],
-            "INVALID_CHAR": () => getUsernameValidationText("asdasd@") == ERROR_TEXTS.USERNAME[ERROR_CODES.USERNAME.INVALID_CHAR]
-        },
-        "validatePassword": {
-            "OK": () => validatePassword("Password123") == ERROR_CODES.PASSWORD.OK,
-            "TOO_SHORT": () => validatePassword("Pas1") == ERROR_CODES.PASSWORD.TOO_SHORT,
-            "TOO_LONG": () => validatePassword("Password1Password1Password1Password1Password12") == ERROR_CODES.PASSWORD.TOO_LONG,
-            "MISSING_NUMBER": () => validatePassword("Passwordasdfasd") == ERROR_CODES.PASSWORD.NEEDS_VARIETY,
-            "MISSING_CAPITAL_LETTER": () => validatePassword("passwordasdfasd123") == ERROR_CODES.PASSWORD.NEEDS_VARIETY
-        },
-        "getPasswordValidationText": {
-            "OK": () => getPasswordValidationText("Password123") == ERROR_TEXTS.PASSWORD[ERROR_CODES.PASSWORD.OK],
-            "TOO_SHORT": () => getPasswordValidationText("Pas1") == ERROR_TEXTS.PASSWORD[ERROR_CODES.PASSWORD.TOO_SHORT],
-            "TOO_LONG": () => getPasswordValidationText("Password1Password1Password1Password1Password12") == ERROR_TEXTS.PASSWORD[ERROR_CODES.PASSWORD.TOO_LONG],
-            "MISSING_NUMBER": () => getPasswordValidationText("Passwordasdfasd") == ERROR_TEXTS.PASSWORD[ERROR_CODES.PASSWORD.NEEDS_VARIETY],
-            "MISSING_CAPITAL_LETTER": () => getPasswordValidationText("passwordasdfasd123") == ERROR_TEXTS.PASSWORD[ERROR_CODES.PASSWORD.NEEDS_VARIETY]
-        }
-    }
-    exports.unitTests = unitTests;
 })(typeof exports === 'undefined' ? this['loginValidation'] = {} : exports);
