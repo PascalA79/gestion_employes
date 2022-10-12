@@ -11,6 +11,17 @@ var plancherRouter = require('./routes/plancher');
 var horairePersoRouter = require('./routes/horaire_perso');
 var horairePlancherRouter = require('./routes/horaire_plancher');
 
+var Fichier = require('./class/Fichier');
+async function configureRoutes(chemin){
+
+  let ls= await Fichier.get_ls(chemin)
+  ls.forEach(x=>{
+      let nameFile=x.split('.')[0];
+      const routeur=require(chemin+'/'+nameFile);
+      if(nameFile=='index') nameFile='';
+      app.use('/'+nameFile, routeur);
+    })
+}
 var app = express();
 
 const config = require('config');
@@ -25,6 +36,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+//configureRoutes('./routes')
 
 app.use('/', indexRouter);
 app.use('/api/', apiRouter);
