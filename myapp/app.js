@@ -3,18 +3,25 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+
+var indexRouter = require('./routes/index');
+var apiRouter = require('./routes/api');
+var loginRouter = require('./routes/login');
+var plancherRouter = require('./routes/plancher');
+var horairePersoRouter = require('./routes/horaire_perso');
+var horairePlancherRouter = require('./routes/horaire_plancher');
+
 var Fichier = require('./class/Fichier');
 async function configureRoutes(chemin){
 
   let ls= await Fichier.get_ls(chemin)
   ls.forEach(x=>{
       let nameFile=x.split('.')[0];
-      var routeur=require(chemin+'/'+nameFile);
+      const routeur=require(chemin+'/'+nameFile);
       if(nameFile=='index') nameFile='';
       app.use('/'+nameFile, routeur);
     })
 }
-
 var app = express();
 
 const config = require('config');
@@ -30,18 +37,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
 //configureRoutes('./routes')
 
-var indexRouter = require('./routes/index');
-var apiRouter = require('./routes/api');
-var loginRouter = require('./routes/login');
-var plancherRouter = require('./routes/plancher');
-var horairePersoRouter = require('./routes/horaire_perso');
-var horairePlancherRouter = require('./routes/horaire_plancher');
-
 app.use('/', indexRouter);
-app.use('/api', apiRouter);
+app.use('/api/', apiRouter);
 app.use('/login', loginRouter);
 app.use('/plancher', plancherRouter);
 app.use('/horaire-perso', horairePersoRouter);
