@@ -51,6 +51,7 @@ async function post(req, res, next){
         const DAL_PASCAL=new DAL();
         let user=(await DAL_PASCAL.getUsers(username,'alias'))[0]
         let authorized= await DAL_PASCAL.checkPassword(username,password);
+        DAL_PASCAL.end()
         console.log(authorized[0].value)
         if(authorized[0].value){
             let session= new Session(router)
@@ -65,11 +66,12 @@ async function post(req, res, next){
             const errorPassword = loginValidation.getPasswordValidationText(password);
             if(errorUsername != "" || errorPassword != ""){
                 res.render('login', { username: username, errorUsername: errorUsername, errorPassword: errorPassword });
-            } else {
+            } 
+            else {
                 console.log('traitement...');
                 const DAL_PASCAL=new DAL();
                 let authorized= await DAL_PASCAL.checkPassword(username,password);
-
+                DAL_PASCAL.end()
                 if(authorized[0].value){
                     let session= new Session(router)
                     session.start(req)

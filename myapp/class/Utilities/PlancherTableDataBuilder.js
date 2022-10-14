@@ -18,6 +18,7 @@ function BuildHoursRow(hours){
 
 function BuildUserRowData(hours, day, user, roles){
     const rowData = [];
+    if(!user.quarts)user.quarts=[]
     rowData.push(BuildUserCell(user, day));
     const shifts = user.quarts.map(q => 
         {return {...q, start: DateUtilities.getDateObj(q.start), end: DateUtilities.getDateObj(q.end)}});
