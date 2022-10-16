@@ -24,6 +24,7 @@ router.use('/', async function(req, res, next) {
     let isSuperviseurOfUtilisateur=await user.isSuperviseurOfUtilisateur(idQueryString);
     let resultat= isNaN(idQueryString) || idQueryString ==user.id || isAdmin || isDirecteur || isSuperviseurOfUtilisateur;
     // let resultat=idQueryString ==user.id || user.id || isAdmin || isDirecteur || isSuperviseurOfUtilisateur
+    DAL_PASCAL.end()
     return !resultat}
   ,'./index')
   if(acces){
@@ -65,6 +66,7 @@ async function GetData(userId, debut, fin){
   const roles = await RoleUtilisateur.getAll();
   QuartTravail.connect(myDAL);
   const quarts = await QuartTravail.getByUser(userId, debut, fin);
+  myDAL.end()
   return BuildUserTableData(roles, quarts, debut, fin);
 } 
 

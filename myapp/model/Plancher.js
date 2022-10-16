@@ -3,6 +3,9 @@ class Plancher{
     static connect(DAL){
         Plancher.#DAL=DAL;
     }
+    static end(){
+        Plancher.#DAL.end()
+    }
     constructor(idPlancher,nomPlancher){
         this.nom=nomPlancher
         this.id=idPlancher

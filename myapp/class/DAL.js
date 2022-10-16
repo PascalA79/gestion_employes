@@ -18,6 +18,9 @@ class DAL{
             database :database?database:config.get("dbserver.database")
         });
     }
+    end(){
+        this.#connectionMYSQL.end()
+    }
     async checkPassword(username,password){
         return await this.#connectionMYSQL.excecuteSync(`SELECT CheckPassword('${username}', '${password}') AS value`)
     }
@@ -98,5 +101,6 @@ class DAL{
         async getSuperviseurOfPlancher(idPlancher){
             return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`CALL getSuperviseurOfPlancher('${idPlancher}');`))[0]).map(x => Utilities.getArray(x));
         }
+        
     }
     module.exports = DAL;

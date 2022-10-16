@@ -26,6 +26,7 @@ router.use('/', async function(req, res, next) {
     // console.log( await user.isSuperviseurOfUtilisateur(3) )
     // console.log( await user.isSuperviseurOfUtilisateur(5) )
     console.log("res.render('index')");
+    DAL_PASCAL.end()
     res.render('index',{user:{alias:session.get('user')},alerts:{},tuiles:mainOption});
   })
 
