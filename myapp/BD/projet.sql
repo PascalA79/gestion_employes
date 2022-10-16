@@ -28,7 +28,7 @@ DELIMITER ;
 -- Structure de la table `Conges`
 --
 
-CREATE TABLE `Conges` (
+CREATE OR REPLACE TABLE `Conges` (
   `idConge` int(11) NOT NULL,
   `idUtilisateur` int(11) NOT NULL,
   `dateConge` date NOT NULL,
@@ -41,7 +41,7 @@ CREATE TABLE `Conges` (
 -- Structure de la table `Conversations`
 --
 
-CREATE TABLE `Conversations` (
+CREATE OR REPLACE TABLE `Conversations` (
   `idConversation` int(11) NOT NULL,
   `idUtilisateurCreateur` int(11) NOT NULL,
   `nomConversation` varchar(45) NOT NULL
@@ -53,7 +53,7 @@ CREATE TABLE `Conversations` (
 -- Structure de la table `Departements`
 --
 
-CREATE TABLE `Departements` (
+CREATE OR REPLACE TABLE `Departements` (
   `idDepartement` int(11) NOT NULL,
   `nomDepartement` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -64,7 +64,7 @@ CREATE TABLE `Departements` (
 -- Structure de la table `DestinatairesMessages`
 --
 
-CREATE TABLE `DestinatairesMessages` (
+CREATE OR REPLACE TABLE `DestinatairesMessages` (
   `idUtilisateur` int(11) NOT NULL,
   `idMessageInterne` int(11) NOT NULL,
   `statusMessage` tinyint(3) UNSIGNED NOT NULL DEFAULT 0
@@ -76,7 +76,7 @@ CREATE TABLE `DestinatairesMessages` (
 -- Structure de la table `Disponibilites`
 --
 
-CREATE TABLE `Disponibilites` (
+CREATE OR REPLACE TABLE `Disponibilites` (
   `idDisponibilite` int(11) NOT NULL,
   `idUtilisateur` int(11) NOT NULL,
   `debut` datetime NOT NULL,
@@ -90,7 +90,7 @@ CREATE TABLE `Disponibilites` (
 -- Structure de la table `MessagesConversations`
 --
 
-CREATE TABLE `MessagesConversations` (
+CREATE OR REPLACE TABLE `MessagesConversations` (
   `idMessageConvo` int(11) NOT NULL,
   `idConversation` int(11) NOT NULL,
   `idUtilisateur` int(11) NOT NULL,
@@ -104,7 +104,7 @@ CREATE TABLE `MessagesConversations` (
 -- Structure de la table `MessagesInternes`
 --
 
-CREATE TABLE `MessagesInternes` (
+CREATE OR REPLACE TABLE `MessagesInternes` (
   `idMessageInterne` int(11) NOT NULL,
   `idUtilisateur` int(11) NOT NULL,
   `dateMessage` datetime NOT NULL,
@@ -119,7 +119,7 @@ CREATE TABLE `MessagesInternes` (
 -- Structure de la table `ParticipantsConversations`
 --
 
-CREATE TABLE `ParticipantsConversations` (
+CREATE OR REPLACE TABLE `ParticipantsConversations` (
   `idConversation` int(11) NOT NULL,
   `idUtilisateur` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -130,7 +130,7 @@ CREATE TABLE `ParticipantsConversations` (
 -- Structure de la table `Planchers`
 --
 
-CREATE TABLE `Planchers` (
+CREATE OR REPLACE TABLE `Planchers` (
   `idPlancher` int(11) NOT NULL,
   `nomPlancher` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -141,7 +141,7 @@ CREATE TABLE `Planchers` (
 -- Structure de la table `Poincons`
 --
 
-CREATE TABLE `Poincons` (
+CREATE OR REPLACE TABLE `Poincons` (
   `idPoincon` int(11) NOT NULL,
   `idUtilisateur` int(11) NOT NULL,
   `temps` datetime NOT NULL
@@ -153,7 +153,7 @@ CREATE TABLE `Poincons` (
 -- Structure de la table `PostesDepenses`
 --
 
-CREATE TABLE `PostesDepenses` (
+CREATE OR REPLACE TABLE `PostesDepenses` (
   `idPosteDepenses` int(11) NOT NULL,
   `nomPosteDepenses` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -164,7 +164,7 @@ CREATE TABLE `PostesDepenses` (
 -- Structure de la table `QuartsTravail`
 --
 
-CREATE TABLE `QuartsTravail` (
+CREATE OR REPLACE TABLE `QuartsTravail` (
   `idQuartTravail` int(11) NOT NULL,
   `idPlancher` int(11) NOT NULL,
   `idUtilisateur` int(11) NOT NULL,
@@ -180,7 +180,7 @@ CREATE TABLE `QuartsTravail` (
 -- Structure de la table `RequisPlancher`
 --
 
-CREATE TABLE `RequisPlancher` (
+CREATE OR REPLACE TABLE `RequisPlancher` (
   `idRequisPlancher` int(11) NOT NULL,
   `idPlancher` int(11) NOT NULL,
   `idRoleUtilisateur` int(11) NOT NULL,
@@ -195,7 +195,7 @@ CREATE TABLE `RequisPlancher` (
 -- Structure de la table `RolesUtilisateurs`
 --
 
-CREATE TABLE `RolesUtilisateurs` (
+CREATE OR REPLACE TABLE `RolesUtilisateurs` (
   `idRoleUtilisateur` int(11) NOT NULL,
   `idPosteDepenses` int(11) NOT NULL,
   `idDepartement` int(11) NOT NULL,
@@ -209,7 +209,7 @@ CREATE TABLE `RolesUtilisateurs` (
 -- Structure de la table `SuperviseursPlanchers`
 --
 
-CREATE TABLE `SuperviseursPlanchers` (
+CREATE OR REPLACE TABLE `SuperviseursPlanchers` (
   `idUtilisateur` int(11) NOT NULL,
   `idPlancher` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -220,7 +220,7 @@ CREATE TABLE `SuperviseursPlanchers` (
 -- Structure de la table `TauxHoraires`
 --
 
-CREATE TABLE `TauxHoraires` (
+CREATE OR REPLACE TABLE `TauxHoraires` (
   `idUtilisateur` int(11) NOT NULL,
   `idRoleUtilisateur` int(11) NOT NULL,
   `tauxHoraire` int(11) NOT NULL
@@ -232,7 +232,7 @@ CREATE TABLE `TauxHoraires` (
 -- Structure de la table `TypesUtilisateurs`
 --
 
-CREATE TABLE `TypesUtilisateurs` (
+CREATE OR REPLACE TABLE `TypesUtilisateurs` (
   `idTypeUtilisateur` int(11) NOT NULL,
   `nomTypeUtilisateur` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -243,7 +243,7 @@ CREATE TABLE `TypesUtilisateurs` (
 -- Structure de la table `Utilisateurs`
 --
 
-CREATE TABLE `Utilisateurs` (
+CREATE OR REPLACE TABLE `Utilisateurs` (
   `idUtilisateur` int(11) NOT NULL,
   `idTypeUtilisateur` int(11) NOT NULL,
   `idPlancher` int(11) NOT NULL,
@@ -459,7 +459,7 @@ ALTER TABLE `RolesUtilisateurs`
 -- AUTO_INCREMENT pour la table `TypesUtilisateurs`
 --
 ALTER TABLE `TypesUtilisateurs`
-  MODIFY `idTypeUtilisateur` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idTypeUtilisateur` int(11) NOT NULL;
 --
 -- AUTO_INCREMENT pour la table `Utilisateurs`
 --

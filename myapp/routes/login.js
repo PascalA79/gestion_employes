@@ -12,10 +12,10 @@ async function get(req, res, next){
     session.start(req);
     let redirect= new Redirect(session,res)
     if(await redirect.access('user',(value)=>value,'/index')){
-        const DAL_PASCAL= new DAL();
+        // const DAL_PASCAL= new DAL();
 
-        Utilisateur.connect(DAL_PASCAL);
-        console.log((await Utilisateur.getSuperviseurOfPlancher(-1))[0].prenom);
+        // Utilisateur.connect(DAL_PASCAL);
+        // console.log((await Utilisateur.getSuperviseurOfPlancher(-1))[0].prenom);
 
         // const DateUtilities = require('../class/Utilities/DateUtilities')
         // let dateDebut=DateUtilities.getDate('2022','09','14');
@@ -37,7 +37,7 @@ async function get(req, res, next){
         // console.log(journees)
 
         // console.log(await DAL_PASCAL.getQuartsByPlancher(-1,DateUtilities.getDate('2022','09','14')))
-        console.log("res.render('login')");
+        // console.log("res.render('login')");
         res.render('login'); 
     }
 

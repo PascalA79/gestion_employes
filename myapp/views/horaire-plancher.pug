@@ -36,10 +36,11 @@ block content
         option(value=floor.id)= floor.nom
       -}
   
-  .container.table-container-plancher
+  .container
     h1 Horaire plancher
     +floorSelector(data.planchers)
     +dateSelector(data.plancherSelectionne.id, data.date, data.datePrev, data.dateNext)
+  .container.table-container-plancher
     +buildTable(tableData)
     - console.log(data.date);
     - const dateLoc = data.date;
