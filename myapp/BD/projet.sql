@@ -409,7 +409,7 @@ ALTER TABLE `Conversations`
 -- AUTO_INCREMENT pour la table `Departements`
 --
 ALTER TABLE `Departements`
-  MODIFY `idDepartement` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idDepartement` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `Disponibilites`
 --
@@ -429,7 +429,7 @@ ALTER TABLE `MessagesInternes`
 -- AUTO_INCREMENT pour la table `Planchers`
 --
 ALTER TABLE `Planchers`
-  MODIFY `idPlancher` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idPlancher` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `Poincons`
 --
@@ -439,7 +439,7 @@ ALTER TABLE `Poincons`
 -- AUTO_INCREMENT pour la table `PostesDepenses`
 --
 ALTER TABLE `PostesDepenses`
-  MODIFY `idPosteDepenses` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idPosteDepenses` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `QuartsTravail`
 --
@@ -454,12 +454,12 @@ ALTER TABLE `RequisPlancher`
 -- AUTO_INCREMENT pour la table `RolesUtilisateurs`
 --
 ALTER TABLE `RolesUtilisateurs`
-  MODIFY `idRoleUtilisateur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idRoleUtilisateur` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `TypesUtilisateurs`
 --
 ALTER TABLE `TypesUtilisateurs`
-  MODIFY `idTypeUtilisateur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idTypeUtilisateur` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `Utilisateurs`
 --
