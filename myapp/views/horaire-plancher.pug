@@ -4,6 +4,7 @@ extends layout
 block content
   include navbar
   +navbar(user, alerts, "horaire-plancher")
+  include utilities
 
   mixin buildCell(celldata)
     td&attributes(celldata.attributes)= celldata.content
@@ -28,22 +29,45 @@ block content
       a(href=`horaire-plancher?id=${id}&date=${dateNext}`).tuile.tuile-sm
           p= ">>"
 
-  mixin floorSelector(floors)
+  mixin floorSelector(floors, selectedFloorId)
     label(for=floorSelector) Plancher sélectionné 
     select.floor-selector.input-dark#floorSelector
       -for(floor of floors){
         - console.log(floor);
-        option(value=floor.id)= floor.nom
+        -if(selectedFloorId == floor.id){
+          option(value=floor.id selected)= floor.nom
+        -}else{
+          option(value=floor.id)= floor.nom
+        -}
       -}
+
+  mixin shiftForm()
+    .container-dark.shift-form-plancher.collapse#edit-shift-form
+      form(action="/horaire-plancher" method="post")
+        input.input-dark#inputUsername(type=text placeholder="Username..." readonly)
+        input.input-dark#inputShiftStart(type="datetime-local")
+        +errorLabel(errorStart, "errorStart")
+        input.input-dark#inputShiftEnd(type="datetime-local")
+        +errorLabel(errorEnd, "errorEnd")
+        select.input-dark#selectRole
+        +errorLabel(errorRole, "errorRole")
+        .row.p-2.gap-2
+          input(type="submit", value="Modifier").btn-dark.col#btnSend
+          button(value="Annuler").btn-dark.col#btnCancel Annuler
+          
   
   .container
     h1 Horaire plancher
-    +floorSelector(data.planchers)
+    +floorSelector(data.planchers, data.plancherSelectionne.id)
     +dateSelector(data.plancherSelectionne.id, data.date, data.datePrev, data.dateNext)
   .container.table-container-plancher
     +buildTable(tableData)
-    - console.log(data.date);
+    +shiftForm()
     - const dateLoc = data.date;
+    script(src="./scripts/horaire/EditShiftForm.js") 
+    script.
+      const allRoles = !{JSON.stringify(data.allRoles)};
+    script(src="./scripts/horaire/horaire-plancher.js" defer) 
     script.
       const date = !{JSON.stringify(data.date)};
       $(() => {

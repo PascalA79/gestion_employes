@@ -48,6 +48,7 @@ router.get(['/','/index'], async function(req, res, next) {
     data.datePrev = DateUtilities.objToDateString(DateUtilities.deltaDaysObj(data.jour, -1));
     data.dateNext = DateUtilities.objToDateString(DateUtilities.deltaDaysObj(data.jour, 1));
     const tableData = BuildTableData(data, data.jour);
+    data.allRoles = await GetAllRoles();
     DAL_PASCAL.end()
     res.render('horaire-plancher', {data:data, tableData:tableData, user:{alias:session.get('user')}, alerts:{}});
   })
@@ -101,4 +102,13 @@ async function GetData(currentUser, idPlancher, date){
   myDAL.end()
   return data;
 }
+
+async function GetAllRoles(){
+  const myDAL = new DAL();
+  RoleUtilisateur.connect(myDAL);
+  const allRoles = await RoleUtilisateur.getAll();
+  myDAL.end();
+  return allRoles;
+}
+
 module.exports = router;

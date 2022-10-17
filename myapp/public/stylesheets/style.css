@@ -92,6 +92,19 @@
     color: var(--txt-dark);
     background-color: var(--txt-light);
   }
+
+  /* Ref (placeholder): https://www.w3schools.com/howto/howto_css_placeholder.asp*/
+  ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: var(--txt-medium);
+  }
+  
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: var(--txt-medium);
+  }
+  
+  ::-ms-input-placeholder { /* Microsoft Edge */
+    color: var(--txt-medium);
+  }
   
   .hidden{
     opacity: 0;
@@ -234,6 +247,7 @@
   .table-container-plancher{
     /* background-color: aliceblue; */
     overflow:scroll;
+    display: flex;
   }
 
   .table-container-plancher table{
@@ -309,6 +323,18 @@
   .dateSelector .input-dark>*{
     text-align: center;
   }
+
+  .shift-form-plancher{
+    position: sticky;
+    right: 0;
+    top: 0;
+
+  }
+  .shift-form-plancher input{
+    width: auto;
+  }
+
+
 
   .index-row{
     margin: auto;
