@@ -11,7 +11,7 @@ var session=new Session(router);
 //redirection automatique vers /login si non connecté
 router.use('/', async function(req, res, next) {
 
-    test()  
+    //test()  
     session.start(req);
     console.log(req.path);
     let redirect= new Redirect(session,res);
