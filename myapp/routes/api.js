@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+/*
 var Session=require('../class/Session');
 var ConnectionMYSQL=require('../class/ConnectionMYSQL');
 // hide those values
@@ -18,7 +19,7 @@ const connectionMySQL= new ConnectionMYSQL({
 })*/
 /* GET id listing. */
 //router.get('/', (req, res, next)=>res.send('respond with a resource'));
-
+/*
 
 
 router.get('/*', appelApi);
@@ -43,8 +44,8 @@ async function appelApi(req, res, next){
     console.log(action,champs)
     console.log(req.query)
   }
-  //connectionMySQL.end()
+  connectionMySQL.end()
   res.send('respond with a resource');
 }
-
+*/
 module.exports = router;

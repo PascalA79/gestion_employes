@@ -40,7 +40,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //configureRoutes('./routes')
 
 app.use('/', indexRouter);
-app.use('/api/', apiRouter);
+app.use('/api', apiRouter);
 app.use('/login', loginRouter);
 app.use('/plancher', plancherRouter);
 app.use('/horaire-perso', horairePersoRouter);

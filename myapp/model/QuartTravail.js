@@ -10,19 +10,22 @@ class QuartTravail{
         this.idRoleUtilisateur=idRoleUtilisateur
         this.debut=debut
         this.fin=fin
-        this.confirme=confirme;
+        this.confirme=confirme?confirme:0;
     }
-    async add(DAL){
-        return await DAL.addQuartTravail({...this})
+    async add(){
+        return await QuartTravail.#DAL.addQuartTravail({...this})
         //ajoute a la BD
     }
-
+    
     async update(){
-        await DAL.updateQuartTravail({...this})
+        return await QuartTravail.#DAL.updateQuartTravail(this)
     }
-
+    
     async delete(){
-        await DAL.removeQuartTravail(this.idQuartTravail)
+        await QuartTravail.#DAL.removeQuartTravail(this.idQuartTravail)
+    }
+    static async validateQuart({idQuartTravail,idUtilisateur,debut,fin}){
+        return checkValidQuart(idQuartTravail,idUtilisateur,debut,fin)
     }
     static async getByUser(idUtilisateur,debut, fin){
         const data=await QuartTravail.#DAL.getQuartsByUser(idUtilisateur, debut, fin);
