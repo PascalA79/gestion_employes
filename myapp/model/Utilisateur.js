@@ -8,21 +8,31 @@ class Utilisateur{
     static connect(DAL){
         Utilisateur.#DAL=DAL;
     }
-    constructor(data){
-        this.id=data['id'];
-        this.idTypeUtilisateur=data['idTypeUtilisateur'];
+    constructor({id,idTypeUtilisateur,idPlancher,prenom,nom,alias,telephone,courriel,actif}){
+        this.id=id?id:-1;
+        this.idTypeUtilisateur=idTypeUtilisateur;
+        this.idPlancher=idPlancher;
+        this.prenom=prenom;
+        this.nom=nom;
+        this.alias=alias;
+        this.telephone=telephone;
+        this.courriel=courriel;
+        this.actif=actif?actif:1;
+    }
+    async add(){
+        return await Utilisateur.#DAL.addUtilisateur({...this})
+    }
 
-        this.idPlancher=data['idPlancher'];
-        this.prenom=data['prenom'];
-        this.nom=data['nom'];
-        this.alias=data['alias'];
-        this.telephone=data['telephone'];
-        this.courriel=data['courriel'];
-        this.actif=data['actif'];
+    async update(){
+        return await Utilisateur.#DAL.updateUtilisateur({...this})
     }
-    update(/*{id,name,nom,...}*/){
-        //this.nom=name ? name : this.nom;
+
+    async delete(){
+        await QuartTravail.#DAL.removeUtilisateur(this.id)
     }
+    
+
+
     isAdministrateur(){
         return this.idTypeUtilisateur == TYPE_UTILISATEUR.ADMINISTRATEUR;
     }
@@ -32,6 +42,11 @@ class Utilisateur{
     isSuperviseur(){
         return this.idTypeUtilisateur == TYPE_UTILISATEUR.SUPERVISEUR;
     }
+
+    async getListEmployes(){
+        return await Utilisateur.#DAL.getListEmployes({...this});
+    }
+
     async isSuperviseurOfPlancher(idPlancher){
         if(!this.isSuperviseur()) return false
         let arrayIdPlancher=Utilities.getArray(await Utilisateur.#DAL.getPlanchersBySuperviseur(this.id))

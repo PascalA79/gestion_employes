@@ -10,6 +10,7 @@ var loginRouter = require('./routes/login');
 var plancherRouter = require('./routes/plancher');
 var horairePersoRouter = require('./routes/horaire_perso');
 var horairePlancherRouter = require('./routes/horaire_plancher');
+var listEmployeRouter = require('./routes/liste_employe');
 
 var Fichier = require('./class/Fichier');
 async function configureRoutes(chemin){
@@ -45,6 +46,7 @@ app.use('/login', loginRouter);
 app.use('/plancher', plancherRouter);
 app.use('/horaire-perso', horairePersoRouter);
 app.use('/horaire-plancher', horairePlancherRouter);
+app.use('/liste-employe', listEmployeRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

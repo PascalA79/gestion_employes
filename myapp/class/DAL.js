@@ -66,6 +66,7 @@ class DAL{
         let quartsTravail= await this.#connectionMYSQL.excecuteSync(sqlHoraire);
         return quartsTravail.map(quart=>new QuartTravail(Utilities.getArray(quart)))
     }
+
     async addQuartTravail({idPlancher,idUtilisateur,idRoleUtilisateur,debut,fin}){
         let quart=await this.#connectionMYSQL.excecuteSync(`Call AddQuartTravail('${idPlancher}','${idUtilisateur}','${idRoleUtilisateur}','${debut}','${fin}')`)
         return Utilities.getArray(quart[0][0]);
@@ -77,6 +78,20 @@ class DAL{
     async removeQuartTravail(idQuartTravail){
         await this.#connectionMYSQL.excecuteSync(`Call RemoveQuartTravail('${idQuartTravail}')`)
     }
+
+    async addUtilisateur({id,idTypeUtilisateur,idPlancher,prenom,nom,alias,telephone,courriel,actif}){
+        let utilisateur=await this.#connectionMYSQL.excecuteSync(
+            `Call AddUtilisateur('${id}','${idTypeUtilisateur}','${idPlancher}','${prenom}','${nom}','${alias}','${telephone}','${courriel}','${actif}}')`)
+        return Utilities.getArray(utilisateur[0][0]);
+    }
+    async updateUtilisateur({id,idTypeUtilisateur,idPlancher,prenom,nom,alias,telephone,courriel,actif}){
+        let utilisateur=await this.#connectionMYSQL.excecuteSync(`Call UpdateUtilisateur('${id}','${idTypeUtilisateur}','${idPlancher}','${prenom}','${nom}','${alias}','${telephone}','${courriel}','${actif}}')`)
+        return Utilities.getArray(utilisateur[0][0]);
+    }
+    async removeUtilisateur(id){
+        await this.#connectionMYSQL.excecuteSync(`Call RemoveUtilisateur('${id}')`)
+    }
+    
     async getQuartsByUser(idUtilisateur,debut, fin){
         return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`Call GetQuartsByUser('${idUtilisateur}','${debut.toLocaleDateString()}','${fin.toLocaleDateString()}')`))[0])
         .map(x=>Utilities.getArray(x))
@@ -101,6 +116,10 @@ class DAL{
     async getSuperviseurOfPlancher(idPlancher){
         return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`CALL getSuperviseurOfPlancher('${idPlancher}');`))[0]).map(x => Utilities.getArray(x));
     }
-        
+    async getListEmployes({id,}){
+        return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`CALL GetListEmployes('${id}'}');`))[0]).map(x => Utilities.getArray(x));
+
     }
-    module.exports = DAL;
+    
+}
+module.exports = DAL;
