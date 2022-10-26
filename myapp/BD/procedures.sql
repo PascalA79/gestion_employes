@@ -50,6 +50,26 @@ CREATE OR REPLACE PROCEDURE `UpdateQuartTravail` (IN `_idQuartTravail` INT, IN `
 UPDATE QuartsTravail SET idPlancher=_idPlancher, idUtilisateur=_idUtilisateur, idRoleUtilisateur = _idRoleUtilisateur, debut = _debut, fin = _fin, confirme =_confirme
 WHERE idQuartTravail=_idQuartTravail$$
 
+
+CREATE OR REPLACE PROCEDURE `GetListEmployes`(IN `_idUtilisateur` INT)
+    NO SQL
+BEGIN
+DECLARE varIdTypeUtilisateur INT;
+SET varIdTypeUtilisateur=(SELECT idTypeUtilisateur FROM Utilisateurs WHERE idUtilisateur=_idUtilisateur);
+
+IF varIdTypeUtilisateur=1 THEN
+    SELECT idTypeUtilisateur, Utilisateurs.idPlancher,
+    prenomUtilisateur as prenom, nomUtilisateur as nom, alias, age, 
+    telephone, courriel FROM Utilisateurs 
+    INNER JOIN SuperviseursPlanchers ON SuperviseursPlanchers.idPlancher= Utilisateurs.idPlancher WHERE 
+    actif=1 AND SuperviseursPlanchers.idUtilisateur = _idUtilisateur;
+END IF;
+IF varIdTypeUtilisateur>=2 THEN
+    SELECT idTypeUtilisateur, idPlancher, prenomUtilisateur as prenom, 
+    nomUtilisateur as nom, alias, age, telephone, courriel FROM 
+    Utilisateurs;
+END IF;
+END
 --
 -- Trigger
 --
