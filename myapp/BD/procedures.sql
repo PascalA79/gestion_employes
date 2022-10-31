@@ -4,11 +4,12 @@ DELIMITER $$
 --
 CREATE OR REPLACE PROCEDURE `AddQuartTravail` (IN `_idPlancher` INT, IN `_idUtilisateur` INT, IN `_idRoleUtilisateur` INT, IN `_debut` DATETIME, IN `_fin` DATETIME, IN `_confirme` TINYINT)  NO SQL
 BEGIN
-INSERT INTO QuartsTravail(idPlancher, idUtilisateur, idRoleUtilisateur, debut ,fin ,confirme) VALUES(_idPlancher, _idUtilisateur, _idRoleUtilisateur, _debut, _fin, _confirme);
-SELECT LAST_INSERT_ID() as id;
-END$$
+    INSERT INTO QuartsTravail(idPlancher, idUtilisateur, idRoleUtilisateur, debut ,fin,confirme)
+    VALUES(_idPlancher, _idUtilisateur, _idRoleUtilisateur, _debut, _fin, 0);
+    SELECT * FROM QuartsTravail WHERE idQuartTravail=(SELECT LAST_INSERT_ID());
+END
 
-CREATE OR REPLACE PROCEDURE `AddUser` (IN `_prenomUtilisateur` VARCHAR(45), IN `_nomUtilisateur` VARCHAR(45), IN `_alias` VARCHAR(45), IN `_motDePasse` VARCHAR(45), IN `_idTypeUtilisateur` INT, IN `_idPlancher` INT, IN `_age` INT, IN `_telephone` VARCHAR(11), IN `_courriel` VARCHAR(150))  NO SQL
+CREATE OR REPLACE PROCEDURE `AddUtilisateur` (IN `_prenomUtilisateur` VARCHAR(45), IN `_nomUtilisateur` VARCHAR(45), IN `_alias` VARCHAR(45), IN `_motDePasse` VARCHAR(45), IN `_idTypeUtilisateur` INT, IN `_idPlancher` INT, IN `_age` INT, IN `_telephone` VARCHAR(11), IN `_courriel` VARCHAR(150))  NO SQL
 BEGIN
 DECLARE hash_password varchar(255);
 SET hash_password=PASSWORD(_motDePasse);
@@ -49,10 +50,189 @@ CREATE OR REPLACE PROCEDURE `UpdateQuartTravail` (IN `_idQuartTravail` INT, IN `
 UPDATE QuartsTravail SET idPlancher=_idPlancher, idUtilisateur=_idUtilisateur, idRoleUtilisateur = _idRoleUtilisateur, debut = _debut, fin = _fin, confirme =_confirme
 WHERE idQuartTravail=_idQuartTravail$$
 
+
+CREATE OR REPLACE PROCEDURE `GetListEmployes`(IN `_idUtilisateur` INT)
+    NO SQL
+BEGIN
+DECLARE varIdTypeUtilisateur INT;
+SET varIdTypeUtilisateur=(SELECT idTypeUtilisateur FROM Utilisateurs WHERE idUtilisateur=_idUtilisateur);
+
+IF varIdTypeUtilisateur=1 THEN
+    SELECT idTypeUtilisateur, Utilisateurs.idPlancher,
+    prenomUtilisateur as prenom, nomUtilisateur as nom, alias, age, 
+    telephone, courriel FROM Utilisateurs 
+    INNER JOIN SuperviseursPlanchers ON SuperviseursPlanchers.idPlancher= Utilisateurs.idPlancher WHERE 
+    actif=1 AND SuperviseursPlanchers.idUtilisateur = _idUtilisateur;
+END IF;
+IF varIdTypeUtilisateur>=2 THEN
+    SELECT idTypeUtilisateur, idPlancher, prenomUtilisateur as prenom, 
+    nomUtilisateur as nom, alias, age, telephone, courriel FROM 
+    Utilisateurs;
+END IF;
+END
+--
+-- Trigger
+--
+
+CREATE OR REPLACE TRIGGER `BeforeInsertQuartsTravail` BEFORE INSERT ON `QuartsTravail`
+ FOR EACH ROW BEGIN
+DECLARE isInvalid INT;
+SET isInvalid=(SELECT IsValidQuart(NEW.idQuartTravail, NEW.idUtilisateur, 
+ 	NEW.debut, NEW.fin));
+IF(0=isInvalid) THEN
+    SIGNAL sqlstate '45001' set message_text = "Ajout du QuartsTravail impossible!";
+ END IF;
+ END
+
+CREATE TRIGGER `BeforeUpdateQuartsTravail` BEFORE UPDATE ON `QuartsTravail`
+ FOR EACH ROW BEGIN
+DECLARE isInvalid INT;
+
+SET isInvalid=(SELECT IsValidQuart(NEW.idQuartTravail, NEW.idUtilisateur, NEW.debut, NEW.fin));
+IF(0=isInvalid) THEN
+    SIGNAL sqlstate '45002' set message_text = "Modification du QuartsTravail impossible!";
+ END IF;
+ END
+
+--
+-- Test Unitaires
+--
+
+CREATE OR REPLACE PROCEDURE `TestUnitaire`()  NO SQL
+BEGIN
+	BEGIN
+DECLARE last_id INT DEFAULT -1;
+DECLARE currentTest INT DEFAULT 0;
+SET currentTest=(SELECT MAX(numTest) FROM TestUnitaire);
+IF (currentTest IS NULL) THEN SET currentTest=0;END IF;
+SET currentTest=currentTest +1;
+
+DELETE FROM QuartsTravail WHERE debut= '3022-09-17 03:00:00' AND fin = '3022-09-17 16:00:00';
+INSERT INTO `QuartsTravail` (`idPlancher`, `idUtilisateur`, `idRoleUtilisateur`, `debut`, `fin`) VALUES ('-1', '2', '1', '3022-09-17 03:00:00',  '3022-09-17 16:00:00');
+
+SET last_id = LAST_INSERT_ID();
+INSERT INTO TestUnitaire(numTest, fonction,description, params, estReussi) VALUES 
+/*  IsValidQuart  */
+(currentTest,'IsValidQuart','quart_avant',
+    "(-1,2, '3022-09-16 22:00:00', '3022-09-16 2:00:00')",
+    (SELECT IsValidQuart(-1,2, '3022-09-16 22:00:00','3022-09-16     2:00:00'))
+),
+(currentTest,'IsValidQuart','quart_apres',"(-1,2, '3022-09-17 16:00:00','3022-09-16 23:00:00')",
+    (SELECT IsValidQuart(-1,2,
+        '3022-09-17 16:00:00','3022-09-16 23:00:00'))
+),
+(currentTest,'IsValidQuart','dedans',
+    "(-1,2,'3022-09-17 04:00:00','3022-09-17 14:00:00')",
+    (SELECT 0 = IsValidQuart(-1,2,
+        '3022-09-17 04:00:00','3022-09-17 14:00:00'))
+),
+(currentTest,'IsValidQuart','même',
+    "(-1,2, '3022-09-16 22:00:00', '3022-09-16 2:00:00')",
+    (SELECT IsValidQuart(-1,2, '3022-09-16 22:00:00','3022-09-16     2:00:00'))
+),
+(currentTest,'IsValidQuart','debut',
+    "(-1,2,        '3022-09-17 10:00:00','3022-09-17 16:00:00)'",
+    (SELECT 0= IsValidQuart(-1,2,
+        '3022-09-17 10:00:00','3022-09-17 16:00:00'))
+),
+(currentTest,'IsValidQuart','fin',
+    "(-1,2,        '3022-09-17 01:00:00','3022-09-17 13:00:00')",
+    (SELECT 0= IsValidQuart(-1,2,
+        '3022-09-17 01:00:00','3022-09-17 13:00:00'))
+),
+(currentTest,'IsValidQuart','encadre',
+    "(-1,2,        '3022-09-17 01:00:00','3022-09-17 19:00:00')",
+    (SELECT 0= IsValidQuart(-1,2,
+        '3022-09-17 01:00:00','3022-09-17 19:00:00'))
+),
+(currentTest,'IsValidQuart','finTouche',
+    "(-1,2,        '3022-09-16 22:00:00','3022-09-17 3:00:00')",
+    (SELECT IsValidQuart(-1,2,
+        '3022-09-16 22:00:00','3022-09-17 3:00:00'))
+),
+(currentTest,'IsValidQuart','debutTouche',
+    "(-1,2,        '3022-09-17 16:00:00','3022-09-17 19:00:00')",
+    (SELECT IsValidQuart(-1,2,
+        '3022-09-17 16:00:00','3022-09-17 19:00:00'))
+),
+(currentTest,'IsValidQuart','dedans_meme_id',
+    CONCAT("(",last_id,",2,'3022-09-17 04:00:00','3022-09-17 14:00:00')"),
+    (SELECT IsValidQuart(last_id,2,'3022-09-17 04:00:00','3022-09-17 14:00:00'))
+),
+(currentTest,'IsValidQuart','quart_avant_meme_id',
+    CONCAT("(",last_id,",2, '3022-09-16 22:00:00','3022-09-16 2:00:00')"),
+    (SELECT IsValidQuart(last_id,2, '3022-09-16 22:00:00','3022-09-16 2:00:00'))
+),
+(currentTest,'IsValidQuart','quart_apres_meme_id',
+    CONCAT("(",last_id,",2,        '3022-09-17 16:00:00','3022-09-16 23:00:00')"),
+    (SELECT IsValidQuart(last_id,2,
+        '3022-09-17 16:00:00','3022-09-16 23:00:00'))
+);
+
+SELECT fonction, description ,params, estReussi FROM TestUnitaire WHERE TestUnitaire.numTest=currentTest;
+
+END
+
+END$$
+
+CREATE OR REPLACE PROCEDURE `TestAddQuartTravailAndTrigger`()  NO SQL
+BEGIN
+	BEGIN
+        DELETE FROM QuartsTravail WHERE idPlancher=-1 AND idUtilisateur = 3 AND debut= '2022-09-17 03:00:00' AND fin = '2022-09-17 16:00:00';
+        INSERT INTO `QuartsTravail` (`idPlancher`, `idUtilisateur`, `idRoleUtilisateur`, `debut`, `fin`) VALUES ('-1', '2', '1', '2022-09-17 03:00:00',  '2022-09-17 16:00:00');
+        CREATE OR REPLACE TABLE Resultat(description VARCHAR(20),estReussi INT);
+        /* À faire */
+        INSERT INTO Resultat VALUES('quart_avant',(SELECT 0= IsValidQuart(-1,3,
+        '2022-09-16 22:00:00','2022-09-16 2:00:00')));
+        INSERT INTO Resultat VALUES('quart_apres',(SELECT 0= IsValidQuart(-1,3,
+        '2022-09-17 16:00:00','2022-09-16 23:00:00')));
+        INSERT INTO Resultat VALUES('dedans',(SELECT 0!= IsValidQuart(-1,3,
+        '2022-09-17 04:00:00','2022-09-17 14:00:00')));
+        INSERT INTO Resultat VALUES('même',(SELECT 0!= IsValidQuart(-1,3,
+        '2022-09-17 03:00:00','2022-09-17 16:00:00')));
+        INSERT INTO Resultat VALUES('debut',(SELECT 0!= IsValidQuart(-1,3,
+        '2022-09-17 10:00:00','2022-09-17 16:00:00')));
+        INSERT INTO Resultat VALUES('fin',(SELECT 0!= IsValidQuart(-1,3,
+        '2022-09-17 01:00:00','2022-09-17 13:00:00')));
+        INSERT INTO Resultat VALUES('encadre',(SELECT 0!= IsValidQuart(-1,3,
+        '2022-09-17 01:00:00','2022-09-17 19:00:00')));
+        INSERT INTO Resultat VALUES('finTouche',(SELECT 0= IsValidQuart(-1,3,
+        '2022-09-16 22:00:00','2022-09-17 3:00:00')));
+        INSERT INTO Resultat VALUES('debutTouche',(SELECT 0= IsValidQuart(-1,3,
+        '2022-09-17 015:00:00','2022-09-17 19:00:00')));
+        INSERT INTO Resultat VALUES('dedans_meme_id',(SELECT 0= IsValidQuart(2,3,
+        '2022-09-17 04:00:00','2022-09-17 14:00:00')));
+        INSERT INTO Resultat VALUES('quart_avant_meme_id',(SELECT 0= IsValidQuart(2,3,
+        '2022-09-16 22:00:00','2022-09-16 2:00:00')));
+        INSERT INTO Resultat VALUES('quart_apres_meme_id',(SELECT 0= IsValidQuart(2,3,
+        '2022-09-17 16:00:00','2022-09-16 23:00:00')));
+
+        SELECT * FROM Resultat;
+        DROP TABLE Resultat;
+
+    END
+
+DELIMITER ;
 --
 -- Fonctions
 --
 CREATE OR REPLACE FUNCTION `CheckPassword` (`_alias` VARCHAR(45), `_motDePasse` VARCHAR(45)) RETURNS TINYINT(1) NO SQL
 RETURN PASSWORD(_motDePasse) = (SELECT Utilisateurs.motDePasse FROM Utilisateurs WHERE Utilisateurs.alias=_alias)$$
 
-DELIMITER ;
+CREATE OR REPLACE FUNCTION `IsValidQuart`(`__idQuartTravail` INT, `__idUtilisateur` INT, `__debutQuart` DATETIME, `__finQuart` DATETIME) RETURNS tinyint(11) NO SQL
+RETURN (
+    SELECT 1>=COUNT(QuartsTravail.idQuartTravail) AS result FROM QuartsTravail 
+    WHERE QuartsTravail.idUtilisateur=_idUtilisateur AND
+    QuartsTravail.idQuartTravail!=_idQuartTravail AND
+    (
+    _debutQuart>=QuartsTravail.debut AND
+    _debutQuart<QuartsTravail.fin
+    OR
+    _finQuart>QuartsTravail.debut AND 
+    _finQuart<=QuartsTravail.fin
+    OR
+    _debutQuart<=QuartsTravail.debut AND 
+    _finQuart>=QuartsTravail.fin
+    )
+   )
+   DELIMITER ;

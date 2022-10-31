@@ -46,7 +46,7 @@ tuiles[TITRES.DISPONIBILITE]={
 tuiles[TITRES.EMPLOYES] = {
     text: "Liste des employés",
     nombreAlerte: 0,
-    url: '/'
+    url: '/liste-employe'
 };
 // tuiles['Employés']={};
 // tuiles['Employés']['text']="Employés";
