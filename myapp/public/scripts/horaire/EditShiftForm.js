@@ -1,5 +1,5 @@
 class EditShiftForm{
-    constructor(form, inputName, inputShiftStart, inputShiftEnd, selectRole, btnSend, btnCancel){
+    constructor(form, inputName, inputShiftStart, inputShiftEnd, selectRole, btnSend, btnCancel, errorStart, errorEnd, errorRole, idQuartTravail, idPlancher, idUtilisateur, confirme, confirmMsg){
         this.form = form;
         this.inputName = inputName;
         this.inputShiftStart = inputShiftStart;
@@ -9,6 +9,14 @@ class EditShiftForm{
         this.btnCancel = btnCancel;
         this.oldShift = null;
         this.user = null;
+        this.errorStart = errorStart;
+        this.errorEnd = errorEnd;
+        this.errorRole = errorRole;
+        this.idQuartTravail = idQuartTravail;
+        this.idPlancher = idPlancher;
+        this.idUtilisateur = idUtilisateur;
+        this.confirme = confirme;
+        this.confirmMsg = confirmMsg;
 
         this.btnCancel.click((e) => {
             e.preventDefault();
@@ -46,13 +54,11 @@ class EditShiftForm{
     }
 
     show(){
-        if(this.form.attr("class").includes("collapse"))
-            this.form.removeClass("collapse")
+        $("#edit-shift-modal").modal("show");
     }
 
     hide(){
-        if(!this.form.attr("class").includes("collapse"))
-        this.form.addClass("collapse")
+        $("#edit-shift-modal").modal("hide");
     }
 
     fillShift(name, start, end, roleId){
@@ -78,14 +84,42 @@ class EditShiftForm{
         this.oldShift = null;
         this.user = null;
         this.fillShift("", null, null, -1);
+        this.fillErrors({});
+        this.fillMsg();
+        this.fillHidden({});
+    }
+
+    fillHidden({idQuartTravail="", idPlancher="", idUtilisateur="", confirme=""}){
+        this.idQuartTravail.val(idQuartTravail);
+        this.idPlancher.val(idPlancher);
+        this.idUtilisateur.val(idUtilisateur);
+        this.confirme.val(confirme);
+    }
+    
+    fillErrors({errorStart="", errorEnd="", errorRole=""}){
+        this.fillErrorLabel(this.errorStart, errorStart);
+        this.fillErrorLabel(this.errorEnd, errorEnd);
+        this.fillErrorLabel(this.errorRole, errorRole);
+    }
+
+    fillMsg(message = ""){
+        this.fillErrorLabel(this.confirmMsg, message);
+    }
+
+    fillErrorLabel(label, errorText){
+        label.text(errorText);
+        if(!!errorText) label.show();
+        else label.hide();
     }
 
     addNewShift(user, start, end){
         this.empty();
         this.form.attr("method", "post");
         this.btnSend.val("Créer");
-        this.user = user
+        this.user = user;
         this.fillShift(this.getFullName(user), start, end);
+        console.log(user);
+        this.fillHidden({idUtilisateur: user.id, idPlancher: user.idPlancher});
         this.show();
     }
 
@@ -95,7 +129,10 @@ class EditShiftForm{
         this.btnSend.val("Modifier");
         this.user = user;
         this.oldShift = ws;
-        this.fillShift(this.getFullName(user), new Date(ws.start), new Date(ws.end), ws.idRoleUtilisateur);
+        console.log(ws);
+        this.fillShift(this.getFullName(user), new Date(ws.debut), new Date(ws.fin), ws.idRoleUtilisateur);
+        // this.fillShift(this.getFullName(user), new Date(ws.start), new Date(ws.end), ws.idRoleUtilisateur);
+        this.fillHidden(ws);
         this.show();
     }
 

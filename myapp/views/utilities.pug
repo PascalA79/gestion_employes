@@ -7,6 +7,12 @@ mixin errorLabel(errorMessage, ctrlId)
     - if(!error-message) classes.append("hidden");
     span.lbl-error(class=classes id=ctrlId)=errorMessage
 
+mixin confirmLabel(confirmMessage, ctrlId)
+    - let classes = [];
+    - if(!confirmMessage) classes.append("hidden");
+    span.lbl-confirm(class=classes id=ctrlId)=confirmMessage
+
+
 mixin test(testMessage)
     p= testMessage
 

@@ -5,11 +5,25 @@ const editShiftForm = new EditShiftForm(
     $("#inputShiftEnd"), 
     $("#selectRole"),
     $("#btnSend"),
-    $("#btnCancel")
+    $("#btnCancel"),
+    $("#errorStart"),
+    $("#errorEnd"),
+    $("#errorRole"),
+    $("#idQuartTravail"),
+    $("#idPlancher"),
+    $("#idUtilisateur"),
+    $("#confirme"),
 );
 
 editShiftForm.fillRoles(allRoles);
 
+if(editShiftData.showModal){
+    editShiftForm.fillShift(editShiftData.workShift);
+    editShiftForm.fillErrors(editShiftData.shiftErrors);
+    // editShiftForm.show();
+}
+
+// if(editShiftData)
 // editShiftForm.show();
 
 

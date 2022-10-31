@@ -19,6 +19,7 @@
     --txt-dark: hsl(213, 43%, 38%);
     --txt-alert: hsl(50, 100%, 50%);
     --bg-alert: hsl(0, 100%, 50%);
+    --txt-confirm: palegreen;
   
   
     --fnt-header: Calibri 20 bold;
@@ -82,6 +83,7 @@
   .lbl-error{
     color: var(--bg-alert);
   }
+  .lbl-confirm{ color: var(--txt-confirm)}
   .input-dark, .btn-dark{
     color: var(--txt-light);
     background-color: var(--txt-dark);
@@ -325,15 +327,20 @@
   }
 
   .shift-form-plancher{
-    position: sticky;
+    /* position: sticky;
     right: 0;
-    top: 0;
+    top: 0; */
 
   }
   .shift-form-plancher input{
     width: auto;
   }
 
+  .modal-content{
+    background: none;
+    border: None;
+
+  }
 
 
   .index-row{

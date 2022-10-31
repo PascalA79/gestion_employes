@@ -33,7 +33,6 @@ block content
     label(for=floorSelector) Plancher sélectionné 
     select.floor-selector.input-dark#floorSelector
       -for(floor of floors){
-        - console.log(floor);
         -if(selectedFloorId == floor.id){
           option(value=floor.id selected)= floor.nom
         -}else{
@@ -41,19 +40,29 @@ block content
         -}
       -}
 
-  mixin shiftForm()
-    .container-dark.shift-form-plancher.collapse#edit-shift-form
-      form(action="/horaire-plancher" method="post")
-        input.input-dark#inputUsername(type=text placeholder="Username..." readonly)
-        input.input-dark#inputShiftStart(type="datetime-local")
-        +errorLabel(errorStart, "errorStart")
-        input.input-dark#inputShiftEnd(type="datetime-local")
-        +errorLabel(errorEnd, "errorEnd")
-        select.input-dark#selectRole
-        +errorLabel(errorRole, "errorRole")
-        .row.p-2.gap-2
-          input(type="submit", value="Modifier").btn-dark.col#btnSend
-          button(value="Annuler").btn-dark.col#btnCancel Annuler
+  mixin shiftFormModal(editShiftData)
+    .modal#edit-shift-modal 
+      .modal-dialog.container-dark#edit-shift-form
+        form(action=`/horaire-plancher?${editShiftData.qs}` method="post")
+          .modal-content.d-flex.flex-column.gap-2
+            input(type="hidden" name="idQuartTravail")#idQuartTravail
+            input(type="hidden" name="idPlancher")#idPlancher
+            input(type="hidden" name="idUtilisateur")#idUtilisateur
+            input(type="hidden" name="confirme")#confirme
+            input.input-dark#inputUsername(type=text placeholder="Username..." readonly name="username")
+            input.input-dark#inputShiftStart(type="datetime-local" name="debut")
+            +errorLabel(editShiftData.shiftErrors.errorStart2, "errorStart")
+            input.input-dark#inputShiftEnd(type="datetime-local" name="fin")
+            +errorLabel(editShiftData.shiftErrors.errorEnd2, "errorEnd")
+            select.input-dark#selectRole(name="idRoleUtilisateur")
+            +errorLabel(editShiftData.shiftErrors.errorRole2, "errorRole")
+            span.lbl-confirm.hidden#confirmMsg
+            .row.p-2.gap-2
+              input(type="submit", value="Modifier").btn-dark.col#btnSend
+              button(value="Annuler").btn-dark.col#btnCancel Annuler
+            button(value="Supprimer").btn-dark.col#btnDelete Supprimer
+
+        
           
   
   .container
@@ -62,19 +71,24 @@ block content
     +dateSelector(data.plancherSelectionne.id, data.date, data.datePrev, data.dateNext)
   .container.table-container-plancher
     +buildTable(tableData)
-    +shiftForm()
-    - const dateLoc = data.date;
-    script(src="./scripts/horaire/EditShiftForm.js") 
-    script.
-      const allRoles = !{JSON.stringify(data.allRoles)};
-    script(src="./scripts/horaire/horaire-plancher.js" defer) 
-    script.
-      const date = !{JSON.stringify(data.date)};
-      $(() => {
-        const floorSelector = $("#floorSelector")
-        floorSelector.val(!{JSON.stringify(data.plancherSelectionne.id)});
-        floorSelector.change(() => {
-          console.log(floorSelector.val());
-          window.location.href = `horaire-plancher?id=${floorSelector.val()}&date=${date}`
-        })
+  +shiftFormModal(editShiftData)
+  - const dateLoc = data.date;
+  script(src="./scripts/horaire/EditShiftForm.js") 
+  script.
+    const allRoles = !{JSON.stringify(data.allRoles)};
+    const editShiftData = !{JSON.stringify(editShiftData)};
+  script(src="./scripts/horaire/horaire-plancher.js" defer) 
+  script(defer).
+    const date = !{JSON.stringify(data.date)};
+    $(document).ready(() => {
+      const floorSelector = $("#floorSelector")
+      floorSelector.val(!{JSON.stringify(data.plancherSelectionne.id)});
+      floorSelector.change(() => {
+        window.location.href = `horaire-plancher?id=${floorSelector.val()}&date=${date}`
       });
+      const editShiftData = !{JSON.stringify(editShiftData)};
+      if (editShiftData.showModal){
+        console.log(editShiftData.shiftData.workShift);
+        editShiftForm.editShift(editShiftData.shiftData.workShift, {})
+      }
+    });

@@ -1,20 +1,35 @@
 (function(exports){
 
     const ERROR_CODES={
-        USERNAME: {
+        USER:{
             OK: 0,
-            TOO_SHORT: 1,
-            TOO_LONG: 2,
-            INVALID_CHAR: 3
+            MISSING: 1,
+            UNKNOWN: 2, 
         },
-        PASSWORD: {
+        START:{
             OK: 0,
-            TOO_SHORT: 1,
-            TOO_LONG: 2,
-            NEEDS_VARIETY: 3,
-            UNKNOWN:4
-        }
-    }
+            INVALID: 1,
+        },
+        END:{
+            OK: 0,
+            INVALID: 1,
+            BEFORESTART: 2,
+        },
+        ROLE:{
+            OK: 0,
+            MISSING: 1,
+            UNKNOWN: 2,
+        },
+    };
+    
+    const CONFIRM_CODES = {
+        NONE: 0,
+        CONFIRMADD: 1,
+        CONFIRMEDIT: 2,
+        CONFIRMDELETE: 3,
+        CONFIRMCONFIRM: 4
+    };
+
 
     const MIN_LENGTH_USERNAME = 5;
     const MAX_LENGTH_USERNAME = 45;
@@ -22,56 +37,104 @@
     const MAX_LENGTH_PASSWORD = 45;
 
     const ERROR_TEXTS = {};
-    ERROR_TEXTS.USERNAME={};
-    ERROR_TEXTS.USERNAME[ERROR_CODES.USERNAME.OK] = "";
-    ERROR_TEXTS.USERNAME[ERROR_CODES.USERNAME.TOO_SHORT] = `Nom d'utilisateur trop court. Doit contenir au moins ${MIN_LENGTH_USERNAME} caractères.`;
-    ERROR_TEXTS.USERNAME[ERROR_CODES.USERNAME.TOO_LONG] = `Nom d'utilisateur trop long. Doit contenir au plus ${MAX_LENGTH_USERNAME} caractères.`;;
-    ERROR_TEXTS.USERNAME[ERROR_CODES.USERNAME.INVALID_CHAR] = "Nom d'utilisateur ne doit pas contenir de caractères spéciaux";
+    ERROR_TEXTS.USER={};
+    ERROR_TEXTS.USER[ERROR_CODES.USER.OK] = "";
+    ERROR_TEXTS.USER[ERROR_CODES.USER.MISSING] = "Utilisateur requis";
+    ERROR_TEXTS.USER[ERROR_CODES.USER.UNKNOWN] = "Utilisateur inconnu";
 
-    ERROR_TEXTS.PASSWORD={};
-    ERROR_TEXTS.PASSWORD[ERROR_CODES.PASSWORD.OK] = "";
-    ERROR_TEXTS.PASSWORD[ERROR_CODES.PASSWORD.TOO_SHORT] = `Mot de passe trop court. Doit contenir au moins ${MIN_LENGTH_PASSWORD} caractères.`;
-    ERROR_TEXTS.PASSWORD[ERROR_CODES.PASSWORD.TOO_LONG] = `Mot de passe trop long. Doit contenir au plus ${MAX_LENGTH_PASSWORD} caractères.`;;
-    ERROR_TEXTS.PASSWORD[ERROR_CODES.PASSWORD.NEEDS_VARIETY] = "Mot de passe doit contenir au moins une lettre majuscule et un chiffre";
-    ERROR_TEXTS.PASSWORD[ERROR_CODES.PASSWORD.UNKNOWN] = "Combinaison de nom d'utilisateur et mot de passe inconnue";
+    ERROR_TEXTS.START={};
+    ERROR_TEXTS.START[ERROR_CODES.START.OK] = "";
+    ERROR_TEXTS.START[ERROR_CODES.START.INVALID] = "Format de date invalide";
+
+    ERROR_TEXTS.END={};
+    ERROR_TEXTS.END[ERROR_CODES.END.OK] = "";
+    ERROR_TEXTS.END[ERROR_CODES.END.INVALID] = ERROR_TEXTS.START[ERROR_CODES.START.INVALID]
+    ERROR_TEXTS.END[ERROR_CODES.END.BEFORESTART] = "La fin doit être après le début";
+
+    ERROR_TEXTS.ROLE={};
+    ERROR_TEXTS.ROLE[ERROR_CODES.ROLE.OK] = "";
+    ERROR_TEXTS.ROLE[ERROR_CODES.ROLE.MISSING] = "Rôle requis";
+    ERROR_TEXTS.ROLE[ERROR_CODES.ROLE.UNKNOWN] = "Rôle inconnu";
 
 
-    const REGEXP_TEMPLATE_USERNAME = "^\[A-Za-z0-9_]{" + MIN_LENGTH_USERNAME + "," + MAX_LENGTH_USERNAME + "}$";
-    const REGEXP_TEMPLATE_PASSWORD = "^(?=.*[A-Z]+)(?=.*[0-9]+).{" + MIN_LENGTH_PASSWORD + "," + MAX_LENGTH_PASSWORD + "}$";
-    const REGEXP_USERNAME = new RegExp(REGEXP_TEMPLATE_USERNAME);
-    const REGEXP_PASSWORD = new RegExp(REGEXP_TEMPLATE_PASSWORD);
+    const CONFIRM_TEXTS = {};
+    CONFIRM_TEXTS[CONFIRM_CODES.NONE] = "";
+    CONFIRM_TEXTS[CONFIRM_CODES.CONFIRMADD] = "Quart ajouté";
+    CONFIRM_TEXTS[CONFIRM_CODES.CONFIRMEDIT] = "Quart modifié";
+    CONFIRM_TEXTS[CONFIRM_CODES.CONFIRMDELETE] = "Quart supprimé";
+    CONFIRM_TEXTS[CONFIRM_CODES.CONFIRMCONFIRM] = "Quart confirmé";
 
-    function getValidationText(text, validateText, error_texts) {
-        return error_texts[validateText(text)];
+
+    function validateUser(user){
+        if(!!user) return ERROR_CODES.USER.OK;
+        return ERROR_CODES.USER.UNKNOWN;
     }
 
-    function validateUsername(username){
-        if(username.length < MIN_LENGTH_USERNAME) return ERROR_CODES.USERNAME.TOO_SHORT;
-        if(username.length > MAX_LENGTH_USERNAME) return ERROR_CODES.USERNAME.TOO_LONG;
-        if(!REGEXP_USERNAME.test(username)) return ERROR_CODES.USERNAME.INVALID_CHAR;
-        return ERROR_CODES.USERNAME.OK;
+    function getUserValidationText(user){
+        return ERROR_TEXTS.USER[validateUser(user)];
     }
 
-    function getUsernameValidationText(username){
-        return getValidationText(username, validateUsername, ERROR_TEXTS.USERNAME);
+    function parseDate(dateString){        
+        try{
+            let maDate = new Date(dateString);
+            return maDate;
+        } catch(error){
+            return null;
+        }
     }
 
-    function validatePassword(password){
-        if(password.length < MIN_LENGTH_PASSWORD) return ERROR_CODES.PASSWORD.TOO_SHORT;
-        if(password.length > MAX_LENGTH_PASSWORD) return ERROR_CODES.PASSWORD.TOO_LONG;
-        if(!REGEXP_PASSWORD.test(password)) return ERROR_CODES.PASSWORD.NEEDS_VARIETY;
-        return ERROR_CODES.PASSWORD.OK;
+    // https://bobbyhadz.com/blog/javascript-check-if-date-is-valid
+    function isDateValid(date){
+        return date instanceof Date && !isNaN(date);
     }
 
-    function getPasswordValidationText(username){
-        return getValidationText(username, validatePassword, ERROR_TEXTS.PASSWORD);
+    function validateStartDate(startDateString){
+        return isDateValid(parseDate(startDateString)) ? 
+                ERROR_CODES.START.OK : 
+                ERROR_CODES.START.INVALID;
     }
+
+    function getStartDateValidationText(startDateString){
+        return ERROR_TEXTS.START[validateStartDate(startDateString)];
+    }
+    
+    function validateEndDate(startDateString, endDateString){
+        let start = parseDate(startDateString);
+        let end = parseDate(endDateString);
+        if(!isDateValid(end)) 
+            return ERROR_CODES.END.INVALID;
+        if(!isDateValid(start)) return ERROR_CODES.END.OK;
+        if(start.getTime() < end.getTime()) return ERROR_CODES.END.OK
+        return ERROR_CODES.END.BEFORESTART;
+    }
+
+    function getEndDateValidationText(startDateString, endDateString){
+        return ERROR_TEXTS.END[validateEndDate(startDateString, endDateString)];
+    }
+
+    function validateRole(role){
+        return !!role ? ERROR_CODES.ROLE.OK : ERROR_CODES.ROLE.UNKNOWN;
+    }
+
+    function getRoleValidationText(role){
+        return ERROR_TEXTS.ROLE[validateRole(role)];
+    }
+
+
 
     exports.ERROR_CODES = ERROR_CODES;
     exports.ERROR_TEXTS = ERROR_TEXTS;
-    exports.validateUsername = validateUsername;
-    exports.validatePassword = validatePassword;
-    exports.getUsernameValidationText = getUsernameValidationText;
-    exports.getPasswordValidationText = getPasswordValidationText;
+
+    exports.CONFIRM_CODES = CONFIRM_CODES;
+    exports.CONFIRM_TEXTS = CONFIRM_TEXTS;
+
+    exports.validateUser = validateUser;
+    exports.getUserValidationText = getUserValidationText;
+    exports.validateStartDate = validateStartDate;
+    exports.getStartDateValidationText = getStartDateValidationText;
+    exports.validateEndDate = validateEndDate;
+    exports.getEndDateValidationText = getEndDateValidationText;
+    exports.validateRole = validateRole;
+    exports.getRoleValidationText = getRoleValidationText;
 
 })(typeof exports === 'undefined' ? this['ValidateurHoraire'] = {} : exports);
