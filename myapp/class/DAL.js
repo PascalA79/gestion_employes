@@ -3,6 +3,7 @@ const QuartTravail = require("../model/QuartTravail");
 var ConnectionMYSQL = require("./ConnectionMYSQL");
 var Utilities = require("./Utilities");
 const config = require("config");
+const DateUtilities = require("./Utilities/DateUtilities");
 
 class DAL{
     #connectionMYSQL
@@ -93,14 +94,14 @@ class DAL{
     }
     
     async getQuartsByUser(idUtilisateur,debut, fin){
-        return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`Call GetQuartsByUser('${idUtilisateur}','${debut.toISOString().replace("T"," ").replace("Z","")}','${fin.toISOString().replace("T"," ").replace("Z","")}')`))[0])
+        return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`Call GetQuartsByUser('${idUtilisateur}','${debut.toLocaleDateString()}','${fin.toLocaleDateString()}')`))[0])
         .map(x=>Utilities.getArray(x))
     }
     async getQuartsByPlancher(idPlancher, date){
         let dateDebut=new Date(date);
         let dateFin=new Date(dateDebut);
         dateFin.setDate(dateFin.getDate() + 1);
-        return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`Call GetQuartsByPlancher('${idPlancher}','${dateDebut.toISOString().replace("T"," ").replace("Z","")}','${dateFin.toISOString().replace("T"," ").replace("Z","")}')`))[0])
+        return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`Call GetQuartsByPlancher('${idPlancher}','${dateDebut.toLocaleDateString()}','${dateFin.toLocaleDateString()}')`))[0])
         .map(x=>Utilities.getArray(x))
     }
     async getAllRolesUtilisateurs(){
