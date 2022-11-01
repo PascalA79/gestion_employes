@@ -115,11 +115,22 @@ class EditShiftForm{
     addNewShift(user, start, end){
         this.empty();
         this.form.attr("method", "post");
-        this.btnSend.val("Créer");
+        this.btnSend.val("Ajouter");
         this.user = user;
         this.fillShift(this.getFullName(user), start, end);
         console.log(user);
         this.fillHidden({idUtilisateur: user.id, idPlancher: user.idPlancher});
+        this.show();
+    }
+
+    addShift(ws, user){
+        this.empty();
+        this.form.attr("method", "post");
+        this.btnSend.val("Ajouter");
+        this.user = user;
+        this.fillShift(this.getFullName(user), new Date(ws.debut), new Date(ws.fin), ws.idRoleUtilisateur);
+        // this.fillShift(this.getFullName(user), new Date(ws.start), new Date(ws.end), ws.idRoleUtilisateur);
+        this.fillHidden(ws);
         this.show();
     }
 
@@ -129,7 +140,6 @@ class EditShiftForm{
         this.btnSend.val("Modifier");
         this.user = user;
         this.oldShift = ws;
-        console.log(ws);
         this.fillShift(this.getFullName(user), new Date(ws.debut), new Date(ws.fin), ws.idRoleUtilisateur);
         // this.fillShift(this.getFullName(user), new Date(ws.start), new Date(ws.end), ws.idRoleUtilisateur);
         this.fillHidden(ws);

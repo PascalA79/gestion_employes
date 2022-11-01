@@ -26,7 +26,7 @@ class DAL{
     }
     async checkValidQuart(idQuartTravail,idUtilisateur,debutQuart,finQuart){
         return await this.#connectionMYSQL.excecuteSync(`SELECT IsValidQuart(${parseInt(idQuartTravail)}, ${parseInt(idUtilisateur)}, 
-        '${debutQuart}','${finQuart}'))); AS value`)
+        '${debutQuart}','${finQuart}') AS value`)
     }
     async getUsers(value=null, champs=null,equation='='){
         const sqlUser=`SELECT idUtilisateur as id,

@@ -14,6 +14,7 @@
             OK: 0,
             INVALID: 1,
             BEFORESTART: 2,
+            CONFLICT: 3,
         },
         ROLE:{
             OK: 0,
@@ -48,8 +49,9 @@
 
     ERROR_TEXTS.END={};
     ERROR_TEXTS.END[ERROR_CODES.END.OK] = "";
-    ERROR_TEXTS.END[ERROR_CODES.END.INVALID] = ERROR_TEXTS.START[ERROR_CODES.START.INVALID]
+    ERROR_TEXTS.END[ERROR_CODES.END.INVALID] = ERROR_TEXTS.START[ERROR_CODES.START.INVALID];
     ERROR_TEXTS.END[ERROR_CODES.END.BEFORESTART] = "La fin doit être après le début";
+    ERROR_TEXTS.END[ERROR_CODES.END.CONFLICT] = "Conflit avec un autre quart de travail";
 
     ERROR_TEXTS.ROLE={};
     ERROR_TEXTS.ROLE[ERROR_CODES.ROLE.OK] = "";

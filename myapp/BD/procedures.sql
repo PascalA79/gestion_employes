@@ -78,11 +78,11 @@ END $$
 CREATE OR REPLACE TRIGGER `BeforeInsertQuartsTravail` BEFORE INSERT ON `QuartsTravail`
     FOR EACH ROW BEGIN
         DECLARE isInvalid INT;
-    SET isInvalid=(SELECT IsValidQuart(NEW.idQuartTravail, NEW.idUtilisateur, 
-    NEW.debut, NEW.fin));
-    IF(0=isInvalid) THEN
-        SIGNAL sqlstate '45001' set message_text = "Ajout du QuartsTravail impossible!";
-    END IF;
+        SET isInvalid=(SELECT IsValidQuart(NEW.idQuartTravail, NEW.idUtilisateur, 
+        NEW.debut, NEW.fin));
+        IF(0=isInvalid) THEN
+            SIGNAL sqlstate '45001' set message_text = "Ajout du QuartsTravail impossible!";
+        END IF;
 END $$
 
 CREATE OR REPLACE TRIGGER `BeforeUpdateQuartsTravail` BEFORE UPDATE ON `QuartsTravail`
@@ -102,20 +102,20 @@ DELIMITER $$
 CREATE OR REPLACE FUNCTION `CheckPassword` (`_alias` VARCHAR(45), `_motDePasse` VARCHAR(45)) RETURNS TINYINT(1) NO SQL
 RETURN PASSWORD(_motDePasse) = (SELECT Utilisateurs.motDePasse FROM Utilisateurs WHERE Utilisateurs.alias=_alias) $$
 
-CREATE OR REPLACE FUNCTION `IsValidQuart`(`__idQuartTravail` INT, `__idUtilisateur` INT, `__debutQuart` DATETIME, `__finQuart` DATETIME) RETURNS tinyint(11) NO SQL
+CREATE OR REPLACE FUNCTION `IsValidQuart`(`_idQuartTravail` INT, `_idUtilisateur` INT, `_debutQuart` DATETIME, `_finQuart` DATETIME) RETURNS tinyint(11) NO SQL
 RETURN (
-    SELECT 1>=COUNT(QuartsTravail.idQuartTravail) AS result FROM QuartsTravail 
+    SELECT COUNT(QuartsTravail.idQuartTravail) AS result FROM QuartsTravail 
     WHERE QuartsTravail.idUtilisateur=_idUtilisateur AND
     QuartsTravail.idQuartTravail!=_idQuartTravail AND
     (
-    _debutQuart>=QuartsTravail.debut AND
-    _debutQuart<QuartsTravail.fin
+    (_debutQuart>=QuartsTravail.debut AND
+    _debutQuart<QuartsTravail.fin)
     OR
-    _finQuart>QuartsTravail.debut AND 
-    _finQuart<=QuartsTravail.fin
+    (_finQuart>QuartsTravail.debut AND 
+    _finQuart<=QuartsTravail.fin)
     OR
-    _debutQuart<=QuartsTravail.debut AND 
-    _finQuart>=QuartsTravail.fin
+    (_debutQuart<=QuartsTravail.debut AND 
+    _finQuart>=QuartsTravail.fin)
     )
    )$$
 DELIMITER ;

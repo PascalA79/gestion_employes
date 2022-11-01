@@ -88,7 +88,14 @@ block content
       });
       const editShiftData = !{JSON.stringify(editShiftData)};
       if (editShiftData.showModal){
-        console.log(editShiftData.shiftData.workShift);
-        editShiftForm.editShift(editShiftData.shiftData.workShift, {})
+        console.log("Allo");
+        console.log(editShiftData.shiftErrors);
+        if(editShiftData.shiftData.id == -1){
+          editShiftForm.addShift(editShiftData.shiftData.workShift, editShiftData.shiftData.user);
+        }else{
+          editShiftForm.editShift(editShiftData.shiftData.workShift, editShiftData.shiftData.user);
+        }
+        
+        editShiftForm.fillErrors(editShiftData.shiftErrors);
       }
     });
