@@ -116,8 +116,8 @@ class DAL{
     async getSuperviseurOfPlancher(idPlancher){
         return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`CALL getSuperviseurOfPlancher('${idPlancher}');`))[0]).map(x => Utilities.getArray(x));
     }
-    async getListEmployes({id,}){
-        return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`CALL GetListEmployes('${id}'}');`))[0]).map(x => Utilities.getArray(x));
+    async getListEmployes({id}){
+        return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`CALL GetListEmployes('${id}');`))[0]).map(x => Utilities.getArray(x));
 
     }
     

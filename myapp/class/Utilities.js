@@ -16,5 +16,14 @@ class Utilities{
         keys.forEach(key=>array[key]=dictionnaire[key])
         return array;
     }
+    static assiativeArrayToDict(array){
+        if(typeof array != typeof (new Object())){
+            return array
+        }
+        let entries=Object.entries(array)
+        let dict={}
+        entries.forEach((elem)=>dict[elem[0]]=Utilities.assiativeArrayToDict(elem[1]))
+        return dict;
+    }
 }
 module.exports = Utilities

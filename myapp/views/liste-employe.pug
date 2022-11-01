@@ -1,5 +1,72 @@
 extends layout
+mixin buildCell(celldata)
 
+  td
+      =celldata.alias
+  td  
+      =celldata.prenom
+  td  
+      =celldata.nom
+  td  
+      =celldata.nomPlancher
+  td  
+      =celldata.nomTypeUtilisateur
+  td  
+      =celldata.courriel
+  td  
+      =celldata.telephone
+  td  
+    -if(celldata.actif[0]){
+      input(type="checkbox", disabled, checked)
+    -}
+    -else{
+      input(type="checkbox", disabled)
+    -}
+
+      
+    
+  
+mixin buildRow(rowdata)
+  tr.clickable-medium(iduser=rowdata.id) 
+    +buildCell(rowdata)
+  
+mixin buildTable(data)
+  -let values=Object.values(data)
+  table
+    thead
+      tr
+        td(colspan='100%',position='relative') 
+          h1 Liste des employés
+        tr 
+        td  Alias
+        td  Prenom
+        td  Nom
+        td  Nom du plancher
+        td  Type de l'utilisateur
+        td  Courriel
+        td  Téléphone
+        td  Actif
+    tbody 
+      -for(rowdata of values){
+        +buildRow(rowdata)
+        -}
+ 
+        
 
 block content
-  h1 Liste des employés
+  include navbar
+  +navbar(user, alerts, "liste-employes")
+  
+  - const EMPLOYES=employes;
+  .container.table-container-emp
+    +buildTable(EMPLOYES)
+    
+  script(defer).
+    $(".clickable-medium").click(e=>{
+      let idUser=$(e.target).parent('.clickable-medium').attr('iduser');
+      location.href=`/profil?idUser=${idUser}`;
+      })
+    //  each emp in employes
+    //+tuile(emp['alias'],emp['prenom'], emp['nom'], emp['idPlancher'], emp["idTypeUtilisateur"] emp['courriel'], emp['telephone'],emp["actif"}])
+
+  
