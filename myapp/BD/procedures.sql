@@ -111,14 +111,14 @@ RETURN (
     WHERE QuartsTravail.idUtilisateur=_idUtilisateur AND
     QuartsTravail.idQuartTravail!=_idQuartTravail AND
     (
-    (_debutQuart>=QuartsTravail.debut AND
-    _debutQuart<QuartsTravail.fin)
+    _debutQuart>=QuartsTravail.debut AND
+    _debutQuart<QuartsTravail.fin
     OR
-    (_finQuart>QuartsTravail.debut AND 
-    _finQuart<=QuartsTravail.fin)
+    _finQuart>QuartsTravail.debut AND 
+    _finQuart<=QuartsTravail.fin
     OR
-    (_debutQuart<=QuartsTravail.debut AND 
-    _finQuart>=QuartsTravail.fin)
+    _debutQuart<=QuartsTravail.debut AND 
+    _finQuart>=QuartsTravail.fin
     )
    )$$
 DELIMITER ;

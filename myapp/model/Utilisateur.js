@@ -44,7 +44,7 @@ class Utilisateur{
     }
 
     async getListEmployes(){
-        return await Utilisateur.#DAL.getListEmployes({...this});
+        return await Utilisateur.#DAL.getListEmployes(this);
     }
 
     async isSuperviseurOfPlancher(idPlancher){
