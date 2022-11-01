@@ -26,7 +26,7 @@ class QuartTravail{
     }
     
     static async validateQuart({idQuartTravail,idUtilisateur,debut,fin}){
-        return checkValidQuart(idQuartTravail,idUtilisateur,debut,fin)
+        return QuartTravail.#DAL.checkValidQuart(idQuartTravail,idUtilisateur,debut,fin)
     }
     static async getByUser(idUtilisateur,debut, fin){
         const data=await QuartTravail.#DAL.getQuartsByUser(idUtilisateur, debut, fin);

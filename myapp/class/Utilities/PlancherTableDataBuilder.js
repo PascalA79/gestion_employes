@@ -24,7 +24,7 @@ function BuildUserRowData(hours, day, user, roles){
         {return {...q, start: DateUtilities.getDateObj(q.start), end: DateUtilities.getDateObj(q.end)}});
     for (h of hours){
         const currentShift = shifts.find((s) => DateUtilities.isInSpan(h, s.start, s.end));
-        if(!currentShift) rowData.push(BuildEmptyCell());
+        if(!currentShift) rowData.push(BuildEmptyCell(h));
         else if (currentShift.start.getTime() == h.getTime()) rowData.push(BuildShiftCell(currentShift, roles));
     }
     return rowData;
@@ -38,13 +38,20 @@ function BuildUserCell(user, day){
     const cell = {};
     cell.content= `${user.prenom} ${user.nom}`
     cell.id = user.id
-    cell.attributes = {class: "clickable-dark tuile-sm"};
+    cell.attributes = {class: "clickable-dark tuile-sm user-cell"};
     cell.attributes.onClick = `window.location.href = '/horaire-perso?id=${user.id}&date=${DateUtilities.dateToDateString(day)}'`;
+    cell.attributes['data-user'] = user;
     return cell;
 }
 
-function BuildEmptyCell(){
-    return {content: " "};
+function BuildEmptyCell(hour){
+    const cell = {};
+    cell.content = " ";
+    cell.attributes = {};
+    if (!!hour)
+        cell.attributes["data-hour"] = hour;
+    return cell;
+    // return {content: " ", attributes:{style: "background-color: red;"}};
 }
 
 function BuildShiftCell(workShift, roles){
@@ -63,6 +70,8 @@ function BuildShiftAttributes(workShift, role){
     const attributes = {};
     attributes.colspan = 2 * DateUtilities.getDurationH(workShift);
     attributes.style = `background-color: ${role.couleur}; font-weight: bold;`;
+    attributes.class = "work-shift-cell";
+    attributes['data-ws'] = workShift;
     // attributes.class = "tuile-sm";
     return attributes;
 }

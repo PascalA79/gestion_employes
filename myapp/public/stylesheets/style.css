@@ -19,6 +19,7 @@
     --txt-dark: hsl(213, 43%, 38%);
     --txt-alert: hsl(50, 100%, 50%);
     --bg-alert: hsl(0, 100%, 50%);
+    --txt-confirm: palegreen;
   
   
     --fnt-header: Calibri 20 bold;
@@ -82,6 +83,7 @@
   .lbl-error{
     color: var(--bg-alert);
   }
+  .lbl-confirm{ color: var(--txt-confirm)}
   .input-dark, .btn-dark{
     color: var(--txt-light);
     background-color: var(--txt-dark);
@@ -91,6 +93,19 @@
   .btn-dark:hover{
     color: var(--txt-dark);
     background-color: var(--txt-light);
+  }
+
+  /* Ref (placeholder): https://www.w3schools.com/howto/howto_css_placeholder.asp*/
+  ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: var(--txt-medium);
+  }
+  
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: var(--txt-medium);
+  }
+  
+  ::-ms-input-placeholder { /* Microsoft Edge */
+    color: var(--txt-medium);
   }
   
   .hidden{
@@ -243,6 +258,7 @@
   .table-container-plancher{
     /* background-color: aliceblue; */
     overflow:scroll;
+    display: flex;
   }
 
   .table-container-plancher table{
@@ -378,6 +394,23 @@
   .dateSelector .input-dark>*{
     text-align: center;
   }
+
+  .shift-form-plancher{
+    /* position: sticky;
+    right: 0;
+    top: 0; */
+
+  }
+  .shift-form-plancher input{
+    width: auto;
+  }
+
+  .modal-content{
+    background: none;
+    border: None;
+
+  }
+
 
   .index-row{
     margin: auto;
