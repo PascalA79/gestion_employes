@@ -44,6 +44,7 @@ router.get(['/','/index'], async function(req, res, next) {
   const DAL_PASCAL=new DAL()
   Plancher.connect(DAL_PASCAL);
   RoleUtilisateur.connect(DAL_PASCAL);
+  QuartTravail.connect(DAL_PASCAL);
   let currentUser = session.get('fullUser');
   if(!currentUser) return;
   currentUser = new Utilisateur(currentUser);
@@ -65,6 +66,7 @@ router.post(['/', '/index'], async function(req, res, next){
   const DAL_PASCAL=new DAL()
   Plancher.connect(DAL_PASCAL);
   RoleUtilisateur.connect(DAL_PASCAL);
+  QuartTravail.connect(DAL_PASCAL);
   const editShiftData = await GetEditData(req);
   console.log(editShiftData);
   let currentUser = session.get('fullUser');
@@ -150,6 +152,11 @@ async function ValidateWorkShift(workShift){
   const allRoles = await RoleUtilisateur.getAll();
   const currentRole = allRoles.find((r) => r.id = workShift.idRoleUtilisateur);
   shiftErrors.errorRole = ValidateurHoraire.getRoleValidationText(currentRole);
+  if(shiftErrors.errorStart == "" && shiftErrors.errorEnd == ""){
+    console.log(workShift);
+    const ws = {...workShift, debut: workShift.debut.replace("T", " "), fin: workShift.fin.replace("T", " ")};
+    console.log(await QuartTravail.validateQuart(ws));
+  }
   // shiftErrors.errorRole = "";
   return shiftErrors;
 }

@@ -13,6 +13,7 @@ const editShiftForm = new EditShiftForm(
     $("#idPlancher"),
     $("#idUtilisateur"),
     $("#confirme"),
+    $("#confirmMsg"),
 );
 
 editShiftForm.fillRoles(allRoles);
