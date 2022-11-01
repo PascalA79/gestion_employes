@@ -1,0 +1,23 @@
+extends layout
+
+
+block content
+  //- mixin tuile(text, alerts, url)
+  //-   p.tuile= text
+  include navbar
+  +navbar(user, alerts, "home")
+  - const tuile=tuiles;
+
+  mixin tuile(text, alert, url)
+    a(href=`${url}`).tuile.tuile-sq
+        p=text
+        if alert
+            .alert
+                p= alert
+
+  .container
+    .index-row
+      each val in tuile
+        +tuile(val['text'], val['nombreAlerte'], val['url'])
+      //- p= `b: ${b}`
+  

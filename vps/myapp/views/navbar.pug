@@ -1,0 +1,41 @@
+
+mixin tuile(text, path, alert, selected)
+    - classes = []
+    if selected
+        -classes.push("selected")
+    li.nav-item
+        a(href=path class=classes).nav-link.tuile
+            p=text
+            if alert
+                .alert
+                    p= alert
+
+mixin showLogo(path, selected)
+    - classes = []
+    if selected
+        -classes.push("selected")
+    a(href=path).navbar-brand
+        svg(height=60 width=60 viewBox="15, 15, 70, 60" class=classes).logo
+            path(d="m 24.739511,60.528645 9.53e-4,-13.824478 12.669309,-10.583333 c 6.968131,-5.820833 12.815136,-10.583333 12.993357,-10.583333 0.178221,0 6.025226,4.7625 12.993346,10.583333 l 12.66931,10.583333 0.0011,13.824478 0.0011,13.824479 H 65.749153 55.430404 v -7.14375 -7.14375 H 50.40332 45.376237 v 7.14375 7.14375 H 35.057488 24.738738 l 9.53e-4,-13.824479 z M 18.896236,48.22532 c -0.357094,-0.400071 -0.911793,-1.029251 -1.232665,-1.398178 l -0.583402,-0.670774 5.280884,-4.4886 5.280883,-4.488601 0.0035,-6.283854 0.0035,-6.283854 h 4.101042 4.101041 v 2.645834 c 0,1.455208 0.06683,2.645833 0.148507,2.645833 0.211834,0 12.800995,-10.744818 13.675972,-11.672408 l 0.727604,-0.771357 0.727604,0.7743 c 0.400182,0.425865 7.752291,6.75369 16.33802,14.061833 8.585729,7.308142 15.755312,13.421047 15.932409,13.584234 0.247877,0.228404 0.03472,0.615788 -0.926042,1.682956 L 81.227087,48.948942 65.904461,35.842328 C 57.477016,28.633691 50.433192,22.792755 50.251518,22.86247 49.992954,22.96169 22.383485,46.395115 20.091502,48.460659 19.555754,48.943478 19.533301,48.939057 18.896236,48.22532 Z")
+        
+
+mixin navbar(user, alerts, selected)
+    nav.navbar.navbar-expand-md
+        .container
+            +showLogo("/index", selected == "home")
+            button(class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav" aria-controls="nav" aria-label="Expand Navigation")
+                span.navbar-toggler-icon
+            
+            .navbar-nav.collapse.navbar-collapse#nav
+                +tuile(user.alias, "#", null, selected == "profil")
+                +tuile("Courriels", "#", alerts.courriels, selected == "courriels")
+                +tuile("Messages", "#", alerts.messages, selected == "messages")
+                +tuile("Déconnecter", "/disconnect")
+
+        
+
+//- p Dans navbar.pug
+
+//- - const user = {alias: "Pascal"};
+//- - const alerts = {messages: 12};
+//- +navbar(user, alerts)

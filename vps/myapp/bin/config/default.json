@@ -1,0 +1,9 @@
+{
+    "name": "Default config",
+    "dbserver":{
+        "host": "173.176.94.124",
+        "user": "projet",
+        "password": "qwerty12345",
+        "database": "projet"
+    }
+}

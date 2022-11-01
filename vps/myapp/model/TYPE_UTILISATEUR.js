@@ -1,0 +1,7 @@
+const TYPE_UTILISATEUR={
+    EMPLOYÉ:0,
+    SUPERVISEUR:1,
+    DIRECTEUR:2,
+    ADMINISTRATEUR:3,
+    NULL:-1}
+module.exports = TYPE_UTILISATEUR;

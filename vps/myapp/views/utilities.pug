@@ -1,0 +1,20 @@
+//- 2022-09-19
+//- Philippe C. Léger
+//- Fichier contenant des mixins réutilisés dans plusieurs pages
+
+mixin errorLabel(errorMessage, ctrlId)
+    - let classes = [];
+    - if(!error-message) classes.append("hidden");
+    span.lbl-error(class=classes id=ctrlId)=errorMessage
+
+mixin confirmLabel(confirmMessage, ctrlId)
+    - let classes = [];
+    - if(!confirmMessage) classes.append("hidden");
+    span.lbl-confirm(class=classes id=ctrlId)=confirmMessage
+
+
+mixin test(testMessage)
+    p= testMessage
+
+mixin tuile(data)
+    p= data

@@ -1,0 +1,9 @@
+{
+    "name": "Dev_Philippe config",
+    "dbserver":{
+        "host": "127.0.0.1",
+        "user": "projetDML",
+        "password": "dM#gmvmUcg9FE5n5",
+        "database": "projet"
+    }
+}

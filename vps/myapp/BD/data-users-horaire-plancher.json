@@ -1,0 +1,167 @@
+{
+    "planchers":[
+        {
+            "id": 2,
+            "nom": "Deuxième plancher"
+        },
+        {
+            "id": 3,
+            "nom": "Troisième plancher"
+        },
+        {
+            "id": 13,
+            "nom": "Treizième plancher"
+        }
+    ],
+    "plancherSelectionne":{
+        "id":13
+    },
+    "jour":{
+        "year": 2022,
+        "month": 9,
+        "day":25
+    },
+    "users": [
+        {
+            "id": 1,
+            "prenom": "Pascal",
+            "nom": "Arès",
+            "roles": [1, 2, 3],
+            "quarts":[
+                {
+                    "id": 1,
+                    "start":{
+                        "year": 2022,
+                        "month": 9,
+                        "day": 25,
+                        "hour": 9,
+                        "minute": 0
+                    },
+                    "end":{
+                        "year": 2022,
+                        "month": 9,
+                        "day": 25,
+                        "hour": 12,
+                        "minute": 30
+                    },
+                    "idRoleUtilisateur": 1
+                },
+                {
+                    "id": 2,
+                    "start":{
+                        "year": 2022,
+                        "month": 9,
+                        "day": 28,
+                        "hour": 12,
+                        "minute": 0
+                    },
+                    "end":{
+                        "year": 2022,
+                        "month": 9,
+                        "day": 25,
+                        "hour": 17,
+                        "minute": 0
+                    },
+                    "idRoleUtilisateur": 1
+                },
+                {
+                    "id": 3,
+                    "start":{
+                        "year": 2022,
+                        "month": 9,
+                        "day": 30,
+                        "hour": 11,
+                        "minute": 0
+                    },
+                    "end":{
+                        "year": 2022,
+                        "month": 9,
+                        "day": 30,
+                        "hour": 19,
+                        "minute": 0
+                    },
+                    "idRoleUtilisateur": 2
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "prenom": "Philippe C.",
+            "nom": "Léger",
+            "roles": [1, 2, 3],
+            "quarts":[
+                {
+                    "id": 4,
+                    "start":{
+                        "year": 2022,
+                        "month": 9,
+                        "day": 25,
+                        "hour": 10,
+                        "minute": 0
+                    },
+                    "end":{
+                        "year": 2022,
+                        "month": 9,
+                        "day": 25,
+                        "hour": 19,
+                        "minute": 30
+                    },
+                    "idRoleUtilisateur": 2
+                },
+                {
+                    "id": 5,
+                    "start":{
+                        "year": 2022,
+                        "month": 9,
+                        "day": 28,
+                        "hour": 12,
+                        "minute": 0
+                    },
+                    "end":{
+                        "year": 2022,
+                        "month": 9,
+                        "day": 25,
+                        "hour": 17,
+                        "minute": 0
+                    },
+                    "idRoleUtilisateur": 2
+                },
+                {
+                    "id": 6,
+                    "start":{
+                        "year": 2022,
+                        "month": 9,
+                        "day": 30,
+                        "hour": 11,
+                        "minute": 0
+                    },
+                    "end":{
+                        "year": 2022,
+                        "month": 9,
+                        "day": 30,
+                        "hour": 19,
+                        "minute": 0
+                    },
+                    "idRoleUtilisateur": 3
+                }
+            ]
+        }
+    ],
+    "roles":[
+        {
+            "id": 1,
+            "nom": "Cuisinier",
+            "couleur": "red"
+        },
+        {
+            "id": 2,
+            "nom": "Serveur",
+            "color": "palegreen"
+        },
+        {
+            "id": 3,
+            "nom": "Plongeur",
+            "couleur": "blueviolet"
+        }
+    ]
+}
