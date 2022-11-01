@@ -49,11 +49,8 @@ CREATE OR REPLACE PROCEDURE `RemoveQuartTravail` (IN `_idQuartTravail` INT)  NO 
 DELETE FROM QuartsTravail WHERE idQuartTravail=_idQuartTravail $$
 
 CREATE OR REPLACE PROCEDURE `UpdateQuartTravail` (IN `_idQuartTravail` INT, IN `_idPlancher` INT, IN `_idUtilisateur` INT, IN `_idRoleUtilisateur` INT, IN `_debut` DATETIME, IN `_fin` DATETIME, IN `_confirme` TINYINT)  NO SQL
-BEGIN
-    UPDATE QuartsTravail SET idPlancher=_idPlancher, idUtilisateur=_idUtilisateur, idRoleUtilisateur = _idRoleUtilisateur, debut = _debut, fin = _fin, confirme =_confirme
-    WHERE idQuartTravail=_idQuartTravail;
-    SELECT * FROM QuartsTravail WHERE idQuartTravail=_idQuartTravail;
-END $$
+UPDATE QuartsTravail SET idPlancher=_idPlancher, idUtilisateur=_idUtilisateur, idRoleUtilisateur = _idRoleUtilisateur, debut = _debut, fin = _fin, confirme =_confirme
+WHERE idQuartTravail=_idQuartTravail$$
 
 
 CREATE OR REPLACE PROCEDURE `GetListEmployes`(IN `_idUtilisateur` INT) NO SQL
@@ -107,7 +104,7 @@ RETURN PASSWORD(_motDePasse) = (SELECT Utilisateurs.motDePasse FROM Utilisateurs
 
 CREATE OR REPLACE FUNCTION `IsValidQuart`(`_idQuartTravail` INT, `_idUtilisateur` INT, `_debutQuart` DATETIME, `_finQuart` DATETIME) RETURNS tinyint(11) NO SQL
 RETURN (
-    SELECT 0 = COUNT(QuartsTravail.idQuartTravail) AS result FROM QuartsTravail 
+    SELECT COUNT(QuartsTravail.idQuartTravail) AS result FROM QuartsTravail 
     WHERE QuartsTravail.idUtilisateur=_idUtilisateur AND
     QuartsTravail.idQuartTravail!=_idQuartTravail AND
     (
