@@ -24,7 +24,6 @@ router.use('/', async function(req, res, next) {
       if(!userId) return false;
       const DAL_PASCAL=new DAL();
       const query = req.query;
-      // console.log(query);
       Utilisateur.connect(DAL_PASCAL);
       let user=await Utilisateur.getUserByAlias(userId);
       let isAdmin=user.isAdministrateur();
@@ -69,7 +68,7 @@ router.post(['/', '/index'], async function(req, res, next){
   RoleUtilisateur.connect(DAL_PASCAL);
   QuartTravail.connect(DAL_PASCAL);
   Utilisateur.connect(DAL_PASCAL);
-  const editShiftData = await GetEditData(req);
+  const editShiftData = await GetEditData(req, true);
   console.log(editShiftData);
   let currentUser = session.get('fullUser');
   if(!currentUser) return;
@@ -85,13 +84,6 @@ router.post(['/', '/index'], async function(req, res, next){
   res.render('horaire-plancher', {data:data, tableData:tableData, editShiftData: editShiftData, user:{alias:session.get('user')}, alerts:{}});
 })
 
-router.put(['/', '/index'], async function(req, res, next){
-  session.start(req);
-  RoleUtilisateur.connect(DAL_PASCAL);
-  const maData = await GetEditData(req);
-  console.log(maData);
-})
-
 function qsToString(qs){
   let t = [];
   for(key in qs)
@@ -99,15 +91,26 @@ function qsToString(qs){
   return t.join("&");
 }
 
-async function GetEditData(req){
+async function GetEditData(req, doSomething = false){
   const workShift = new QuartTravail(req.body);
-  // const shiftErrors = {
-  //   errorStart: "My start error",
-  //   errorEnd: "My end error",
-  //   errorRole: "My role error"
-  // };
-  // shiftErrors.errorRole = "";
+  let success = false;
+  let confirmationMsg;
   const shiftErrors = await ValidateWorkShift(workShift);
+  if (doSomething && shiftErrors.errorEnd == "" && shiftErrors.errorStart == "" && shiftErrors.errorRole == ""){
+    let result = null;
+    if(workShift.idQuartTravail == -1){
+      result = await workShift.add();
+      confirmationMsg = ValidateurHoraire.CONFIRM_TEXTS[ValidateurHoraire.CONFIRM_CODES.CONFIRMADD];
+      if(result){
+        workShift.idQuartTravail = result.idQuartTravail;
+        success = true;
+      }
+    }else{
+      result = await workShift.update();
+      confirmationMsg = ValidateurHoraire.CONFIRM_TEXTS[ValidateurHoraire.CONFIRM_CODES.CONFIRMEDIT];
+      if(result) success = true;
+    }
+  } 
   const shiftData = {
     workShift: workShift,
     dataRole: 0,
@@ -118,8 +121,9 @@ async function GetEditData(req){
   const editShiftData = {
     showModal: showModal,
     shiftErrors: shiftErrors,
-    shiftData: shiftData
-  }
+    shiftData: shiftData,
+    msg: success ? confirmationMsg : "",
+  };
   editShiftData.qs = qsToString(req.query);
   return editShiftData;
 }
@@ -158,7 +162,7 @@ async function ValidateWorkShift(workShift){
   if(shiftErrors.errorStart == "" && shiftErrors.errorEnd == ""){
     const ws = {...workShift, debut: workShift.debut.replace("T", " "), fin: workShift.fin.replace("T", " ")};
     const resultat = await QuartTravail.validateQuart(ws)
-    if(resultat[0].value != 0){
+    if(resultat[0].value != 1){
       shiftErrors.errorEnd = ValidateurHoraire.ERROR_TEXTS.END[ValidateurHoraire.ERROR_CODES.END.CONFLICT];
     }
   }

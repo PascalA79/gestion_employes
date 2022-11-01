@@ -21,23 +21,7 @@ editShiftForm.fillRoles(allRoles);
 if(editShiftData.showModal){
     editShiftForm.fillShift(editShiftData.workShift);
     editShiftForm.fillErrors(editShiftData.shiftErrors);
-    // editShiftForm.show();
 }
-
-// if(editShiftData)
-// editShiftForm.show();
-
-
-
-// const btnSendShift = $("#btnSend");
-// const inputName = $("");
-// btnSendShift.click((e) => {
-//     console.log(e);
-//     e.preventDefault();
-//     const lst = $(".work-shift-cell");
-//     const workShift = lst.eq(0).data("ws");
-//     console.log(workShift);
-// });
 
 function AddShiftHandlers(){
     const shiftCells = $(".work-shift-cell");

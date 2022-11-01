@@ -114,7 +114,6 @@ class EditShiftForm{
 
     addNewShift(user, start, end){
         this.empty();
-        this.form.attr("method", "post");
         this.btnSend.val("Ajouter");
         this.user = user;
         this.fillShift(this.getFullName(user), start, end);
@@ -125,23 +124,20 @@ class EditShiftForm{
 
     addShift(ws, user){
         this.empty();
-        this.form.attr("method", "post");
         this.btnSend.val("Ajouter");
         this.user = user;
         this.fillShift(this.getFullName(user), new Date(ws.debut), new Date(ws.fin), ws.idRoleUtilisateur);
-        // this.fillShift(this.getFullName(user), new Date(ws.start), new Date(ws.end), ws.idRoleUtilisateur);
         this.fillHidden(ws);
         this.show();
     }
 
     editShift(ws, user){
         this.empty();
-        this.form.attr("method", "put");
+        console.log(ws);
         this.btnSend.val("Modifier");
         this.user = user;
         this.oldShift = ws;
         this.fillShift(this.getFullName(user), new Date(ws.debut), new Date(ws.fin), ws.idRoleUtilisateur);
-        // this.fillShift(this.getFullName(user), new Date(ws.start), new Date(ws.end), ws.idRoleUtilisateur);
         this.fillHidden(ws);
         this.show();
     }

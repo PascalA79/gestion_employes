@@ -42,8 +42,8 @@ block content
 
   mixin shiftFormModal(editShiftData)
     .modal#edit-shift-modal 
-      .modal-dialog.container-dark#edit-shift-form
-        form(action=`/horaire-plancher?${editShiftData.qs}` method="post")
+      .modal-dialog.container-dark
+        form(action=`/horaire-plancher?${editShiftData.qs}` method="post")#edit-shift-form
           .modal-content.d-flex.flex-column.gap-2
             input(type="hidden" name="idQuartTravail")#idQuartTravail
             input(type="hidden" name="idPlancher")#idPlancher
@@ -56,7 +56,7 @@ block content
             +errorLabel(editShiftData.shiftErrors.errorEnd2, "errorEnd")
             select.input-dark#selectRole(name="idRoleUtilisateur")
             +errorLabel(editShiftData.shiftErrors.errorRole2, "errorRole")
-            span.lbl-confirm.hidden#confirmMsg
+            span.lbl-confirm#confirmMsg
             .row.p-2.gap-2
               input(type="submit", value="Modifier").btn-dark.col#btnSend
               button(value="Annuler").btn-dark.col#btnCancel Annuler
@@ -89,13 +89,14 @@ block content
       const editShiftData = !{JSON.stringify(editShiftData)};
       if (editShiftData.showModal){
         console.log("Allo");
-        console.log(editShiftData.shiftErrors);
-        if(editShiftData.shiftData.id == -1){
+        console.log(editShiftData.shiftData);
+        if(editShiftData.shiftData.workShift.idQuartTravail == -1){
           editShiftForm.addShift(editShiftData.shiftData.workShift, editShiftData.shiftData.user);
         }else{
           editShiftForm.editShift(editShiftData.shiftData.workShift, editShiftData.shiftData.user);
         }
         
         editShiftForm.fillErrors(editShiftData.shiftErrors);
+        editShiftForm.fillMsg(editShiftData.msg);
       }
     });

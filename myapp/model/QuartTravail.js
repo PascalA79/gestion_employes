@@ -10,7 +10,7 @@ class QuartTravail{
         this.idRoleUtilisateur=idRoleUtilisateur
         this.debut=debut
         this.fin=fin
-        this.confirme=confirme?confirme:0;
+        this.confirme=confirme?1:0;
     }
     async add(){
         return await QuartTravail.#DAL.addQuartTravail({...this})
@@ -18,7 +18,7 @@ class QuartTravail{
     }
     
     async update(){
-        return await QuartTravail.#DAL.updateQuartTravail(this)
+        return await QuartTravail.#DAL.updateQuartTravail({...this})
     }
     
     async delete(){

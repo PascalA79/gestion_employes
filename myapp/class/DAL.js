@@ -67,13 +67,13 @@ class DAL{
         return quartsTravail.map(quart=>new QuartTravail(Utilities.getArray(quart)))
     }
 
-    async addQuartTravail({idPlancher,idUtilisateur,idRoleUtilisateur,debut,fin}){
-        let quart=await this.#connectionMYSQL.excecuteSync(`Call AddQuartTravail('${idPlancher}','${idUtilisateur}','${idRoleUtilisateur}','${debut}','${fin}')`)
+    async addQuartTravail({idPlancher,idUtilisateur,idRoleUtilisateur,debut,fin,confirme}){
+        let quart=await this.#connectionMYSQL.excecuteSync(`Call AddQuartTravail('${idPlancher}','${idUtilisateur}','${idRoleUtilisateur}','${debut}','${fin}',${confirme})`);
         return Utilities.getArray(quart[0][0]);
     }
     async updateQuartTravail({idQuartTravail,idPlancher,idUtilisateur,idRoleUtilisateur,debut,fin,confirme}){
-        let quart=await this.#connectionMYSQL.excecuteSync(`Call UpdateQuartTravail('${idQuartTravail}','${idPlancher}','${idUtilisateur}','${idRoleUtilisateur}','${debut}','${fin}','${confirme}')`)
-        return Utilities.getArray(quart[0][0]);
+        let quart=await this.#connectionMYSQL.excecuteSync(`Call UpdateQuartTravail(${idQuartTravail},${idPlancher},${idUtilisateur},${idRoleUtilisateur},'${debut}','${fin}',${confirme})`)
+        return quart.affectedRows;
     }
     async removeQuartTravail(idQuartTravail){
         await this.#connectionMYSQL.excecuteSync(`Call RemoveQuartTravail('${idQuartTravail}')`)
