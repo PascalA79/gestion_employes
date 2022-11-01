@@ -24,6 +24,10 @@ class QuartTravail{
     async delete(){
         await QuartTravail.#DAL.removeQuartTravail(this.idQuartTravail)
     }
+
+    static async delete(idQuartTravail){
+        await QuartTravail.#DAL.removeQuartTravail(idQuartTravail)
+    }
     
     static async validateQuart({idQuartTravail,idUtilisateur,debut,fin}){
         return QuartTravail.#DAL.checkValidQuart(idQuartTravail,idUtilisateur,debut,fin)

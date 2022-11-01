@@ -6,6 +6,7 @@ const editShiftForm = new EditShiftForm(
     $("#selectRole"),
     $("#btnSend"),
     $("#btnCancel"),
+    $("#btnDelete"),
     $("#errorStart"),
     $("#errorEnd"),
     $("#errorRole"),
@@ -14,6 +15,7 @@ const editShiftForm = new EditShiftForm(
     $("#idUtilisateur"),
     $("#confirme"),
     $("#confirmMsg"),
+    maUrl
 );
 
 editShiftForm.fillRoles(allRoles);

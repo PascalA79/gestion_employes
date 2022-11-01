@@ -35,5 +35,10 @@ class Utilities{
         })
         return array;
     }
+
+
+    static getURL(req){
+        return req.protocol + '://' + req.get('host') + req.originalUrl;
+    }
 }
 module.exports = Utilities

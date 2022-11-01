@@ -1,5 +1,5 @@
 class EditShiftForm{
-    constructor(form, inputName, inputShiftStart, inputShiftEnd, selectRole, btnSend, btnCancel, errorStart, errorEnd, errorRole, idQuartTravail, idPlancher, idUtilisateur, confirme, confirmMsg){
+    constructor(form, inputName, inputShiftStart, inputShiftEnd, selectRole, btnSend, btnCancel, btnDelete, errorStart, errorEnd, errorRole, idQuartTravail, idPlancher, idUtilisateur, confirme, confirmMsg, url){
         this.form = form;
         this.inputName = inputName;
         this.inputShiftStart = inputShiftStart;
@@ -17,6 +17,8 @@ class EditShiftForm{
         this.idUtilisateur = idUtilisateur;
         this.confirme = confirme;
         this.confirmMsg = confirmMsg;
+        this.btnDelete = btnDelete;
+        this.url = url;
 
         this.btnCancel.click((e) => {
             e.preventDefault();
@@ -26,6 +28,11 @@ class EditShiftForm{
 
         this.selectRole.change((e) => {
             this.setRole();
+        })
+
+        this.btnDelete.click((e) => {
+            e.preventDefault();
+            this.deleteShift();
         })
     }
     
@@ -146,4 +153,12 @@ class EditShiftForm{
         return `${user.prenom} ${user.nom}`;
     }
 
+    deleteShift(){
+        $.ajax({
+            url: this.url,
+            type: "DELETE",
+            data: {idQuartTravail: this.oldShift.idQuartTravail},
+            success: () => {location.reload()}
+        })
+    }
 }

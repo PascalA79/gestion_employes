@@ -57,6 +57,8 @@ router.get(['/','/index'], async function(req, res, next) {
   data.allRoles = await GetAllRoles();
   const editShiftData = GetEmptyEditData(req); // await GetEditData(req);
   DAL_PASCAL.end()
+  const maUrl = Utilities.getURL(req)
+  data.url = maUrl;
   res.render('horaire-plancher', {data:data, tableData:tableData, editShiftData: editShiftData, user:{alias:session.get('user')}, alerts:{}});
 })
 
@@ -81,8 +83,33 @@ router.post(['/', '/index'], async function(req, res, next){
   const tableData = BuildTableData(data, data.jour);
   data.allRoles = await GetAllRoles();
   DAL_PASCAL.end()
+  const maUrl = Utilities.getURL(req)
+  data.url = maUrl;
   res.render('horaire-plancher', {data:data, tableData:tableData, editShiftData: editShiftData, user:{alias:session.get('user')}, alerts:{}});
 })
+
+
+router.delete(['/', '/index'], async function(req, res){
+  console.log("DELETE");
+  console.log(req);
+  session.start(req);
+  let success = false;
+  const DAL_PASCAL=new DAL()
+  QuartTravail.connect(DAL_PASCAL);
+  try{
+    const idQuartTravail = req.body.idQuartTravail;
+    QuartTravail.delete(idQuartTravail);
+    success = true;
+  }catch(error){
+    console.log(error);
+  }
+  DAL_PASCAL.end()
+  if(success){
+    res.send({success:success, msg:ValidateurHoraire.CONFIRM_TEXTS[ValidateurHoraire.CONFIRM_CODES.CONFIRMDELETE]});
+  }else{
+    res.send({success:success, msg:"Un problème est survenu"});
+  }
+});
 
 function qsToString(qs){
   let t = [];

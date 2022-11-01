@@ -77,6 +77,7 @@ block content
   script.
     const allRoles = !{JSON.stringify(data.allRoles)};
     const editShiftData = !{JSON.stringify(editShiftData)};
+    const maUrl = `${!{JSON.stringify(data.url)}}`;
   script(src="./scripts/horaire/horaire-plancher.js" defer) 
   script(defer).
     const date = !{JSON.stringify(data.date)};
@@ -88,8 +89,6 @@ block content
       });
       const editShiftData = !{JSON.stringify(editShiftData)};
       if (editShiftData.showModal){
-        console.log("Allo");
-        console.log(editShiftData.shiftData);
         if(editShiftData.shiftData.workShift.idQuartTravail == -1){
           editShiftForm.addShift(editShiftData.shiftData.workShift, editShiftData.shiftData.user);
         }else{
