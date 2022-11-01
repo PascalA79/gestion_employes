@@ -94,14 +94,14 @@ class DAL{
     }
     
     async getQuartsByUser(idUtilisateur,debut, fin){
-        return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`Call GetQuartsByUser('${idUtilisateur}','${debut.toLocaleDateString()}','${fin.toLocaleDateString()}')`))[0])
+        return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`Call GetQuartsByUser('${idUtilisateur}','${debut.toLocaleDateString("fr-CA")}','${fin.toLocaleDateString("fr-CA")}')`))[0])
         .map(x=>Utilities.getArray(x))
     }
     async getQuartsByPlancher(idPlancher, date){
         let dateDebut=new Date(date);
         let dateFin=new Date(dateDebut);
         dateFin.setDate(dateFin.getDate() + 1);
-        return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`Call GetQuartsByPlancher('${idPlancher}','${dateDebut.toLocaleDateString()}','${dateFin.toLocaleDateString()}')`))[0])
+        return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`Call GetQuartsByPlancher('${idPlancher}','${dateDebut.toLocaleDateString("fr-CA")}','${dateFin.toLocaleDateString("fr-CA")}')`))[0])
         .map(x=>Utilities.getArray(x))
     }
     async getAllRolesUtilisateurs(){
