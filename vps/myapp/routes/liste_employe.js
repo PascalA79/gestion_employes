@@ -31,7 +31,7 @@ router.use('/', async function(req, res, next) {
     let user=await Utilisateur.getUserByAlias(session.get('user'))
     let listEmployes=await user.getListEmployes();
     myDAL.end();
-    listEmployes=[...listEmployes,...listEmployes,...listEmployes,...listEmployes]
+    //listEmployes=[...listEmployes,...listEmployes,...listEmployes,...listEmployes]
     let listeJSONObject=(Utilities.assiativeArrayToDict(listEmployes));
     res.render('liste-employe',{user:{alias:session.get('user')},alerts:{},employes:listeJSONObject});
   })

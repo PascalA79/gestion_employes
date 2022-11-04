@@ -104,7 +104,7 @@ RETURN PASSWORD(_motDePasse) = (SELECT Utilisateurs.motDePasse FROM Utilisateurs
 
 CREATE OR REPLACE FUNCTION `IsValidQuart`(`_idQuartTravail` INT, `_idUtilisateur` INT, `_debutQuart` DATETIME, `_finQuart` DATETIME) RETURNS tinyint(11) NO SQL
 RETURN (
-    SELECT '0'=COUNT(QuartsTravail.idQuartTravail) AS result FROM QuartsTravail 
+    SELECT COUNT(QuartsTravail.idQuartTravail) AS result FROM QuartsTravail 
     WHERE QuartsTravail.idUtilisateur=_idUtilisateur AND
     QuartsTravail.idQuartTravail!=_idQuartTravail AND
     (

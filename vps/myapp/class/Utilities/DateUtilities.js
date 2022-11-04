@@ -139,4 +139,13 @@ module.exports = class DateUtilities{
         // console.log(`${DateUtilities.dateToDateString(sunday)}: ${i}`)
         return sunday;
     }
+
+    static getDBDateStringFromString(dateStr){
+        return DateUtilities.getDBDateString(new Date(dateStr));
+    }
+    static getDBDateString(date){
+        let offset = date.getTimezoneOffset();
+        let date2 = new Date(date.getTime() + offset * 60 * 1000)
+        return  date2.toISOString().replace("T", " ").replace("Z", "");
+    }
 };

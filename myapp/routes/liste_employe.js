@@ -7,15 +7,17 @@ const Utilisateur = require('../model/Utilisateur');
 const Utilities = require('../class/Utilities');
 var session=new Session(router);
 router.use('/', async function(req, res, next) {
-    let redirect= new Redirect(session,res);
+  session.start(req);
+  let redirect= new Redirect(session,res);
   let acces= await  redirect.access('user',async (alias)=>{
     const myDAL=new DAL()
     Utilisateur.connect(myDAL)
     let user=await Utilisateur.getUserByAlias(alias)
     let isAdmin=user.isAdministrateur();
     let isDirecteur=user.isDirecteur();
-    let isSuperviseur=user.isSuperviseur()
-    let resultat = isAdmin || isDirecteur || isSuperviseur;
+    let isSuperviseur=user.isSuperviseur();
+    let resultat=  isAdmin || isDirecteur || isSuperviseur;
+    // let resultat=idQueryString ==user.id || user.id || isAdmin || isDirecteur || isSuperviseurOfUtilisateur
     myDAL.end()
     return !resultat}
   ,'./index')

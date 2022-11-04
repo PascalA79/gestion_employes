@@ -79,7 +79,8 @@ class EditShiftForm{
     fillDate(input, date){
         if(!!date){
             let maDate = new Date(date.getTime());
-            maDate.setMinutes(maDate.getMinutes() - maDate.getTimezoneOffset());
+            // maDate.setMinutes(maDate.getMinutes() - maDate.getTimezoneOffset());
+            //maDate.setMinutes(maDate.getMinutes() - maDate.getTimezoneOffset());
             input.val(maDate.toISOString().slice(0, 16));
         } else {
             console.log("emptyDate");
