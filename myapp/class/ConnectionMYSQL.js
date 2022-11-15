@@ -15,7 +15,7 @@ class ConnectionMYSQL{
         }
     #excecute(query,fonction_error_results_fields){
         this.connectionMySQL.query(query,(error,results,fields)=>{
-            this.connectionMySQL.connect(()=>fonction_error_results_fields(error,results,fields));
+            /*this.connectionMySQL.connect(()=>*/fonction_error_results_fields(error,results,fields);
             //this.connectionMySQL.end();
         })
 

@@ -39,7 +39,7 @@ class DAL{
         age,
         telephone,
         courriel,
-        actif FROM Utilisateurs${value?` WHERE ${champs} ${equation}'${value}'`:''}`;
+        actif FROM Utilisateurs${typeof(value)=='string'?` WHERE ${champs} ${equation}'${value}'`:''}`;
         let users= await this.#connectionMYSQL.excecuteSync(sqlUser);
         return users.map(user=>new Utilisateur(Utilities.getArray(user)))
     }
@@ -80,10 +80,10 @@ class DAL{
         await this.#connectionMYSQL.excecuteSync(`Call RemoveQuartTravail('${idQuartTravail}')`)
     }
 
-    async addUtilisateur({id,idTypeUtilisateur,idPlancher,prenom,nom,alias,telephone,courriel,actif}){
+    async addUtilisateur({idTypeUtilisateur,idPlancher,prenom,nom,alias,telephone,courriel,actif,age}){
         let utilisateur=await this.#connectionMYSQL.excecuteSync(
-            `Call AddUtilisateur('${id}','${idTypeUtilisateur}','${idPlancher}','${prenom}','${nom}','${alias}','${telephone}','${courriel}','${actif}}')`)
-        return Utilities.getArray(utilisateur[0][0]);
+            `Call AddUtilisateur('${prenom}','${nom}','${alias}','mot de passe',${parseInt(idTypeUtilisateur)},'${idPlancher}','${age}','${telephone}','${courriel}','${actif}')`)
+        return utilisateur;
     }
     async updateUtilisateur({id,idTypeUtilisateur,idPlancher,prenom,nom,alias,telephone,courriel,actif}){
         let utilisateur=await this.#connectionMYSQL.excecuteSync(`Call UpdateUtilisateur('${id}','${idTypeUtilisateur}','${idPlancher}','${prenom}','${nom}','${alias}','${telephone}','${courriel}','${actif}}')`)

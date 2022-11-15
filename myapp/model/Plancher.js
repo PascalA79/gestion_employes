@@ -1,3 +1,5 @@
+const Utilities = require("../class/Utilities");
+
 class Plancher{
     static #DAL
     static connect(DAL){
@@ -10,8 +12,9 @@ class Plancher{
         this.nom=nomPlancher
         this.id=idPlancher
     }
-    static async getSuperviseurByPlancher(idPlancher){
-        
+    static async getPlancherById(idPlancher){
+        let planchers=await Plancher.#DAL.getAllPlanchers()
+        return Utilities.assiativeArrayToDict(planchers.filter(p=>p.idPlancher==idPlancher)[0])
     }
     static async getPlancherBySuperviseur(idUtilisateur){
 

@@ -7,6 +7,10 @@ const DateUtilities = require('../class/Utilities/DateUtilities');
 var DAL = require('../class/DAL');
 const Utilisateur = require('../model/Utilisateur');
 const loginValidation = require('../public/scripts/login');
+const Plancher = require('../model/Plancher');
+
+const ValidationUtilisateur=require("../public/scripts/ValidationUtilisateur")
+console.log(ValidationUtilisateur(new Utilisateur({id:1,idTypeUtilisateur:2,idPlancher:0,alias:"pascala79"})))
 var session=new Session(router);
 router.get('/', get);
 async function get(req, res, next){
@@ -17,8 +21,11 @@ async function get(req, res, next){
     if(await redirect.access('user',(value)=>value,'/index')){
 
         // const DAL_PASCAL= new DAL();
-
         // Utilisateur.connect(DAL_PASCAL);
+        // Plancher.connect(DAL_PASCAL)
+        // let plancher=Plancher.getPlancherById(999)
+        // console.log(await plancher)
+        // DAL_PASCAL.end()
         // console.log((await Utilisateur.getSuperviseurOfPlancher(-1))[0].prenom);
 
         // const DateUtilities = require('../class/Utilities/DateUtilities')
