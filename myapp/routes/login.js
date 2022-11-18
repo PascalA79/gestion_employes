@@ -53,8 +53,8 @@ async function get(req, res, next){
         
 
 
-        res.render('plancher',{user:{alias:session.get('user')},alerts:{}});
-        //res.render('login'); 
+        //res.render('plancher',{user:{alias:session.get('user')},alerts:{}});
+        res.render('login'); 
     }
 
 }
