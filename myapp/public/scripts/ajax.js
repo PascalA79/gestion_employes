@@ -39,7 +39,7 @@ class Ajax{
             type: 'PUT',
             contentType: 'application/json',
             data: JSON.stringify(data),
-            success: () => { successCallBack() },
+            success: (data) => { successCallBack(data) },
             error: function (jqXHR) { errorCallBack(jqXHR.status) }
         });
     }

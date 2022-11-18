@@ -3,6 +3,28 @@ extends layout
 
 block content
   include navbar
-  +navbar(user, alerts, "home")
+  +navbar(user, alerts, "")
   h1 Plancher
+  #form-plancher
+    label(for="plancher") Gestion des planchers
+    select#plancher(name="plancher")
+      option(value="ajouter") ajouter
+    -/*liste des superviseurs qu'on peut ajouter à un plancher*/
+    input#nomPlancher(type="text")
+    select#superviseurs(name="superviseurs")
+      option(value="0") Superviseur0
+      option(value="1") Superviseur1
+      option(value="2") Superviseur2
+      option(value="3") Superviseur3
+      option(value="4") Superviseur4
+    input#ajouter(type="button" value="ajouter")
+    input#modifier(type="button" value="modifier")
+    input#supprimer(type="button" value="supprimer")
+    
+
+  - // select-plancher+ nom select-superviseur+ AJOUTER MODIFIER
+  #form-role
+  - // select-role+ nomRoleUtilisateur couleur
+  -/* liste des planchers où on voie les superviseurs */
+
   

@@ -1,57 +1,4 @@
 extends layout
-//- mixin buildCell(celldata)
-
-//-   td
-//-       =celldata.alias
-//-   td  
-//-       =celldata.prenom
-//-   td  
-//-       =celldata.nom
-//-   td  
-//-       =celldata.nomPlancher
-//-   td  
-//-       =celldata.nomTypeUtilisateur
-//-   td  
-//-       =celldata.courriel
-//-   td  
-//-       =celldata.telephone
-//-   td  
-//-     -if(celldata.actif[0]){
-//-       input(type="checkbox", disabled, checked)
-//-     -}
-//-     -else{
-//-       input(type="checkbox", disabled)
-//-     -}
-
-      
-    
-  
-//- mixin buildRow(rowdata)
-//-   tr.clickable-medium(iduser=rowdata.id) 
-//-     +buildCell(rowdata)
-  
-//- mixin buildTable(data)
-//-   -let values=Object.values(data)
-//-   table
-//-     thead
-//-       tr
-//-         td(colspan='6',position='relative') 
-//-           h1 Liste des employés
-//-         td#ajouter-emp(colspan='2',position='relative') +
-          
-//-         tr 
-//-         td  Alias
-//-         td  Prenom
-//-         td  Nom
-//-         td  Nom du plancher
-//-         td  Type de l'utilisateur
-//-         td  Courriel
-//-         td  Téléphone
-//-         td  Actif
-//-     tbody 
-//-       -for(rowdata of values){
-//-         +buildRow(rowdata)
-//-         -}
 mixin buildForm(id, params={})
   -let idElem=id
   div.modal-emp
@@ -79,7 +26,7 @@ mixin buildForm(id, params={})
               input(id=name,type=type).input-dark
             -}
             -errors.forEach(error=>{
-              -console.log(error.name,error.value)
+              -//console.log(error.name,error.value)
               .lbl-error(hidden,class=error.name)
                 =error.value
             -})
@@ -95,23 +42,25 @@ mixin buildForm(id, params={})
 
 block content
   script(src="/scripts/ajax.js" defer) 
+  script(src="/scripts/ValidationUtilisateur.js" defer) 
   script(src="/scripts/liste-employe/CRUD-emp.js" defer) 
   include navbar
   +navbar(user, alerts, "liste-employes")
-  - const EMPLOYES=employes;
+  - console.log(planchers)
+  - console.log(typeUtilisateur)
   +buildForm('formEmp',{ 
                       alias:{name:'Alias',type:'text',required:true,error:
-                      [{name:'required',value:'requis'},{name:"min",value:"Alias est trop court"},{name:"max",value:"Alias est trop long"},{name:"invalid",value:"Alias invalide"}]},
+                      [{name:'required',value:'requis'},{name:"min",value:"Alias est trop court"},{name:"max",value:"Alias est trop long"},{name:"invalid",value:"Alias invalide"},{name:"unique",value:"Alias doit être unique"}]},
                       prenom:{name:'Prenom',type:'text',required:true,error:
                       [{name:'required',value:'requis'},{name:"min",value:"Prenom est trop court"},{name:"max",value:"Prenom est trop long"},{name:"invalid",value:"Prenom invalide"}]},
                       nom:{name:'Nom',type:'text',required:true,error:
                       [{name:'required',value:'requis'},{name:"min",value:"Nom est trop court"},{name:"max",value:"Nom est trop long"},{name:"invalid",value:"Nom invalide"}]},
-                      nomPlancher:{name:'Nom du plancher',type:'select',required:true,error:
-                      [{name:'required',value:'requis'}],
-                      data:[{name:"test",value:-1},{name:'Plancher cuisine',value:1},{name:'Plancher restaurant',value:2},{name:'test2',value:-3},{name:'Plancher administration',value:3}]},
-                      nomTypeUtilisateur:{name:"Type d'utilisateur",type:'select',required:true,error:
-                      [{name:'required',value:'requis'}],
-                      data:[{name:'null',value:0},{name:'employé',value:1},{name:'superviseur',value:2},{name:'directeur',value:3},{name:'administrateur',value:4}]},
+                      idPlancher:{name:'Nom du plancher',type:'select',required:true,error:
+                      [{name:'required',value:'requis'},{name:"unfound",value:"Plancher doit exister"}],
+                      data:planchers},
+                      idTypeUtilisateur:{name:"Type d'utilisateur",type:'select',required:true,error:
+                      [{name:'required',value:'requis'},{name:"unfound",value:"Type d'utilisateur doit exister"}],
+                      data:typeUtilisateur},
                       courriel:{name:'Courriel',type:'text',required:true,error:
                       [{name:'required',value:'requis'},{name:"min",value:"Courriel est trop court"},{name:"max",value:"Courriel est trop long"},{name:"invalid",value:"Courriel invalide"}]},
                       age:{name:'Age',type:'number',required:true,error:
@@ -123,11 +72,4 @@ block content
                       }
                       )
   .container.table-container-emp
-  //-   +buildTable(EMPLOYES)
-
-  //- script(defer).
-  //-   $(".clickable-medium").click(e=>{
-  //-     let idUser=$(e.target).parent('.clickable-medium').attr('iduser');
-  //-     location.href=`/profil?idUser=${idUser}`;
-  //-     })
    

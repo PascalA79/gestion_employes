@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About</title>
+    <link rel='stylesheet' href='./stylesheets/style.css'>
+</head>
+    <body class="demo">
+        <h1>À propos</h1>
+        <br>
+        <div class="descrition">Descrition du projet</div>
+        <br>
+        <ul>
+            <li><img src="./images/connection.png" alt="Page de connection"><div>Page de connection </div></li>
+            <li><img src="./images/pagePrincipalePrevue.png" alt="Page de l'application finale"><div>Page de l'application finale </div></li>
+            <li><img src="./images/visualisationHoraire.png" alt="Page pour visualiser un horaire"><div>Visualiser un horaire </div></li>
+            <li><img src="./images/ajouterEmployés.png" alt="Page pour ajouter un utilisateur"><div>Ajouter un utilisateur </div></li>
+            <li><img src="./images/modifierEmployés.png" alt="Page pour modifier un utilisateur"><div>Modifier un utilisateur </div></li>
+            <li><img src="./images/modifierQuartTravail.png" alt="Page pour modifier un quart de travail"><div>Modifier un quart de travail</div></li>
+            <li><img src="./images" alt="Image des dévoloppeurs"><div>Les dévoloppeurs, Pascal Arès et Philippe C. Léger</div></li>
+        </ul>
+        <script defer>
+            let images=document.querySelectorAll(".demo li img");
+            images.forEach(img=>img.addEventListener("click",()=>{location.assign(img.src)}))
+        </script>
+    </body>
+</html>

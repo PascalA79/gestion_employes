@@ -9,8 +9,7 @@ const Utilisateur = require('../model/Utilisateur');
 const loginValidation = require('../public/scripts/login');
 const Plancher = require('../model/Plancher');
 
-const ValidationUtilisateur=require("../public/scripts/ValidationUtilisateur")
-console.log(ValidationUtilisateur(new Utilisateur({id:1,idTypeUtilisateur:2,idPlancher:0,alias:"pascala79"})))
+//console.log(ValiderUtilisateur(new Utilisateur({id:1,idTypeUtilisateur:2,idPlancher:0,alias:"pascala79"})))
 var session=new Session(router);
 router.get('/', get);
 async function get(req, res, next){
@@ -49,7 +48,13 @@ async function get(req, res, next){
 
         // console.log(await DAL_PASCAL.getQuartsByPlancher(-1,DateUtilities.getDate('2022','09','14')))
         // console.log("res.render('login')");
-        res.render('login'); 
+
+
+        
+
+
+        res.render('plancher',{user:{alias:session.get('user')},alerts:{}});
+        //res.render('login'); 
     }
 
 }

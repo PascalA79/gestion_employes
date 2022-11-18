@@ -1,4 +1,4 @@
-const ERREUR_UTILISATEUR={
+const ERREUR_PLANCHER={
     OK:0,
     MISSING:1,
     INVALID:2,
@@ -7,12 +7,14 @@ const ERREUR_UTILISATEUR={
     DUPLICATE_KEY:5,
     UNFOUND_KEY:6
 }
-function ValiderUtilisateur({id=-1,idTypeUtilisateur,idPlancher,prenom,nom,age,alias,telephone,courriel,actif=1},uniqueKeys={},foreignKeys={},permis={}){
+/**
+ * Valide les planchers
+ */
+function ValiderPlancher({idPlancher,nomPlancher,superviseur=[{/*id:-1*/}]},uniqueKeys={},foreignKeys={},permis={}){
     const MIN_LENGTH_NAME = 5;
     const MAX_LENGTH_NAME = 45;
     const MAX_LENGTH_COURRIEL = 150;
-    const MIN_AGE = 14;
-    const MAX_AGE = 119;
+    const MAX_AGE = 150;
     const REGEX_STRING = new RegExp( "^\[A-Za-z0-9_]{1,}$");
     const REGEX_NUMBER = new RegExp( "^-*\[0-9]{1,}$");
     const REGEX_COURRIEL = new RegExp( String.raw`^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$`)
@@ -33,7 +35,7 @@ function ValiderUtilisateur({id=-1,idTypeUtilisateur,idPlancher,prenom,nom,age,a
         prenom:2,
         nom:2,
         alias:MIN_LENGTH_NAME,
-        age:MIN_AGE
+        age:2
     }
     const MAX_UTILISATEUR={
         prenom:MAX_LENGTH_NAME,
@@ -121,6 +123,6 @@ function ValiderUtilisateur({id=-1,idTypeUtilisateur,idPlancher,prenom,nom,age,a
 }
 
 if(typeof exports !== 'undefined'){
-    module.exports.ValiderUtilisateur = ValiderUtilisateur;
-    module.exports.ERREUR_UTILISATEUR = ERREUR_UTILISATEUR;
+    module.exports.ValiderPlancher = ValiderPlancher;
+    module.exports.ERREUR_PLANCHER = ERREUR_PLANCHER;
 }

@@ -5,7 +5,6 @@ var Redirect=require('../class/Redirect')
 var DAL = require('../class/DAL');
 const Utilisateur = require('../model/Utilisateur');
 const Utilities = require('../class/Utilities');
-const ValidationUtilisateur=require("../public/scripts/ValidationUtilisateur")
 var session=new Session(router);
 router.use('/', async function(req, res, next) {
   session.start(req);
@@ -36,7 +35,14 @@ router.use('/', async function(req, res, next) {
     // listEmployes=[...listEmployes,...listEmployes,...listEmployes,...listEmployes]
     // let listeJSONObject=(Utilities.assiativeArrayToDict(listEmployes));
     // res.render('liste-employe',{user:{alias:session.get('user')},alerts:{},employes:listeJSONObject});listeJSONObject
-    res.render('liste-employe',{user:{alias:session.get('user')},alerts:{}});
+
+    const myDAL=new DAL();
+    //let AllAlias=await myDAL.getAllAlias();
+    let allTypeUtilisateur=(await myDAL.getAllTypeUtilisateurs()).map((t)=> {return {name:t.nomTypeUtilisateur,value:t.idTypeUtilisateur}});
+    let allPlancher=(await myDAL.getAllPlanchers()).map((p)=> {return {name:p.idPlancher,value:p.idPlancher}});
+    myDAL.end()
+
+    res.render('liste-employe',{user:{alias:session.get('user')},planchers:allPlancher,typeUtilisateur:allTypeUtilisateur,alerts:{}});
   })
   router.get('/get', async function(req, res, next){
     session.start(req);
@@ -64,10 +70,40 @@ router.use('/', async function(req, res, next) {
     let myDAL=new DAL();
     Utilisateur.connect(myDAL)
     let data=req.body
-    let newUser=new Utilisateur(data)
+    let newUser=new Utilisateur(data);
+
+    let AllAlias=await myDAL.getAllAlias();
+    let AllIdTypeUtilisateur=(await myDAL.getAllTypeUtilisateurs()).map(t=>t.idTypeUtilisateur);
+    let AllIdPlancher=(await myDAL.getAllPlanchers()).map(p=>p.idPlancher);
+    
+    Utilisateur.addUniqueKey("alias",AllAlias);
+    Utilisateur.addForeignKey("idTypeUtilisateur",AllIdTypeUtilisateur);
+    Utilisateur.addForeignKey("idPlancher",AllIdPlancher);
     let validation=await newUser.add();
     myDAL.end()
     res.send(JSON.stringify(validation))
+  })
+  router.put('/update',async function(req, res, next){
+    session.start(req);
+    let myDAL=new DAL();
+    Utilisateur.connect(myDAL)
+    let data=req.body
+    let newUser=new Utilisateur(data);
+    let currentAlias=""
+    if(data.id==parseInt(data.id))
+      currentAlias=await myDAL.getAliasById(data.id);
+    let AllAlias=await myDAL.getAllAlias();
+    let AllIdTypeUtilisateur=(await myDAL.getAllTypeUtilisateurs()).map(t=>t.idTypeUtilisateur);
+    let AllIdPlancher=(await myDAL.getAllPlanchers()).map(p=>p.idPlancher);
     
+    if(currentAlias!=="")
+      Utilisateur.addPermis("alias",currentAlias);
+    Utilisateur.addUniqueKey("alias",AllAlias);
+    Utilisateur.addForeignKey("idTypeUtilisateur",AllIdTypeUtilisateur);
+    Utilisateur.addForeignKey("idPlancher",AllIdPlancher);
+
+    let validation= await newUser.update(async (user)=> await myDAL.updateUtilisateur(user));//await newUser.update();
+    myDAL.end()
+    res.send(JSON.stringify(validation))
   })
 module.exports = router;

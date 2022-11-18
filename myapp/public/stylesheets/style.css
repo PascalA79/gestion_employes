@@ -509,7 +509,15 @@
   .tuile-sq p{
     text-align: center;
   }
-
+  #form-plancher{
+    display: grid;
+    grid-template:  1,
+    repeat(3, auto),
+    repeat(3, auto);
+  }
+  #form-plancher input{
+    width: 200px;
+  }
   
     @media all and (max-width: 48rem){
       .index-row{
@@ -541,4 +549,27 @@
       padding: 1.5rem !important;
       height: auto;
     }
+  }
+
+
+  /*   About   */
+  .demo{
+    margin: 5%;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+  }
+  h1{
+    font-size: 72px;
+  }
+  .demo img{
+    width: 100%;
+  }
+  .demo li{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+  }
+  .demo li div{
+    margin: 15px;
+    padding:15px;
+    border: 1px solid;
   }

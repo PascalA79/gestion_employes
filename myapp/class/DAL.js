@@ -86,8 +86,8 @@ class DAL{
         return utilisateur;
     }
     async updateUtilisateur({id,idTypeUtilisateur,idPlancher,prenom,nom,alias,telephone,courriel,actif}){
-        let utilisateur=await this.#connectionMYSQL.excecuteSync(`Call UpdateUtilisateur('${id}','${idTypeUtilisateur}','${idPlancher}','${prenom}','${nom}','${alias}','${telephone}','${courriel}','${actif}}')`)
-        return Utilities.getArray(utilisateur[0][0]);
+        let utilisateur=await this.#connectionMYSQL.excecuteSync(`Call UpdateUtilisateur(${id},'${idTypeUtilisateur}','${idPlancher}','${prenom}','${nom}','${alias}','${telephone}','${courriel}','${actif}')`)
+        return Utilities.getArray(utilisateur[0]);
     }
     async removeUtilisateur(id){
         await this.#connectionMYSQL.excecuteSync(`Call RemoveUtilisateur('${id}')`)
@@ -112,14 +112,28 @@ class DAL{
         return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`CALL GetPlanchersBySuperviseur('${idUtilisateur}');`))[0]).map(x => Utilities.getArray(x));
     }
     async getAllPlanchers(){
-        return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`CALL GetAllPlanchers();`))[0]).map(x => Utilities.getArray(x));
+        return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`CALL GetAllPlanchers();`))[0]).map(p=>Utilities.assiativeArrayToDict(p));
     }
     async getSuperviseurOfPlancher(idPlancher){
         return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`CALL getSuperviseurOfPlancher('${idPlancher}');`))[0]).map(x => Utilities.getArray(x));
     }
     async getListEmployes({id}){
-        return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`CALL GetListEmployes('${id}');`))[0]).map(x => Utilities.getArray(x));
-
+        return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`CALL GetListEmployes('${id}');`))[0]);
+    }
+    async getAllAlias(){
+        return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`
+        SELECT alias FROM Utilisateurs;
+        `))).map(a=>a.alias);
+    }
+    async getAliasById(id){
+        return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`
+        SELECT alias FROM Utilisateurs WHERE idUtilisateur=${id};
+        `)))[0]["alias"];
+    }
+    async getAllTypeUtilisateurs(){
+        return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`
+        SELECT idTypeUtilisateur,nomTypeUtilisateur  FROM TypesUtilisateurs;
+        `))).map(t=>Utilities.assiativeArrayToDict(t))
     }
     
 }
