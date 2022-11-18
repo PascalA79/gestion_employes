@@ -59,6 +59,13 @@ router.use('/', async function(req, res, next) {
     listEmployes.forEach(element => {
       element.actif=element.actif[0]
     });
+    listEmployes.forEach((element,num) => {
+      let isFind=0
+      if(!isFind&&element.alias==user.alias)
+      {
+        delete listEmployes[num]
+      }
+    });
     listEmployes=[...listEmployes]
 
     let listeJSONObject=(Utilities.assiativeArrayToDict(listEmployes));
