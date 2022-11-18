@@ -39,7 +39,7 @@ router.use('/', async function(req, res, next) {
     const myDAL=new DAL();
     //let AllAlias=await myDAL.getAllAlias();
     let allTypeUtilisateur=(await myDAL.getAllTypeUtilisateurs()).map((t)=> {return {name:t.nomTypeUtilisateur,value:t.idTypeUtilisateur}});
-    let allPlancher=(await myDAL.getAllPlanchers()).map((p)=> {return {name:p.idPlancher,value:p.idPlancher}});
+    let allPlancher=(await myDAL.getAllPlanchers()).map((p)=> {return {name:p.nomPlancher,value:p.idPlancher}});
     myDAL.end()
 
     res.render('liste-employe',{user:{alias:session.get('user')},planchers:allPlancher,typeUtilisateur:allTypeUtilisateur,alerts:{}});
