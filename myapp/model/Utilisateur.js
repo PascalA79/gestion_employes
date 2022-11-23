@@ -153,32 +153,32 @@ class Utilisateur{
                 break
             }
             case TYPE_UTILISATEUR.EMPLOYÉ:{
-                acces.push(tuile[TITRES.HORAIRE_PERSO])
-                acces.push(tuile[TITRES.DISPONIBILITE])
+                // acces.push(tuile[TITRES.HORAIRE_PERSO])
+                // acces.push(tuile[TITRES.DISPONIBILITE])
                 break
             }
             case TYPE_UTILISATEUR.SUPERVISEUR:{
                 acces.push(tuile[TITRES.EMPLOYES])
-                acces.push(tuile[TITRES.HORAIRE_PERSO])
+                // acces.push(tuile[TITRES.HORAIRE_PERSO])
                 acces.push(tuile[TITRES.HORAIRE_PLANCHER])
-                acces.push(tuile[TITRES.PUNCH])
-                acces.push(tuile[TITRES.DEPENSES])
-                acces.push(tuile[TITRES.PLANCHERS])
+                // acces.push(tuile[TITRES.PUNCH])
+                // acces.push(tuile[TITRES.DEPENSES])
+                // acces.push(tuile[TITRES.PLANCHERS])
                 // acces.push(tuile['Planchers'])
                 break;
             }
             case TYPE_UTILISATEUR.DIRECTEUR:
             case TYPE_UTILISATEUR.ADMINISTRATEUR:{
                 acces.push(tuile[TITRES.EMPLOYES])
-                acces.push(tuile[TITRES.HORAIRE_PERSO])
+                // acces.push(tuile[TITRES.HORAIRE_PERSO])
                 acces.push(tuile[TITRES.HORAIRE_PLANCHER])
-                acces.push(tuile[TITRES.PUNCH])
-                acces.push(tuile[TITRES.DEPENSES])
-                acces.push(tuile[TITRES.PLANCHERS])
-                acces.push(tuile[TITRES.DISPONIBILITE])
-                acces.push(tuile[TITRES.UTILISATEURS])
-                acces.push(tuile[TITRES.DEPARTEMENTS])
-                acces.push(tuile[TITRES.PAIES])
+                // acces.push(tuile[TITRES.PUNCH])
+                // acces.push(tuile[TITRES.DEPENSES])
+                // acces.push(tuile[TITRES.PLANCHERS])
+                // acces.push(tuile[TITRES.DISPONIBILITE])
+                // acces.push(tuile[TITRES.UTILISATEURS])
+                // acces.push(tuile[TITRES.DEPARTEMENTS])
+                // acces.push(tuile[TITRES.PAIES])
                 // acces.push(tuile['Paies'])
                 break
             }
