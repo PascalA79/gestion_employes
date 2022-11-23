@@ -17,11 +17,11 @@ function main(){
         let stringHTML=`<table>
         <thead>
             <tr>
-                <td colspan='7'> 
-                    <h1>Liste des employés</h1>
-                </td>
-                <td id=ajouter-emp colspan='2'>
+                <td id=ajouter-emp colspan='1'>
                     +
+                </td>
+                <td colspan='8'> 
+                    <h1>Liste des employés</h1>
                 </td>
             </tr>
             <tr>
@@ -161,7 +161,6 @@ function main(){
         */
     }
     addValidation()
-    var listEmployes=[]
     refreshList(containerListe)
 
     // Get the modal
@@ -298,4 +297,6 @@ function main(){
         })
 }
 }
+
+var listEmployes=[]
 main()

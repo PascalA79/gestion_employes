@@ -12,8 +12,9 @@ router.get('/get', async function(req, res, next) {
     session.start(req);
     const myDAL=new DAL();
     let planchers=await myDAL.getAllPlanchers()
+    let organisation=await myDAL.getOrganisationPlancher()
     myDAL.end();
-    res.send(JSON.stringify(planchers));
+    res.send(JSON.stringify({planchers:planchers,organisation,organisation}));
 })
 router.post('/add',async (req, res, next)=>{
     const myDAL=new DAL();
@@ -25,9 +26,23 @@ router.post('/add',async (req, res, next)=>{
 router.put('/update',async (req, res, next)=>{
     const myDAL=new DAL();
     let data=req.body
-    myDAL.updatePlancher(oldNom,newNom)
-    myDAL.end();
-    res.send("")
+    let idPlancher=0;
+    let planchers=[];
+    let nomPlancher=undefined;
+    try {
+        idPlancher=data.idPlancher
+        planchers=data.planchers
+        nomPlancher=data.nomPlancher
+        if(!isNaN(idPlancher) &&  typeof planchers ==="object"&& planchers.length >0 && typeof nomPlancher ==="string")
+        await myDAL.updatePlancher({idPlancher:idPlancher,planchers:planchers,nomPlancher:nomPlancher})
+        
+        res.send("")
+    } catch (error) {
+        res.send(error)
+    }
+    finally{
+        myDAL.end();
+    }
 })
 router.delete('/remove',async (req, res, next)=>{
     

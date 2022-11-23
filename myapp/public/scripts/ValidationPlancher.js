@@ -10,39 +10,22 @@ const ERREUR_PLANCHER={
 /**
  * Valide les planchers
  */
-function ValiderPlancher({idPlancher,nomPlancher,superviseur=[{/*id:-1*/}]},uniqueKeys={},foreignKeys={},permis={}){
+function ValiderPlancher({idPlancher,nomPlancher,superviseur=[{/*idPlancher-1*/}]},uniqueKeys={},foreignKeys={},permis={}){
     const MIN_LENGTH_NAME = 5;
     const MAX_LENGTH_NAME = 45;
-    const MAX_LENGTH_COURRIEL = 150;
-    const MAX_AGE = 150;
     const REGEX_STRING = new RegExp( "^\[A-Za-z0-9_]{1,}$");
     const REGEX_NUMBER = new RegExp( "^-*\[0-9]{1,}$");
-    const REGEX_COURRIEL = new RegExp( String.raw`^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$`)
     
     const REGEX_UTILISATEUR={
-        id:REGEX_NUMBER,
-        idTypeUtilisateur:REGEX_NUMBER,
-        idPlancher:REGEX_NUMBER,
-        prenom:REGEX_STRING,
-        nom:REGEX_STRING,
-        alias:REGEX_STRING,
-        age:REGEX_NUMBER,
-        telephone:REGEX_NUMBER,
-        courriel:REGEX_COURRIEL,
-        actif:new RegExp( "^\[0-1]{1}$")
+        idPlancherREGEX_NUMBER,
+        nomPlancher:REGEX_STRING,
     }
     const MIN_UTILISATEUR={
-        prenom:2,
-        nom:2,
-        alias:MIN_LENGTH_NAME,
-        age:2
+        idPlancher:1,
+        nomPlancher:2
     }
     const MAX_UTILISATEUR={
-        prenom:MAX_LENGTH_NAME,
-        nom:MAX_LENGTH_NAME,
-        alias:MAX_LENGTH_NAME,
-        courriel:MAX_LENGTH_COURRIEL,
-        age:MAX_AGE
+        nomPlancher:MAX_LENGTH_NAME
     }
     const isValidMin=(name)=>{
         let min=MIN_UTILISATEUR[name]
@@ -94,7 +77,7 @@ function ValiderPlancher({idPlancher,nomPlancher,superviseur=[{/*id:-1*/}]},uniq
     let isValid={}
     const converToInt=(n)=>parseInt(n)==n?parseInt(n):"Invalide";
     let values={
-        id:converToInt(id),
+        idPlancher:converToInt(id),
         idTypeUtilisateur:converToInt(idTypeUtilisateur),
         idPlancher:converToInt(idPlancher),
         prenom:prenom,
@@ -115,7 +98,7 @@ function ValiderPlancher({idPlancher,nomPlancher,superviseur=[{/*id:-1*/}]},uniq
         isValidMin(obj[0])
         isValidMax(obj[0])
 
-        isValidUniqueKey(obj[0],[{id:id,alias:alias}])
+        isValidUniqueKey(obj[0],[{idPlancherid,alias:alias}])
         isValidFKey(obj[0])
 
     }
