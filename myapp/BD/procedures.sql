@@ -81,7 +81,7 @@ CREATE OR REPLACE TRIGGER `BeforeInsertQuartsTravail` BEFORE INSERT ON `QuartsTr
         DECLARE isInvalid INT;
         SET isInvalid=(SELECT IsValidQuart(NEW.idQuartTravail, NEW.idUtilisateur, 
         NEW.debut, NEW.fin));
-        IF(0=isInvalid) THEN
+        IF(isInvalid>0) THEN
             SIGNAL sqlstate '45001' set message_text = "Ajout du QuartsTravail impossible!";
         END IF;
 END $$
@@ -91,7 +91,7 @@ CREATE OR REPLACE TRIGGER `BeforeUpdateQuartsTravail` BEFORE UPDATE ON `QuartsTr
         DECLARE isInvalid INT;
 
     SET isInvalid=(SELECT IsValidQuart(NEW.idQuartTravail, NEW.idUtilisateur, NEW.debut, NEW.fin));
-    IF(0=isInvalid) THEN
+    IF(isInvalid>0) THEN
         SIGNAL sqlstate '45002' set message_text = "Modification du QuartsTravail impossible!";
     END IF;
 END $$
