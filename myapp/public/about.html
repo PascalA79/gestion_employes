@@ -5,25 +5,94 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
     <link rel='stylesheet' href='./stylesheets/style.css'>
+    <link rel='stylesheet' href='./stylesheets/demo.css'>
 </head>
     <body class="demo">
-        <h1>À propos</h1>
-        <br>
-        <div class="descrition">Descrition du projet</div>
-        <br>
-        <ul>
-            <li><img src="./images/connection.png" alt="Page de connection"><div>Page de connection </div></li>
-            <li><img src="./images/pagePrincipalePrevue.png" alt="Page de l'application finale"><div>Page de l'application finale </div></li>
-            <li><img src="./images/visualisationHoraire.png" alt="Page pour visualiser un horaire"><div>Visualiser un horaire </div></li>
-            <li><img src="./images/ajouterEmployés.png" alt="Page pour ajouter un utilisateur"><div>Ajouter un utilisateur </div></li>
-            <li><img src="./images/modifierEmployés.png" alt="Page pour modifier un utilisateur"><div>Modifier un utilisateur </div></li>
-            <li><img src="./images/modifierQuartTravail.png" alt="Page pour modifier un quart de travail"><div>Modifier un quart de travail</div></li>
-            <li><img src="./images" alt="Image des dévoloppeurs"><div>Les dévoloppeurs, Pascal Arès et Philippe C. Léger</div></li>
-        </ul>
+        <div class="container d-flex flex-column gap-5">
+            <div class="container">
+                <svg width="500" height="200" preserveAspectRatio="xMidYMid meet" viewBox="0, 0, 500, 200" style="fill: var(--txt-dark); width: 100%">
+                    <path
+                        id="rect10"
+                        d="m 95.299467,29.338422 c -0.08674,-0.0025 -0.175429,0.0034 -0.266131,0.01809 l -6.946347,1.128096 c -0.72563,0.11784 -1.175657,0.742494 -1.057817,1.468128 l 2.155941,13.276707 c 0.11784,0.725634 0.744257,1.177524 1.468644,1.059884 l 6.945828,-1.127581 c 0.724393,-0.117639 1.175142,-0.744561 1.057302,-1.470197 L 96.500945,30.414325 c -0.10311,-0.634927 -0.594293,-1.058764 -1.201478,-1.075903 z m 12.384773,1.95802 c -0.39008,0.004 -0.785,0.03727 -1.18235,0.101801 l -8.125091,1.3193 1.743561,10.736813 c 0.24531,1.510551 -0.773019,2.924518 -2.283578,3.169828 l -6.945831,1.12759 c -1.510538,0.2453 -2.924525,-0.77355 -3.16983,-2.284103 l -1.743565,-10.736297 -41.400055,6.723105 1.743562,10.736815 c 0.245308,1.51055 -0.773028,2.924 -2.283582,3.16931 l -6.945829,1.1281 c -1.510554,0.24531 -2.924525,-0.77355 -3.169833,-2.2841 l -1.743562,-10.736813 -8.124571,1.319816 c -4.238424,0.688306 -7.096699,4.654057 -6.408393,8.892487 l 9.814903,60.436096 c 0.688309,4.23842 4.654572,7.0967 8.892998,6.40839 l 28.657683,-4.65398 a 69.841377,69.841377 0 0 1 1.882574,-7.49515 l -32.136025,5.21881 -7.583517,-46.694826 83.365451,-13.53819 1.541,9.48883 a 69.841377,69.841377 0 0 1 7.0745,-1.88723 l -3.76049,-23.156723 c -0.62378,-3.841073 -3.9393,-6.548155 -7.71013,-6.509679 z m -66.183556,6.778913 c -0.08674,-0.0024 -0.175945,0.0034 -0.266649,0.0181 l -6.946347,1.128097 c -0.725634,0.11784 -1.175658,0.742495 -1.057818,1.468128 l 2.155942,13.276707 c 0.11784,0.72564 0.744254,1.17752 1.468643,1.05989 l 6.946347,-1.1281 c 0.724388,-0.11764 1.174624,-0.74404 1.056784,-1.46968 L 42.701644,39.151273 c -0.103108,-0.634928 -0.593778,-1.058764 -1.20096,-1.075904 z m 93.329706,25.947769 a 65.200845,65.200845 0 0 0 -65.201189,65.200666 65.200845,65.200845 0 0 0 65.201189,65.2012 65.200845,65.200845 0 0 0 45.6861,-18.76372 l -10.71253,-10.71252 c -9.22989,9.02674 -22.0614,14.27253 -34.97357,14.27251 -13.08939,2e-5 -26.09883,-5.3879 -35.354432,-14.64355 -9.255591,-9.25565 -14.643571,-22.26506 -14.64355,-35.35443 -2.1e-5,-13.0894 5.387959,-26.09884 14.64355,-35.354426 9.255602,-9.25561 22.265042,-14.64306 35.354432,-14.64304 12.69027,-3e-5 25.30512,5.06463 34.49712,13.80794 l 10.74404,-10.74404 a 65.200845,65.200845 0 0 0 -45.24116,-18.26659 z m -48.214111,2.48202 c -0.920398,-0.0137 -1.913596,0.0661 -2.979664,0.23926 -2.04485,0.33208 -3.753188,0.92261 -5.12527,1.7725 -1.372076,0.8499 -2.420271,1.96085 -3.144509,3.33262 -0.722215,1.38424 -1.150819,3.00262 -1.285193,4.85448 -0.134379,1.85187 -0.0053,3.98689 0.387573,6.40581 0.380674,2.34411 0.924843,4.39331 1.631942,6.14691 0.02323,0.0574 0.04866,0.11129 0.07234,0.16795 a 69.841377,69.841377 0 0 1 5.62188,-6.99027 c -0.028,-0.16158 -0.0577,-0.31456 -0.08475,-0.48111 -0.550765,-3.39147 -0.610862,-5.85168 -0.180867,-7.38042 0.427977,-1.54122 1.408301,-2.43605 2.94194,-2.68511 1.533638,-0.24906 2.747433,0.28986 3.641119,1.61644 0.339666,0.50058 0.653944,1.15186 0.943612,1.95026 a 69.841377,69.841377 0 0 1 5.77019,-4.30154 c -0.490915,-0.79913 -1.042111,-1.50108 -1.658289,-2.09806 -1.125164,-1.09703 -2.461453,-1.83974 -4.009059,-2.22829 -0.774809,-0.20051 -1.622602,-0.30773 -2.542995,-0.32143 z m -27.257253,4.43281 c -1.101614,-0.001 -2.311707,0.10523 -3.630269,0.31936 -1.807956,0.2936 -3.559664,0.77645 -5.254977,1.44849 -1.697336,0.65956 -3.023992,1.27819 -3.9796,1.8557 l 0.981334,6.04097 0.691949,-0.11265 c 1.160753,-0.96915 2.394826,-1.76469 3.701581,-2.38642 1.304735,-0.6342 2.542964,-1.04628 3.71502,-1.23662 0.473808,-0.077 1.046803,-0.13183 1.719792,-0.16433 0.672989,-0.0325 1.271479,0.024 1.794206,0.1695 0.468802,0.12863 0.874538,0.34392 1.218012,0.64647 0.341452,0.29009 0.557937,0.71584 0.649057,1.27693 0.123515,0.76059 0.08032,1.36254 -0.129191,1.80609 -0.211542,0.43107 -0.572476,0.80985 -1.082622,1.13585 -0.487238,0.30948 -1.099619,0.55617 -1.837613,0.74 -0.738,0.18384 -1.593183,0.35469 -2.565736,0.51263 l -1.590085,0.25787 0.807704,4.97541 1.533755,-0.24909 c 0.735653,-0.11946 1.535467,-0.23661 2.399856,-0.35139 0.862361,-0.12725 1.615413,-0.14111 2.258777,-0.0408 0.641337,0.0878 1.186018,0.32604 1.632974,0.71416 0.444931,0.37566 0.73293,0.96876 0.864547,1.77922 0.135665,0.8354 0.102716,1.50026 -0.0987,1.99368 -0.203441,0.48095 -0.510154,0.91458 -0.920874,1.30121 -0.521232,0.49417 -1.196028,0.87244 -2.023647,1.13482 -0.829649,0.24991 -1.605876,0.43343 -2.329059,0.55087 -1.234397,0.20046 -2.638441,0.18484 -4.211629,-0.046 -1.560716,-0.23285 -2.93016,-0.58617 -4.10776,-1.0604 l -0.729154,0.11834 0.993222,6.115896 c 1.107794,0.28081 2.514277,0.46897 4.218863,0.56327 1.717053,0.0923 3.729106,-0.0491 6.035807,-0.42374 2.019927,-0.328026 3.700452,-0.812346 5.042586,-1.452616 1.352584,-0.65477 2.488776,-1.46026 3.408579,-2.41588 0.940686,-0.9846 1.574742,-2.08549 1.901693,-3.30316 0.33942,-1.21969 0.40278,-2.48384 0.190169,-3.79305 -0.188315,-1.15958 -0.520306,-2.05953 -0.995288,-2.69906 -0.474986,-0.63952 -1.060472,-1.1713 -1.756482,-1.59577 -0.667022,-0.40357 -1.376868,-0.67884 -2.130102,-0.82527 -0.75324,-0.14642 -1.454703,-0.21132 -2.104782,-0.19533 l -0.04289,-0.262 c 1.516382,-0.59179 2.656271,-1.56985 3.419946,-2.93522 0.76165,-1.37785 1.017444,-2.84018 0.76636,-4.3863 -0.190336,-1.17206 -0.605943,-2.15426 -1.246433,-2.94607 -0.640488,-0.79182 -1.521601,-1.40975 -2.643251,-1.85467 -0.943362,-0.3715 -2.100313,-0.59959 -3.47059,-0.6842 -0.343075,-0.0243 -0.697847,-0.0363 -1.065051,-0.0367 z m 72.612624,15.69516 c -2.3492,0 -4.24005,1.89137 -4.24005,4.24057 v 30.256026 a 10.779172,10.779172 0 0 0 -3.68092,8.09408 10.779172,10.779172 0 0 0 0.6873,3.76929 l -10.43864,21.03127 c -0.84009,1.69249 -0.15407,3.73119 1.53841,4.5713 l 6.84196,3.39617 c 1.69247,0.84011 3.73119,0.15408 4.57129,-1.5384 l 10.33116,-20.81372 a 10.779172,10.779172 0 0 0 8.0269,-10.41591 10.779172,10.779172 0 0 0 -3.41737,-7.85585 V 90.873684 c 0,-2.3492 -1.89188,-4.24057 -4.24108,-4.24057 z"
+                        inkscape:connector-curvature="0" />
+                    <text
+                        id="text376"
+                        y="176.50142"
+                        x="186.19113"
+                        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:88.19445038px;line-height:1.25;font-family:calibri;-inkscape-font-specification:'calibri Bold';letter-spacing:0px;word-spacing:0px;stroke:none;stroke-width:0.26458332"
+                        xml:space="preserve"><tspan
+                        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:88.19445038px;font-family:calibri;-inkscape-font-specification:'calibri Bold';stroke-width:0.26458332"
+                        y="176.50142"
+                        x="186.19113"
+                        id="tspan374"
+                        sodipodi:role="line">alendriX</tspan></text>
+               </svg>
+            </div>
+            <br>
+            <div class="descrition">
+                CalendriX est une application web de gestion d’horaire et de personnel. Son interface facile à utiliser sur une variété d’appareils permet aux superviseurs et directeurs de consulter les coordonnées de leurs employés ainsi que de leur assigner des quarts de travail. Les employés quant à eux, peuvent ensuite consulter leur horaire de travail et savoir où et quand se présenter au travail, et quel rôle remplir.
+            </div>
+            <video height="80%" controls>
+                <source src="./video/demo_calendrix.mp4" type="video/mp4">
+            </video>
+            <br>
+            <div class="container-dark" style="position: relative;">
+                <div class="image">
+                    <img src="./images/connection.png" alt="Page de connection">
+                    <p>Connectez-vous de n'importe où</p>
+                </div>
+            </div>
+            <div class="container-dark">
+                    <div class="image"><img src="./images/pagePrincipalePrevue.png" alt="Page de l'application finale">
+                    </div>
+                    <p>Accédez à vos options sur votre écran d'accueil.</p>
+            </div>
+        
+            <div class="container-dark">
+                <div class="image"><img src="./images/visualisationHoraire.png" alt="Page pour visualiser un horaire">
+                    <p>Consultez votre horaire de travail.</p>
+                </div>
+            </div>
+            <div class="container-dark">
+                <div class="image"><img src="./images/ajouterEmployés.png" alt="Page pour ajouter un utilisateur">
+                    <p>Consultez la liste de vos employés.</p>
+                </div>
+            </div>
+            <div class="container-dark">
+                <div class="image"><img src="./images/ajouterEmployés.png" alt="Page pour ajouter un utilisateur">
+                    <p>Ajoutez de nouveaux utilisateurs.</p>
+                </div>
+            </div>
+            <div class="container-dark">
+                <div class="image"><img src="./images/ajouterEmployés.png" alt="Page pour ajouter un utilisateur">
+                    <p>Consultez vos planchers de travail.</p>
+                </div>
+            </div>
+            <div class="container-dark">
+                <div class="image"><img src="./images/modifierQuartTravail.png" alt="Page pour modifier un quart de travail">
+                    <p>Cédulez les quarts de travail de vos employés.</p>
+                </div>
+                </div>
+            <div class="container-dark">
+                <p>Les développeurs</p>
+                <div class="row">
+                    <div class="col">
+                        <div class="image"><img src="./images" alt="Image des développeurs"></div>
+                        <p>Pascal Arès</p>
+                    </div>
+                    <div class="col">
+                        <div class="image"><img src="./images/profil_phil.jpg" alt="Photo de Philippe"></div>
+                        <p>Philippe C. Léger</p>
+                    </div>
+                </div>
+            </div>
+        </div>
         <script defer>
-            let images=document.querySelectorAll(".demo li img");
-            images.forEach(img=>img.addEventListener("click",()=>{location.assign(img.src)}))
+            let images=document.querySelectorAll(".demo img");
+            images.forEach(img=>img.addEventListener("click",()=>{window.open(img.src)}))
         </script>
     </body>
 </html>

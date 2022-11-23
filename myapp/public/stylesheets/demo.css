@@ -1,0 +1,36 @@
+
+  /*   About   */
+  .demo{
+    margin: 5%;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+  }
+  h1{
+    font-size: 72px;
+  }
+.demo .image{
+    text-align: center;
+  }
+  .demo .images .image{
+    display: inline-block;
+    width:  fit-content;  
+    border: 3px solid black;
+  }
+  .demo img {  
+    max-height: 300px;
+    max-width: 100%;
+  }
+  .demo .container-dark{
+    height: fit-content;
+    width: 100%;
+  }
+.container-dark p{
+    display: block;
+
+}
+
+  body{
+    height: 100vh;
+    overflow-y: scroll;
+}
+
+  

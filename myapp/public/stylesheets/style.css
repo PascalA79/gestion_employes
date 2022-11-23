@@ -70,6 +70,8 @@
     padding: 0.75rem;
     width: fit-content;
   }
+
+  .container-dark p, .container-dark img{ color: var(--txt-light);}
   
   .container-dark > form{
     display: flex;
@@ -394,6 +396,9 @@
   #formEmp>div>*{
     width: 200px;
   }
+  #formEmp label,#modal-title-emp{
+    color: var(--txt-light);
+  }
 /* The Modal (background) */
 .modal-emp {
   display: none; /* Hidden by default */
@@ -551,25 +556,3 @@
     }
   }
 
-
-  /*   About   */
-  .demo{
-    margin: 5%;
-    font-family:Georgia, 'Times New Roman', Times, serif;
-  }
-  h1{
-    font-size: 72px;
-  }
-  .demo img{
-    width: 100%;
-  }
-  .demo li{
-    display: flex;
-    flex-direction: column;
-    width: 80%;
-  }
-  .demo li div{
-    margin: 15px;
-    padding:15px;
-    border: 1px solid;
-  }
