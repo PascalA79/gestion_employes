@@ -135,6 +135,38 @@ class DAL{
         SELECT idTypeUtilisateur,nomTypeUtilisateur  FROM TypesUtilisateurs;
         `))).map(t=>Utilities.assiativeArrayToDict(t))
     }
+    async getOrganisationPlancher(){
+        let result={};
+        let data=Utilities.getArray(await this.#connectionMYSQL.excecuteSync(`SELECT Utilisateurs.idUtilisateur,Utilisateurs.alias, Planchers.idPlancher,Planchers.nomPlancher FROM Utilisateurs
+        LEFT OUTER JOIN SuperviseursPlanchers ON SuperviseursPlanchers.idUtilisateur = Utilisateurs.idUtilisateur
+        LEFT OUTER JOIN Planchers ON SuperviseursPlanchers.idPlancher = Planchers.idPlancher
+        WHERE Utilisateurs.idTypeUtilisateur=1 ORDER BY Utilisateurs.idUtilisateur`));
+        data.forEach(o=>{
+            if(!result[o.alias])
+            {
+                result[o.alias]={}
+                result[o.alias]["idUtilisateur"]=o.idUtilisateur
+                result[o.alias]["planchers"]=[]
+            }
+            if(null != o.idPlancher){
+                delete o.idUtilisateur
+                result[o.alias]["planchers"].push(Utilities.assiativeArrayToDict(o))
+                delete o.alias
+            }
+        })
+        return result;
+    }
+    async updatePlancher({idPlancher,planchers,nomPlancher}){
+        await this.#connectionMYSQL.excecuteSync(`DELETE FROM SuperviseursPlanchers WHERE idPlancher="${idPlancher}"`)
+        try {
+            let sql=`INSERT INTO SuperviseursPlanchers (idPlancher, idUtilisateur)  VALUES`
+            planchers.forEach((p)=>sql+=` (${idPlancher},${p}),`)
+            sql=sql.slice(0, -1)
+            this.#connectionMYSQL.excecuteSync(sql)
+        } catch (error) {
+            console.error(error)
+        }
+    }
     
 }
 module.exports = DAL;

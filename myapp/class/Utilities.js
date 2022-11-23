@@ -17,7 +17,7 @@ class Utilities{
         return array;
     }
     static assiativeArrayToDict(array){
-        if(typeof array != typeof (new Object())){
+        if(null===array || typeof array != typeof (new Object())){
             return array
         }
         let entries=Object.entries(array)

@@ -65,7 +65,7 @@ tuiles[TITRES.DEPENSES] = {
 
 tuiles[TITRES.PLANCHERS] = {
     text: "Gérer les planchers",
-    nombreAlerte: 12,
+    nombreAlerte: 0,
     url: '/plancher'
 };
 // tuiles['Planchers']={};

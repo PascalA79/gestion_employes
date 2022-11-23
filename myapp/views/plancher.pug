@@ -4,27 +4,55 @@ extends layout
 block content
   include navbar
   +navbar(user, alerts, "")
-  h1 Plancher
-  #form-plancher
-    label(for="plancher") Gestion des planchers
-    select#plancher(name="plancher")
-      option(value="ajouter") ajouter
-    -/*liste des superviseurs qu'on peut ajouter à un plancher*/
-    input#nomPlancher(type="text")
-    select#superviseurs(name="superviseurs")
-      option(value="0") Superviseur0
-      option(value="1") Superviseur1
-      option(value="2") Superviseur2
-      option(value="3") Superviseur3
-      option(value="4") Superviseur4
-    input#ajouter(type="button" value="ajouter")
-    input#modifier(type="button" value="modifier")
-    input#supprimer(type="button" value="supprimer")
+  #form-gestion.container 
     
+    //- table
+    //-   thead 
+    //-     tr 
+    //-       th
+    //-         h1 Gestion
+    //-     tr 
+    //-       th Plancher
+    //-       th Nom
+    //-       th Superviseurs
+    //-   tbody 
+    //-     tr 
+    //-       td
+    //-         select#plancher(name="plancher")
+    //-           option(idPlancher="0") ajouter
+    //-           option(idPlancher="1") plancher1
+    //-           option(idPlancher="2") plancher2
+    //-       td
+    //-         input#nomPlancher(type="text")
+    //-       td
+    //-         table#superviseurs
+    //-           tr
+    //-             td 
+    //-               label(for="superviseur0") Superviseur0
+    //-             td 
+    //-               input#superviseur0(type="checkbox",idSuperviseur="0")
+    //-             td
+    //-               select 
+    //-                 option(value="0") plancher1 
+    //-           tr
+    //-             td 
+    //-               label(for="superviseur1") Superviseur1
+    //-             td
+    //-               input#superviseur1(type="checkbox",idSuperviseur="1") 
+    //-           tr
+    //-             td 
+    //-               label(for="superviseur3") Superviseur2
+    //-             td 
+    //-               input#superviseur3(type="checkbox",idSuperviseur="2")     
+    //-       td 
+    //-         #ajouter(value="Modifier") Modifier
+      
 
-  - // select-plancher+ nom select-superviseur+ AJOUTER MODIFIER
-  #form-role
+    - // select-plancher+ nom select-superviseur+ AJOUTER MODIFIER
+    #form-role
   - // select-role+ nomRoleUtilisateur couleur
   -/* liste des planchers où on voie les superviseurs */
+  script(src="./scripts/ajax.js") 
+  script(src="./scripts/plancher/CRUD-gestion.js",defer) 
 
   
