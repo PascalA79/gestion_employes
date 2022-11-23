@@ -20,7 +20,7 @@ function main(){
                 <td id=ajouter-emp colspan='1'>
                     +
                 </td>
-                <td colspan='8'> 
+                <td colspan='100%'> 
                     <h1>Liste des employés</h1>
                 </td>
             </tr>
@@ -139,28 +139,9 @@ function main(){
             }
         })
 
-        /*
-        if(!isFinite(data.alias)) $("#alias + .lbl-error").attr('hidden','hidden');
-        else $("#alias + .lbl-error").removeAttr('hidden');
-        if(!isNaN(parseInt(data.age))) $("#age + .lbl-error").attr('hidden','hidden');
-        else $("#age + .lbl-error").removeAttr('hidden');
-        if([0,1].includes(data.actif)) $("#actif + .lbl-error").attr('hidden','hidden');
-        else $("#actif + .lbl-error").removeAttr('hidden');
-        if(!isFinite(data.courriel)) $("#courriel + .lbl-error").attr('hidden','hidden');
-        else $("#courriel + .lbl-error").removeAttr('hidden');
-        if(!isFinite(data.idPlancher)) $("#idPlancher + .lbl-error").attr('hidden','hidden');
-        else $("#idPlancher + .lbl-error").removeAttr('hidden');
-        if(!isFinite(data.idTypeUtilisateur)) $("#idTypeUtilisateur + .lbl-error").attr('hidden','hidden');
-        else $("#idTypeUtilisateur + .lbl-error").removeAttr('hidden');
-        if(!isFinite(data.nom)) $("#nom + .lbl-error").attr('hidden','hidden');
-        else $("#nom + .lbl-error").removeAttr('hidden');
-        if(!isFinite(data.prenom)) $("#prenom + .lbl-error").attr('hidden','hidden');
-        else $("#prenom + .lbl-error").removeAttr('hidden');
-        if(!isNaN(parseInt(data.telephone))) $("#telephone + .lbl-error").attr('hidden','hidden');
-        else $("#telephone + .lbl-error").removeAttr('hidden');
-        */
     }
     addValidation()
+    var listEmployes=[]
     refreshList(containerListe)
 
     // Get the modal
@@ -280,8 +261,7 @@ function main(){
                 $(`#formEmp #${elem.id}`).val(infoEmp[elem.id])
             })
             $("#formEmp select").each((e,elem)=>{$(elem).children().each((e,option)=>{
-
-                if(option.text==infoEmp[elem.id]){
+                if(option.value==infoEmp[elem.id]){
                     option.selected=true;
                 }
             })})
@@ -297,6 +277,4 @@ function main(){
         })
 }
 }
-
-var listEmployes=[]
 main()

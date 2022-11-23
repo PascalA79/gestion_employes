@@ -18,6 +18,7 @@
   .demo img {  
     max-height: 300px;
     max-width: 100%;
+    border:var(--border-light);
   }
   .demo .container-dark{
     height: fit-content;
