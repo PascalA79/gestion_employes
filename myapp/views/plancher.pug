@@ -5,54 +5,9 @@ block content
   include navbar
   +navbar(user, alerts, "")
   #form-gestion.container 
-    
-    //- table
-    //-   thead 
-    //-     tr 
-    //-       th
-    //-         h1 Gestion
-    //-     tr 
-    //-       th Plancher
-    //-       th Nom
-    //-       th Superviseurs
-    //-   tbody 
-    //-     tr 
-    //-       td
-    //-         select#plancher(name="plancher")
-    //-           option(idPlancher="0") ajouter
-    //-           option(idPlancher="1") plancher1
-    //-           option(idPlancher="2") plancher2
-    //-       td
-    //-         input#nomPlancher(type="text")
-    //-       td
-    //-         table#superviseurs
-    //-           tr
-    //-             td 
-    //-               label(for="superviseur0") Superviseur0
-    //-             td 
-    //-               input#superviseur0(type="checkbox",idSuperviseur="0")
-    //-             td
-    //-               select 
-    //-                 option(value="0") plancher1 
-    //-           tr
-    //-             td 
-    //-               label(for="superviseur1") Superviseur1
-    //-             td
-    //-               input#superviseur1(type="checkbox",idSuperviseur="1") 
-    //-           tr
-    //-             td 
-    //-               label(for="superviseur3") Superviseur2
-    //-             td 
-    //-               input#superviseur3(type="checkbox",idSuperviseur="2")     
-    //-       td 
-    //-         #ajouter(value="Modifier") Modifier
-      
 
-    - // select-plancher+ nom select-superviseur+ AJOUTER MODIFIER
-    #form-role
-  - // select-role+ nomRoleUtilisateur couleur
-  -/* liste des planchers où on voie les superviseurs */
   script(src="./scripts/ajax.js") 
+  script(src="./scripts/ValidationPlancher.js") 
   script(src="./scripts/plancher/CRUD-gestion.js",defer) 
 
   

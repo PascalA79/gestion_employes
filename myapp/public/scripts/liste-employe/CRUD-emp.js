@@ -81,7 +81,7 @@ function main(){
                     ${user.telephone}
                 </td>
                 <td>
-                    <input type="checkbox" disabled ${user.actif?"checked":""}>
+                    <input type="checkbox" readonly ${user.actif?"checked":""}>
                 </td>
             </tr>`;
         }

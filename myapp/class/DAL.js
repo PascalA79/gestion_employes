@@ -156,13 +156,34 @@ class DAL{
         })
         return result;
     }
-    async updatePlancher({idPlancher,planchers,nomPlancher}){
+    async updatePlancher({idPlancher,superviseurs,nomPlancher}){
         await this.#connectionMYSQL.excecuteSync(`DELETE FROM SuperviseursPlanchers WHERE idPlancher="${idPlancher}"`)
         try {
-            let sql=`INSERT INTO SuperviseursPlanchers (idPlancher, idUtilisateur)  VALUES`
-            planchers.forEach((p)=>sql+=` (${idPlancher},${p}),`)
-            sql=sql.slice(0, -1)
-            this.#connectionMYSQL.excecuteSync(sql)
+            if(superviseurs.length>0){
+                let updateSuperviseurSQL=`INSERT INTO SuperviseursPlanchers (idPlancher, idUtilisateur) VALUES`
+                superviseurs.forEach((p)=>updateSuperviseurSQL+=` (${idPlancher},${p}),`)
+                updateSuperviseurSQL=updateSuperviseurSQL.slice(0, -1)
+                await this.#connectionMYSQL.excecuteSync(updateSuperviseurSQL)
+            }
+            let updateNomSQL=`UPDATE Planchers SET nomPlancher="${nomPlancher}" WHERE idPlancher=${idPlancher}`
+            await this.#connectionMYSQL.excecuteSync(updateNomSQL)
+        } catch (error) {
+            console.error(error)
+        }
+    }
+    async addPlancher({superviseurs,nomPlancher}){
+        try {
+            let addNomSQL=`INSERT INTO Planchers(nomPlancher) VALUES("${nomPlancher}")`
+            await this.#connectionMYSQL.excecuteSync(addNomSQL)
+            let idPlancherSQL="SELECT LAST_INSERT_ID() as id";
+            let test=await this.#connectionMYSQL.excecuteSync(idPlancherSQL)
+            let idPlancher=test[0]["id"]
+            if(superviseurs.length>0){
+                let updateSuperviseurSQL=`INSERT INTO SuperviseursPlanchers (idPlancher, idUtilisateur) VALUES`
+                superviseurs.forEach((p)=>updateSuperviseurSQL+=` (${idPlancher},${p}),`)
+                updateSuperviseurSQL=updateSuperviseurSQL.slice(0, -1)
+                await this.#connectionMYSQL.excecuteSync(updateSuperviseurSQL)
+            }
         } catch (error) {
             console.error(error)
         }

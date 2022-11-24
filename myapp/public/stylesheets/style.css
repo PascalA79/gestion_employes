@@ -459,7 +459,7 @@
     background-color: var(--border-light);
   }
   .buttons_confirmation_plancher button:active{
-    background-color: var(--border-light);
+    background-color: var(--txt-light);
   }
   .table-container-emp{
     /* background-color: aliceblue; */
