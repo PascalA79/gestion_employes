@@ -1,0 +1,137 @@
+[
+    {
+        "idQuartTravail": 1,
+        "idPlancher": 1,
+        "idUtilisateur": 6,
+        "idRoleUtilisateur": 1,
+        "debut": 1666704600000,
+        "fin": 1666715400000,
+        "confirme": 1
+    },
+    {
+        "idQuartTravail": 2,
+        "idPlancher": 1,
+        "idUtilisateur": 6,
+        "idRoleUtilisateur": 1,
+        "debut": 1666704600000,
+        "fin": 1666715400000,
+        "confirme": 1
+    },
+    {
+        "idQuartTravail": 3,
+        "idPlancher": 1,
+        "idUtilisateur": 6,
+        "idRoleUtilisateur": 1,
+        "debut": 1666972800000,
+        "fin": 1666998000000,
+        "confirme": 1
+    },
+    {
+        "idQuartTravail": 4,
+        "idPlancher": 1,
+        "idUtilisateur": 7,
+        "idRoleUtilisateur": 2,
+        "debut": 1666713600000,
+        "fin": 1666738800000,
+        "confirme": 1
+    },
+    {
+        "idQuartTravail": 5,
+        "idPlancher": 1,
+        "idUtilisateur": 7,
+        "idRoleUtilisateur": 2,
+        "debut": 1666800000000,
+        "fin": 1666825200000,
+        "confirme": 1
+    },
+    {
+        "idQuartTravail": 6,
+        "idPlancher": 1,
+        "idUtilisateur": 7,
+        "idRoleUtilisateur": 2,
+        "debut": 1666886400000,
+        "fin": 1666911600000,
+        "confirme": 1
+    },
+    {
+        "idQuartTravail": 7,
+        "idPlancher": 1,
+        "idUtilisateur": 7,
+        "idRoleUtilisateur": 2,
+        "debut": 1666972800000,
+        "fin": 1666998000000,
+        "confirme": 1
+    },
+    {
+        "idQuartTravail": 8,
+        "idPlancher": 1,
+        "idUtilisateur": 8,
+        "idRoleUtilisateur": 3,
+        "debut": 1666713600000,
+        "fin": 1666738800000,
+        "confirme": 1
+    },
+    {
+        "idQuartTravail": 9,
+        "idPlancher": 1,
+        "idUtilisateur": 8,
+        "idRoleUtilisateur": 3,
+        "debut": 1666800000000,
+        "fin": 1666825200000,
+        "confirme": 1
+    },
+    {
+        "idQuartTravail": 10,
+        "idPlancher": 1,
+        "idUtilisateur": 8,
+        "idRoleUtilisateur": 3,
+        "debut": 1666886400000,
+        "fin": 1666911600000,
+        "confirme": 1
+    },
+    {
+        "idQuartTravail": 11,
+        "idPlancher": 1,
+        "idUtilisateur": 8,
+        "idRoleUtilisateur": 2,
+        "debut": 1666972800000,
+        "fin": 1666998000000,
+        "confirme": 1
+    },
+    {
+        "idQuartTravail": 12,
+        "idPlancher": 1,
+        "idUtilisateur": 3,
+        "idRoleUtilisateur": 3,
+        "debut": 1667278800000,
+        "fin": 1667287800000,
+        "confirme": 1
+    },
+    {
+        "idQuartTravail": 13,
+        "idPlancher": 1,
+        "idUtilisateur": 7,
+        "idRoleUtilisateur": 1,
+        "debut": 1667278800000,
+        "fin": 1667295000000,
+        "confirme": 1
+    },
+    {
+        "idQuartTravail": 14,
+        "idPlancher": 1,
+        "idUtilisateur": 12,
+        "idRoleUtilisateur": 3,
+        "debut": 1667278800000,
+        "fin": 1667289600000,
+        "confirme": 1
+    },
+    {
+        "idQuartTravail": 16,
+        "idPlancher": 1,
+        "idUtilisateur": 16,
+        "idRoleUtilisateur": 1,
+        "debut": 1667278800000,
+        "fin": 1667291400000,
+        "confirme": 1
+    }
+]

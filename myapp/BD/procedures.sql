@@ -4,7 +4,7 @@ DELIMITER $$
 --
 -- Procédures
 --
-CREATE OR REPLACE PROCEDURE `AddQuartTravail` (IN `_idPlancher` INT, IN `_idUtilisateur` INT, IN `_idRoleUtilisateur` INT, IN `_debut` DATETIME, IN `_fin` DATETIME, IN `_confirme` TINYINT)  NO SQL
+CREATE OR REPLACE PROCEDURE `AddQuartTravail` (IN `_idPlancher` INT, IN `_idUtilisateur` INT, IN `_idRoleUtilisateur` INT, IN `_debut` BIGINT, IN `_fin` BIGINT, IN `_confirme` TINYINT)  NO SQL
 BEGIN
     INSERT INTO QuartsTravail(idPlancher, idUtilisateur, idRoleUtilisateur, debut ,fin,confirme)
     VALUES(_idPlancher, _idUtilisateur, _idRoleUtilisateur, _debut, _fin, 0);
@@ -32,12 +32,12 @@ INNER JOIN Utilisateurs
 ON SuperviseursPlanchers.idUtilisateur = Utilisateurs.idUtilisateur
 WHERE Utilisateurs.idUtilisateur = userid $$
 
-CREATE OR REPLACE PROCEDURE `GetQuartsByPlancher` (IN `_idPlancher` INT, IN `_debut` DATETIME, IN `_fin` DATETIME)  NO SQL
+CREATE OR REPLACE PROCEDURE `GetQuartsByPlancher` (IN `_idPlancher` INT, IN `_debut` BIGINT, IN `_fin` BIGINT)  NO SQL
 SELECT Utilisateurs.idUtilisateur,Utilisateurs.alias,Utilisateurs.prenomUtilisateur as prenom,Utilisateurs.nomUtilisateur as nom, debut,fin FROM QuartsTravail INNER JOIN Utilisateurs
 ON Utilisateurs.idUtilisateur = QuartsTravail.idUtilisateur
 WHERE QuartsTravail.idPlancher=_idPlancher AND debut>=_debut AND fin<=_fin $$
 
-CREATE OR REPLACE PROCEDURE `GetQuartsByUser` (IN `_idUtilisateur` INT, IN `_debut` DATETIME, IN `_fin` DATETIME)  NO SQL
+CREATE OR REPLACE PROCEDURE `GetQuartsByUser` (IN `_idUtilisateur` INT, IN `_debut` BIGINT, IN `_fin` BIGINT)  NO SQL
 SELECT * FROM QuartsTravail 
 WHERE idUtilisateur=_idUtilisateur AND debut>=_debut AND fin<=_fin $$
 
@@ -48,7 +48,7 @@ WHERE SuperviseursPlanchers.`idPlancher`= _idPlancher $$
 CREATE OR REPLACE PROCEDURE `RemoveQuartTravail` (IN `_idQuartTravail` INT)  NO SQL
 DELETE FROM QuartsTravail WHERE idQuartTravail=_idQuartTravail $$
 
-CREATE OR REPLACE PROCEDURE `UpdateQuartTravail` (IN `_idQuartTravail` INT, IN `_idPlancher` INT, IN `_idUtilisateur` INT, IN `_idRoleUtilisateur` INT, IN `_debut` DATETIME, IN `_fin` DATETIME, IN `_confirme` TINYINT)  NO SQL
+CREATE OR REPLACE PROCEDURE `UpdateQuartTravail` (IN `_idQuartTravail` INT, IN `_idPlancher` INT, IN `_idUtilisateur` INT, IN `_idRoleUtilisateur` INT, IN `_debut` BIGINT, IN `_fin` BIGINT, IN `_confirme` TINYINT)  NO SQL
 UPDATE QuartsTravail SET idPlancher=_idPlancher, idUtilisateur=_idUtilisateur, idRoleUtilisateur = _idRoleUtilisateur, debut = _debut, fin = _fin, confirme =_confirme
 WHERE idQuartTravail=_idQuartTravail$$
 
@@ -80,7 +80,7 @@ CREATE OR REPLACE TRIGGER `BeforeInsertQuartsTravail` BEFORE INSERT ON `QuartsTr
         DECLARE isInvalid INT;
         SET isInvalid=(SELECT IsValidQuart(NEW.idQuartTravail, NEW.idUtilisateur, 
         NEW.debut, NEW.fin));
-        IF(0=isInvalid) THEN
+        IF(isInvalid > 0) THEN
             SIGNAL sqlstate '45001' set message_text = "Ajout du QuartsTravail impossible!";
         END IF;
 END $$
@@ -90,7 +90,7 @@ CREATE OR REPLACE TRIGGER `BeforeUpdateQuartsTravail` BEFORE UPDATE ON `QuartsTr
         DECLARE isInvalid INT;
 
     SET isInvalid=(SELECT IsValidQuart(NEW.idQuartTravail, NEW.idUtilisateur, NEW.debut, NEW.fin));
-    IF(0=isInvalid) THEN
+    IF(isInvalid > 0) THEN
         SIGNAL sqlstate '45002' set message_text = "Modification du QuartsTravail impossible!";
     END IF;
 END $$
@@ -102,20 +102,24 @@ DELIMITER $$
 CREATE OR REPLACE FUNCTION `CheckPassword` (`_alias` VARCHAR(45), `_motDePasse` VARCHAR(45)) RETURNS TINYINT(1) NO SQL
 RETURN PASSWORD(_motDePasse) = (SELECT Utilisateurs.motDePasse FROM Utilisateurs WHERE Utilisateurs.alias=_alias) $$
 
-CREATE OR REPLACE FUNCTION `IsValidQuart`(`_idQuartTravail` INT, `_idUtilisateur` INT, `_debutQuart` DATETIME, `_finQuart` DATETIME) RETURNS tinyint(11) NO SQL
+
+DELIMITER $$
+CREATE OR REPLACE FUNCTION `IsValidQuart`(`_idQuartTravail` INT, `_idUtilisateur` INT, `_debutQuart` BIGINT, `_finQuart` BIGINT) RETURNS tinyint(11) NO SQL
 RETURN (
     SELECT COUNT(QuartsTravail.idQuartTravail) AS result FROM QuartsTravail 
     WHERE QuartsTravail.idUtilisateur=_idUtilisateur AND
     QuartsTravail.idQuartTravail!=_idQuartTravail AND
     (
-    _debutQuart>=QuartsTravail.debut AND
-    _debutQuart<QuartsTravail.fin
+    (_debutQuart>=QuartsTravail.debut AND
+    _debutQuart<QuartsTravail.fin)
     OR
-    _finQuart>QuartsTravail.debut AND 
-    _finQuart<=QuartsTravail.fin
+    (_finQuart>QuartsTravail.debut AND 
+    _finQuart<=QuartsTravail.fin)
     OR
-    _debutQuart<=QuartsTravail.debut AND 
-    _finQuart>=QuartsTravail.fin
+    (_debutQuart<=QuartsTravail.debut AND 
+    _finQuart>=QuartsTravail.fin)
     )
    )$$
 DELIMITER ;
+
+SELECT IsValidQuart(-1, 6, 3000000000, 3000000001);

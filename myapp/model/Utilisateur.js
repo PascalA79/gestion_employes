@@ -43,6 +43,14 @@ class Utilisateur{
         return this.idTypeUtilisateur == TYPE_UTILISATEUR.SUPERVISEUR;
     }
 
+    async isSuperviseurOfUser(otherUser){
+        return this.isAdministrateur() || 
+        this.isDirecteur() || 
+        otherUser.id == this.id || 
+        (this.isSuperviseur() || 
+        await this.isSuperviseurOfPlancher(otherUser.idPlancher));
+    }
+
     async getListEmployes(){
         return await Utilisateur.#DAL.getListEmployes(this);
     }

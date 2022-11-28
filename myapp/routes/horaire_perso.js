@@ -8,6 +8,7 @@ const BuildUserTableData = require('../class/Utilities/UserTableBuilder').BuildU
 const DateUtilities = require('../class/Utilities/DateUtilities');
 const QuartTravail = require('../model/QuartTravail');
 const RoleUtilisateur = require('../model/RoleUtilisateur');
+const Plancher = require('../model/Plancher');
 
 /* GET home page. */
 var session=new Session(router);
@@ -47,6 +48,7 @@ router.use('/', async function(req, res, next) {
     const start = DateUtilities.getWeekDay(date, 0);
     const end = DateUtilities.getWeekDay(date, 7);
     const data = await GetData(id, start, end);
+    // user:{alias:session.get('user')},
     res.render('horaire-perso',
     {
       user:{alias:session.get('user')},
@@ -57,6 +59,22 @@ router.use('/', async function(req, res, next) {
       prev: DateUtilities.dateToDateString(DateUtilities.deltaDaysDate(start, -7)),
       next: DateUtilities.dateToDateString(DateUtilities.deltaDaysDate(start, 7)),
       id: user.id});
+    // res.render('horaire-perso',
+    // {
+    //   user:{alias:session.get('user')},
+    //   alerts:{}, 
+    //   data:data, 
+    //   start:DateUtilities.dateToDateString(start), 
+    //   end:DateUtilities.dateToDateString(DateUtilities.deltaDaysDate(end, -1)),
+    //   prev: DateUtilities.dateToDateString(DateUtilities.deltaDaysDate(start, -7)),
+    //   next: DateUtilities.dateToDateString(DateUtilities.deltaDaysDate(start, 7)),
+    //   id: user.id,
+    //   quarts: null,
+    //   planchers: null,
+    //   user: null,
+    //   roles: null,
+    //   dates: [],
+    // });
   })
 
 
@@ -65,9 +83,12 @@ async function GetData(userId, debut, fin){
   RoleUtilisateur.connect(myDAL);
   const roles = await RoleUtilisateur.getAll();
   QuartTravail.connect(myDAL);
-  const quarts = await QuartTravail.getByUser(userId, debut, fin);
+  const quarts = await QuartTravail.getByUserDate(userId, debut, fin);
+  Plancher.connect(myDAL);
+  const planchers = await Plancher.getAllPlanchers();
+  // const quarts = await QuartTravail.getByUser(userId, debut, fin);
   myDAL.end()
-  return BuildUserTableData(roles, quarts, debut, fin);
+  return BuildUserTableData(roles, planchers, quarts, debut, fin);
 } 
 
 module.exports = router;

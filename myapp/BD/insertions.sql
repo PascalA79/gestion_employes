@@ -64,15 +64,30 @@ INSERT INTO RolesUtilisateurs (idPosteDepenses, idDepartement, nomRoleUtilisateu
 INSERT INTO RolesUtilisateurs (idPosteDepenses, idDepartement, nomRoleUtilisateur, couleur) VALUES (1, 1, 'Hôte', 'orange'); --3
 
 -- AddQuartTravail(idPlancher, idUtilisateur, idRoleUtilisateur, debut, fin, confirme)
-CALL AddQuartTravail(1, 6, 1, '2022-10-25 9:30' , '2022-10-25 12:30', 0);
-CALL AddQuartTravail(1, 6, 1, '2022-10-26 9:30' , '2022-10-6 12:30', 0);
-CALL AddQuartTravail(1, 6, 1, '2022-10-28 12:00', '2022-10-28 19:00', 0);
-CALL AddQuartTravail(1, 7, 2, '2022-10-25 12:00', '2022-10-25 19:00', 0);
-CALL AddQuartTravail(1, 7, 2, '2022-10-26 12:00', '2022-10-26 19:00', 0);
-CALL AddQuartTravail(1, 7, 2, '2022-10-27 12:00', '2022-10-27 19:00', 0);
-CALL AddQuartTravail(1, 7, 2, '2022-10-28 12:00', '2022-10-28 19:00', 0);
-CALL AddQuartTravail(1, 8, 3, '2022-10-25 12:00', '2022-10-25 19:00', 0);
-CALL AddQuartTravail(1, 8, 3, '2022-10-26 12:00', '2022-10-26 19:00', 0);
-CALL AddQuartTravail(1, 8, 3, '2022-10-27 12:00', '2022-10-27 19:00', 0);
-CALL AddQuartTravail(1, 8, 2, '2022-10-28 12:00', '2022-10-28 19:00', 0);
+-- CALL AddQuartTravail(1, 6, 1, '2022-10-25 9:30' , '2022-10-25 12:30', 0);
+-- CALL AddQuartTravail(1, 6, 1, '2022-10-26 9:30' , '2022-10-6 12:30', 0);
+-- CALL AddQuartTravail(1, 6, 1, '2022-10-28 12:00', '2022-10-28 19:00', 0);
+-- CALL AddQuartTravail(1, 7, 2, '2022-10-25 12:00', '2022-10-25 19:00', 0);
+-- CALL AddQuartTravail(1, 7, 2, '2022-10-26 12:00', '2022-10-26 19:00', 0);
+-- CALL AddQuartTravail(1, 7, 2, '2022-10-27 12:00', '2022-10-27 19:00', 0);
+-- CALL AddQuartTravail(1, 7, 2, '2022-10-28 12:00', '2022-10-28 19:00', 0);
+-- CALL AddQuartTravail(1, 8, 3, '2022-10-25 12:00', '2022-10-25 19:00', 0);
+-- CALL AddQuartTravail(1, 8, 3, '2022-10-26 12:00', '2022-10-26 19:00', 0);
+-- CALL AddQuartTravail(1, 8, 3, '2022-10-27 12:00', '2022-10-27 19:00', 0);
+-- CALL AddQuartTravail(1, 8, 2, '2022-10-28 12:00', '2022-10-28 19:00', 0);
 -- CALL AddQuartTravail(2, 12, 4, '2022-09-28 12:00', '2022-09-28 19:00', 0);
+CALL AddQuartTravail(1, 6, 1, 1666704600000, 1666715400000, 1);
+-- CALL AddQuartTravail(1, 6, 1, 1666704600000, 1666715400000, 1);
+CALL AddQuartTravail(1, 6, 1, 1666972800000, 1666998000000, 1);
+CALL AddQuartTravail(1, 7, 2, 1666713600000, 1666738800000, 1);
+CALL AddQuartTravail(1, 7, 2, 1666800000000, 1666825200000, 1);
+CALL AddQuartTravail(1, 7, 2, 1666886400000, 1666911600000, 1);
+CALL AddQuartTravail(1, 7, 2, 1666972800000, 1666998000000, 1);
+CALL AddQuartTravail(1, 8, 3, 1666713600000, 1666738800000, 1);
+CALL AddQuartTravail(1, 8, 3, 1666800000000, 1666825200000, 1);
+CALL AddQuartTravail(1, 8, 3, 1666886400000, 1666911600000, 1);
+CALL AddQuartTravail(1, 8, 2, 1666972800000, 1666998000000, 1);
+CALL AddQuartTravail(1, 3, 3, 1667278800000, 1667287800000, 1);
+CALL AddQuartTravail(1, 7, 1, 1667278800000, 1667295000000, 1);
+CALL AddQuartTravail(1, 12, 3, 1667278800000, 1667289600000, 1);
+CALL AddQuartTravail(1, 16, 1, 1667278800000, 1667291400000, 1);

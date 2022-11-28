@@ -94,7 +94,8 @@ class DAL{
     }
     
     async getQuartsByUser(idUtilisateur,debut, fin){
-        return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`Call GetQuartsByUser('${idUtilisateur}','${debut.toLocaleDateString("fr-CA")}','${fin.toLocaleDateString("fr-CA")}')`))[0])
+        return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`Call GetQuartsByUser('${idUtilisateur}','${debut}','${fin}')`))[0])
+        // return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`Call GetQuartsByUser('${idUtilisateur}','${debut.toLocaleDateString("fr-CA")}','${fin.toLocaleDateString("fr-CA")}')`))[0])
         .map(x=>Utilities.getArray(x))
     }
     async getQuartsByPlancher(idPlancher, date){

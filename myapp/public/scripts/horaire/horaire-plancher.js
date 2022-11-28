@@ -59,3 +59,17 @@ function AddEmptyCellHandlers(){
 
 AddShiftHandlers();
 AddEmptyCellHandlers();
+
+
+
+async function GetData(userId, debut, fin){
+    const myDAL = new DAL();
+    RoleUtilisateur.connect(myDAL);
+    const roles = await RoleUtilisateur.getAll();
+    QuartTravail.connect(myDAL);
+    const quarts = await QuartTravail.getByUserDate(userId, debut, fin);
+    // const quarts = await QuartTravail.getByUser(userId, debut, fin);
+    myDAL.end()
+    return BuildUserTableData(roles, quarts, debut, fin);
+}
+
