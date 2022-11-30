@@ -41,5 +41,9 @@
     height: 100vh;
     overflow-y: scroll;
 }
-
+.titre{
+  font-size:72px ;
+  width:fit-content;
+  margin: auto;
+}
   
