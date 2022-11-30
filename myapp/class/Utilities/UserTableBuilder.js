@@ -46,7 +46,7 @@ function BuildShiftCell(quart, dateTime, roles, planchers, plancherIdUser){
     // const strDebut = sameDay ? DateUtilities.dateToHoursString(quart.debut) : DateUtilities.dateToFullDateString(quart.debut);
     // const strFin   = sameDay ? DateUtilities.dateToHoursString(quart.fin) : DateUtilities.dateToFullDateString(quart.fin);
     td.content = "";
-    if(plancherIdUser == plancher.id) td.content = `${plancher.nom} - `
+    if(plancherIdUser != plancher.id) td.content = `${plancher.nom} - `
     td.content += `${role.nom}: ${strDebut} - ${strFin}`;
     td.attributes = {rowspan: GetRowSpan(sameDay, quart, dateTime)}
     td.attributes.style = `background-color:${role.couleur}; font-weight:bold;`;

@@ -87,10 +87,12 @@ async function GetData(userId, debut, fin){
   Plancher.connect(myDAL);
   const planchers = await Plancher.getAllPlanchers();
   Utilisateur.connect(myDAL);
-  const currentUser = await Utilisateur.getUserById(userId);
+  const allUsers = await Utilisateur.getUsers();
+  const displayedUser = allUsers.find((user) => user.id == userId);
+  // const displayedUser = await Utilisateur.getUserById(userId);
   // const quarts = await QuartTravail.getByUser(userId, debut, fin);
   myDAL.end()
-  return BuildUserTableData(roles, planchers, quarts, debut, fin, currentUser.idPlancher);
+  return BuildUserTableData(roles, planchers, quarts, debut, fin, displayedUser.idPlancher);
 } 
 
 module.exports = router;
