@@ -225,7 +225,7 @@ async function GetData(currentUser, idPlancher, date){
   Utilisateur.connect(myDAL)
   const data = {};
   data.planchers = await GetPlanchers(currentUser);
-  data.plancherSelectionne ={id: !idPlancher ? data.planchers[0].id : idPlancher};
+  data.plancherSelectionne ={id: !idPlancher ? `${data.planchers[0].id}` : idPlancher};
   data.users = await Utilisateur.getUserByPlancher(data.plancherSelectionne.id);
   data.jour = DateUtilities.getObj(debut);
 
