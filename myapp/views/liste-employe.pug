@@ -23,7 +23,7 @@ mixin buildForm(id, params={})
                 -})
               -}
             -else{
-              input(id=name,type=type).input-dark
+              input(id=name,type=type,readonly=name=="alias").input-dark
             -}
             -errors.forEach(error=>{
               -//console.log(error.name,error.value)
