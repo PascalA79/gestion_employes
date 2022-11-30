@@ -23,15 +23,27 @@
   .demo .container-dark{
     height: fit-content;
     width: 100%;
+    min-width: 200px;
   }
 .container-dark p{
     display: block;
-
+    margin: auto;
+}
+.col{
+  display: flex;
+  flex-direction: column;
+}
+.col>*{
+  margin: auto;
 }
 
   body{
     height: 100vh;
     overflow-y: scroll;
 }
-
+.titre{
+  font-size:72px ;
+  width:fit-content;
+  margin: auto;
+}
   

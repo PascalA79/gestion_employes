@@ -29,26 +29,26 @@ INSERT INTO TypesUtilisateurs(idTypeUtilisateur, nomTypeUtilisateur) VALUES (3, 
 
 -- AddUtilisateur(prenom, nom, alias, mot de passe, idTypeUtilisateur, idPlancher, age, telephone, courriel)
 -- AddUtilisateur(prenom, nom, alias, mot de passe, idTypeUtilisateur, idPlancher, age, telephone, courriel,actif)
-CALL AddUtilisateur('Steve',     'Administrateur1',          'Admin1', 'Test123', 3, 3, 23, 1234567890, 'courriel@email.com', 1); --1
-CALL AddUtilisateur('Alexandre', 'Directeur1',               'Boss1',  'Test123', 2, 3, 23, 1234567890, 'courriel@email.com', 1); --2
-CALL AddUtilisateur('Étienne',   'SuperviseurCuisine',       'Super1', 'Test123', 1, 1, 23, 1234567890, 'courriel@email.com', 1); --3
-CALL AddUtilisateur('Alice',     'SuperviseurResto',         'Super2', 'Test123', 1, 2, 23, 1234567890, 'courriel@email.com', 1); --4
-CALL AddUtilisateur('Alice',     'SuperviseurCuisine&Resto', 'Super3', 'Test123', 1, 2, 23, 1234567890, 'courriel@email.com', 1); --5
-CALL AddUtilisateur('Sudo',      'Employé1',                 'Emp1',   'Test123', 0, 1, 23, 1234567890, 'courriel@email.com', 1); --6
-CALL AddUtilisateur('Sudo',      'Employé2',                 'Emp2',   'Test123', 0, 1, 23, 1234567890, 'courriel@email.com', 1); --7
-CALL AddUtilisateur('Sudo',      'Employé3',                 'Emp3',   'Test123', 0, 1, 23, 1234567890, 'courriel@email.com', 1); --8
-CALL AddUtilisateur('Sudo',      'Employé4',                 'Emp4',   'Test123', 0, 2, 23, 1234567890, 'courriel@email.com', 1); --9
-CALL AddUtilisateur('Sudo',      'Employé5',                 'Emp5',   'Test123', 0, 2, 23, 1234567890, 'courriel@email.com', 1); --10
-CALL AddUtilisateur('Sudo',      'Employé6',                 'Emp6',   'Test123', 0, 2, 23, 1234567890, 'courriel@email.com', 1); --11
-CALL AddUtilisateur('Sudo',      'Employé7',                 'Emp7',   'Test123', 0, 1, 23, 1234567890, 'courriel@email.com', 1); --12
-CALL AddUtilisateur('Sudo',      'Employé8',                 'Emp8',   'Test123', 0, 1, 23, 1234567890, 'courriel@email.com', 1); --13
-CALL AddUtilisateur('Sudo',      'Employé9',                 'Emp9',   'Test123', 0, 1, 23, 1234567890, 'courriel@email.com', 1); --14
-CALL AddUtilisateur('Sudo',      'Employé10',                'Emp10',  'Test123', 0, 1, 23, 1234567890, 'courriel@email.com', 1); --15
-CALL AddUtilisateur('Sudo',      'Employé11',                'Emp11',  'Test123', 0, 1, 23, 1234567890, 'courriel@email.com', 1); --16
-CALL AddUtilisateur('Sudo',      'Employé12',                'Emp12',  'Test123', 0, 1, 23, 1234567890, 'courriel@email.com', 1); --17
-CALL AddUtilisateur('Sudo',      'Employé13',                'Emp13',  'Test123', 0, 1, 23, 1234567890, 'courriel@email.com', 1); --18
-CALL AddUtilisateur('Sudo',      'Employé14',                'Emp14',  'Test123', 0, 1, 23, 1234567890, 'courriel@email.com', 1); --19
-CALL AddUtilisateur('Sudo',      'Employé15',                'Emp15',  'Test123', 0, 1, 23, 1234567890, 'courriel@email.com', 1); --20
+CALL AddUtilisateur('pascal','ares','pares','Test123','3','3','23','4502804076','pascal.ares@calendrix.ca','1');
+CALL AddUtilisateur('philippe','leger','pleger','Test123','2','3','26','5142397711','philippe.leger@calendrix.ca','1');
+CALL AddUtilisateur('william','smith','wsmith','Test123','1','1','23','4502801234','william.smith@calendrix.ca','1');
+CALL AddUtilisateur('alexandre','leger','aleger','Test123','1','1','21','5149982829','alexandre.leger@calendrix.ca','1');
+CALL AddUtilisateur('amelia','boucher','aboucher','Test123','1','1','16','5142239801','amelia.boucher@calendrix.ca','1');
+CALL AddUtilisateur('gabriel','proulx','gproulx','Test123','0','2','23','4509370091','gabriel.proulx@calendrix.ca','1');
+CALL AddUtilisateur('samuel','auger','sauger','Test123','0','2','17','5145537894','samuel.auger@calendrix.ca','1');
+CALL AddUtilisateur('emma','etienne','eetienne','Test123','0','1','25','5149756257','emma.etienne@calendrix.ca','1');
+CALL AddUtilisateur('noah','lamarche','nlamarche','Test123','0','2','17','5148225945','noah.lamarche@calendrix.ca','1');
+CALL AddUtilisateur('olivia','durocher','odurocher','Test123','0','1','29','5147106012','olivia.durocher@calendrix.ca','1');
+CALL AddUtilisateur('william','tremblay','wtremblay','Test123','0','2','16','5149201542','william.tremblay@calendrix.ca','1');
+CALL AddUtilisateur('alice','picher','apicher','Test123','0','1','23','5146131961','alice.picher@calendrix.ca','1');
+CALL AddUtilisateur('thomas','saintclair','tsaintclair','Test123','0','2','15','5145113036','thomas.saintclair@calendrix.ca','1');
+CALL AddUtilisateur('florence','vaillancourt','fvaillancourt','Test123','0','1','19','5142235537','florence.vaillancourt@calendrix.ca','1');
+CALL AddUtilisateur('leo','major','lmajor','Test123','0','2','17','5147193772','leo.major@calendrix.ca','1');
+CALL AddUtilisateur('charlie','brown','cbrown','Test123','0','1','25','5143520574','charlie.brown@calendrix.ca','1');
+CALL AddUtilisateur('liam','neeson','lneeson','Test123','0','2','30','5142069666','liam.neeson@calendrix.ca','1');
+CALL AddUtilisateur('livia','lafoest','llafoest','Test123','0','1','17','5146023298','livia.lafoest@calendrix.ca','1');
+CALL AddUtilisateur('jacob','cloutier','jcloutier','Test123','0','2','25','5142943389','jacob.cloutier@calendrix.ca','1');
+CALL AddUtilisateur('nathan','desjardins','ndesjardins','Test123','0','3','23','5147373464','nathan.desjardins@calendrix.ca','1');
 
 
 INSERT INTO SuperviseursPlanchers(idUtilisateur, idPlancher) VALUES (3, 1);

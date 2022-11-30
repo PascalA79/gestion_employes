@@ -60,16 +60,18 @@ DECLARE varIdTypeUtilisateur INT;
 SET varIdTypeUtilisateur=(SELECT idTypeUtilisateur FROM Utilisateurs WHERE idUtilisateur=_idUtilisateur);
 
 IF varIdTypeUtilisateur=1 THEN
-    SELECT idTypeUtilisateur, Utilisateurs.idPlancher,
-    prenomUtilisateur as prenom, nomUtilisateur as nom, alias, age, 
-    telephone, courriel FROM Utilisateurs 
-    INNER JOIN SuperviseursPlanchers ON SuperviseursPlanchers.idPlancher= Utilisateurs.idPlancher WHERE 
+   
+    SELECT Utilisateurs.idUtilisateur as id, Utilisateurs.idTypeUtilisateur,TypesUtilisateurs.nomTypeUtilisateur, Planchers.nomPlancher, Utilisateurs.idPlancher,prenomUtilisateur as prenom, nomUtilisateur as nom, alias, age, telephone, courriel, actif FROM Utilisateurs INNER JOIN Planchers ON 
+    Utilisateurs.idPlancher = Planchers.idPlancher
+INNER  JOIN TypesUtilisateurs ON 
+TypesUtilisateurs.idTypeUtilisateur=Utilisateurs.idTypeUtilisateur WHERE 
     actif=1 AND SuperviseursPlanchers.idUtilisateur = _idUtilisateur;
 END IF;
 IF varIdTypeUtilisateur>=2 THEN
-    SELECT idTypeUtilisateur, idPlancher, prenomUtilisateur as prenom, 
-    nomUtilisateur as nom, alias, age, telephone, courriel FROM 
-    Utilisateurs;
+    SELECT Utilisateurs.idUtilisateur as id, Utilisateurs.idTypeUtilisateur,TypesUtilisateurs.nomTypeUtilisateur, Planchers.nomPlancher, Utilisateurs.idPlancher,prenomUtilisateur as prenom, nomUtilisateur as nom, alias, age, telephone, courriel, actif FROM Utilisateurs INNER JOIN Planchers ON 
+    Utilisateurs.idPlancher = Planchers.idPlancher
+INNER  JOIN TypesUtilisateurs ON 
+TypesUtilisateurs.idTypeUtilisateur=Utilisateurs.idTypeUtilisateur;
 END IF;
 END $$
 

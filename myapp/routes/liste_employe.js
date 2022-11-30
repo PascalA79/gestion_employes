@@ -57,7 +57,7 @@ router.use('/', async function(req, res, next) {
     let listEmployes=await user.getListEmployes();
     myDAL.end();
     listEmployes.forEach(element => {
-      element.actif=true
+      element.actif=element.actif[0]
     });
     listEmployes.forEach((element,num) => {
       let isFind=0
