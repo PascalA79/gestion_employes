@@ -72,6 +72,16 @@ IF varIdTypeUtilisateur>=2 THEN
     Utilisateurs;
 END IF;
 END $$
+
+DELIMITER $$
+CREATE OR REPLACE PROCEDURE `UpdatePassword`(IN `_alias` VARCHAR(45), IN `_newPassword` VARCHAR(45))
+    NO SQL
+BEGIN
+DECLARE hash_password varchar(255);
+SET hash_password=PASSWORD(_newPassword);
+UPDATE Utilisateurs SET motDePasse=hash_password WHERE alias=_alias;
+END$$
+DELIMITER ;
 --
 -- Trigger
 --
@@ -96,6 +106,7 @@ CREATE OR REPLACE TRIGGER `BeforeUpdateQuartsTravail` BEFORE UPDATE ON `QuartsTr
     END IF;
 END $$
 DELIMITER ;
+
 --
 -- Fonctions
 --
