@@ -82,8 +82,12 @@ class DAL{
 
     async addUtilisateur({idTypeUtilisateur,idPlancher,prenom,nom,alias,telephone,courriel,actif,age}){
         let utilisateur=await this.#connectionMYSQL.excecuteSync(
-            `Call AddUtilisateur('${prenom}','${nom}','${alias}','mot de passe',${parseInt(idTypeUtilisateur)},'${idPlancher}','${age}','${telephone}','${courriel}','${actif}')`)
+            `Call AddUtilisateur('${prenom}','${nom}','${alias}','${courriel}',${parseInt(idTypeUtilisateur)},'${idPlancher}','${age}','${telephone}','${courriel}','${actif}')`)
         return utilisateur;
+    }
+    async updatePassword(alias,newPassword){
+        let sql=`Call UpdatePassword('${alias}','${newPassword}')`
+        await this.#connectionMYSQL.excecuteSync(sql)
     }
     async updateUtilisateur({id,idTypeUtilisateur,idPlancher,prenom,nom,alias,telephone,courriel,actif}){
         let utilisateur=await this.#connectionMYSQL.excecuteSync(`Call UpdateUtilisateur(${id},'${idTypeUtilisateur}','${idPlancher}','${prenom}','${nom}','${alias}','${telephone}','${courriel}','${actif}')`)

@@ -26,7 +26,7 @@ mixin navbar(user, alerts, selected)
                 span.navbar-toggler-icon
             
             .navbar-nav.collapse.navbar-collapse#nav
-                +tuile(user.alias, "#", null, selected == "profil")
+                +tuile(user.alias, "profil", null, selected == "profil")
                 +tuile("Horaire de travail", "horaire-perso", null, selected == "horaire-perso")
                 +tuile("À propos", "about.html", null, selected == "about")
                 //- +tuile("Courriels", "#", alerts.courriels, selected == "courriels")

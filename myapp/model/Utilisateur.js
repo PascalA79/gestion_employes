@@ -2,7 +2,7 @@ const TYPE_UTILISATEUR = require('./TYPE_UTILISATEUR');
 const {TUILES, TITRES} = require("./TUILES");
 const Utilities = require('../class/Utilities');
 const {ValiderUtilisateur,ERREUR_UTILISATEUR}=require("../public/scripts/ValidationUtilisateur");
-const DAL = require('../class/DAL');
+const {validatePassword,ERROR_CODES,ERROR_TEXTS}=require("../public/scripts/login");
 class Utilisateur{
     static #DAL
     static #UniqueKeys={}
@@ -81,6 +81,13 @@ class Utilisateur{
             await updateur({...this})
         }
         return validate;
+    }
+    async updatePassword(newPassword){
+        let validate=validatePassword(newPassword)
+        if(validate==ERROR_CODES.PASSWORD.OK){
+            await Utilisateur.#DAL.updatePassword(this.alias,newPassword)
+        }
+        return {error:validate}
     }
 
     async delete(){

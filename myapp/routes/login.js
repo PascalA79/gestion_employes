@@ -77,6 +77,8 @@ async function post(req, res, next){
             res.redirect('index')
         }
         else{
+            res.render('login', { username: username, errorPassword:loginValidation.ERROR_TEXTS.PASSWORD[loginValidation.ERROR_CODES.PASSWORD.UNKNOWN]});
+/*
             var {username,password}=validArray
             const errorUsername = loginValidation.getUsernameValidationText(username);
             const errorPassword = loginValidation.getPasswordValidationText(password);
@@ -96,7 +98,7 @@ async function post(req, res, next){
                 } else {
                     res.render('login', { username: username, errorPassword:loginValidation.ERROR_TEXTS.PASSWORD[loginValidation.ERROR_CODES.PASSWORD.UNKNOWN]});
                 }
-            }
+            }*/
         }
     }
     else{
