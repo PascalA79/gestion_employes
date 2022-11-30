@@ -119,7 +119,7 @@ function qsToString(qs){
 }
 
 async function GetEditData(req, doSomething = false){
-  const workShift = new QuartTravail(req.body);
+  const workShift = new QuartTravail({...req.body, debut:Date.parse(req.body.debut), fin:Date.parse(req.body.fin)});
   let success = false;
   let confirmationMsg;
   const shiftErrors = await ValidateWorkShift(workShift);
@@ -187,9 +187,10 @@ async function ValidateWorkShift(workShift){
   const currentRole = allRoles.find((r) => r.id = workShift.idRoleUtilisateur);
   shiftErrors.errorRole = ValidateurHoraire.getRoleValidationText(currentRole);
   if(shiftErrors.errorStart == "" && shiftErrors.errorEnd == ""){
-    const ws = {...workShift, debut: workShift.debut.replace("T", " "), fin: workShift.fin.replace("T", " ")};
+    const ws = {...workShift};
+    // const ws = {...workShift, debut: workShift.debut.replace("T", " "), fin: workShift.fin.replace("T", " ")};
     const resultat = await QuartTravail.validateQuart(ws)
-    if(resultat[0].value != 1){
+    if(resultat[0].value > 0){
       shiftErrors.errorEnd = ValidateurHoraire.ERROR_TEXTS.END[ValidateurHoraire.ERROR_CODES.END.CONFLICT];
     }
   }
@@ -199,7 +200,7 @@ async function ValidateWorkShift(workShift){
 
 function BuildTableData(data, date){
   const day = DateUtilities.getDateObj(date);
-  return BuildPlancherTableData(day, data.users, data.roles);
+  return BuildPlancherTableData(day, data.users, data.roles, data.planchers, data.plancherSelectionne);
 }
 
 async function GetPlanchers(currentUser){
@@ -230,13 +231,13 @@ async function GetData(currentUser, idPlancher, date){
 
 
   for(user of data.users){
-    let quarts = await QuartTravail.getByUser(user.id, debut, fin);
+    let quarts = await QuartTravail.getByUser(user.id, debut.getTime(), fin.getTime());
     user.quarts = quarts
     user.quarts = user.quarts.map(q => {
       return {
         ...q,
-        start: DateUtilities.getObj(q.debut),
-        end: DateUtilities.getObj(q.fin)
+        start: DateUtilities.getObj(new Date(q.debut)),
+        end: DateUtilities.getObj(new Date(q.fin))
       }
     });
   }

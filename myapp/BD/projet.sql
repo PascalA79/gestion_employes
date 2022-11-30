@@ -19,8 +19,28 @@ SET time_zone = "+00:00";
 --
 -- Base de données :  `projet`
 --
-
+USE projet;
 DELIMITER ;
+
+DROP TABLE IF EXISTS QuartsTravail;
+DROP TABLE IF EXISTS RequisPlancher;
+DROP TABLE IF EXISTS Conges;
+DROP TABLE IF EXISTS TauxHoraires;
+DROP TABLE IF EXISTS DestinatairesMessages;
+DROP TABLE IF EXISTS ParticipantsConversations;
+DROP TABLE IF EXISTS MessagesConversations;
+DROP TABLE IF EXISTS MessagesInternes;
+DROP TABLE IF EXISTS Conversations;
+DROP TABLE IF EXISTS Poincons;
+DROP TABLE IF EXISTS RolesUtilisateurs;
+DROP TABLE IF EXISTS PostesDepenses;
+DROP TABLE IF EXISTS Departements;
+DROP TABLE IF EXISTS Disponibilites;
+DROP TABLE IF EXISTS SuperviseursPlanchers;
+DROP TABLE IF EXISTS Utilisateurs;
+DROP TABLE IF EXISTS Planchers;
+DROP TABLE IF EXISTS TypesUtilisateurs;
+
 
 -- --------------------------------------------------------
 
@@ -169,8 +189,8 @@ CREATE OR REPLACE TABLE `QuartsTravail` (
   `idPlancher` int(11) NOT NULL,
   `idUtilisateur` int(11) NOT NULL,
   `idRoleUtilisateur` int(11) NOT NULL,
-  `debut` datetime NOT NULL,
-  `fin` datetime NOT NULL,
+  `debut` BIGINT NOT NULL,
+  `fin` BIGINT NOT NULL,
   `confirme` bit(1) NOT NULL DEFAULT b'0'
 ) ;
 
@@ -190,7 +210,6 @@ CREATE OR REPLACE TABLE `RequisPlancher` (
 ) ;
 
 -- --------------------------------------------------------
-
 --
 -- Structure de la table `RolesUtilisateurs`
 --

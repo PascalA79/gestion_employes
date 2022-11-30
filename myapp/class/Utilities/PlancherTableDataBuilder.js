@@ -1,11 +1,11 @@
 // const { removeHoursDate } = require('./DateUtilities');
 const DateUtilities = require('./DateUtilities');
 module.exports.BuildPlancherTableData = 
-function BuildPlancherTableData(day, users, roles){
+function BuildPlancherTableData(day, users, roles, planchers, plancherSelectionne){
     const hours = DateUtilities.getHours(DateUtilities.getObj(day));
     const data = [];
     for(user of users){
-        data.push(BuildUserRowData(hours, day, user, roles));
+        data.push(BuildUserRowData(hours, day, user, roles, planchers, plancherSelectionne));
     }
     data.push(BuildHoursRow(hours));
     return data
@@ -16,7 +16,7 @@ function BuildHoursRow(hours){
     return [BuildEmptyCell(), ...rowData];
 }
 
-function BuildUserRowData(hours, day, user, roles){
+function BuildUserRowData(hours, day, user, roles, planchers, plancherSelectionne){
     const rowData = [];
     if(!user.quarts)user.quarts=[]
     rowData.push(BuildUserCell(user, day));
@@ -25,7 +25,7 @@ function BuildUserRowData(hours, day, user, roles){
     for (h of hours){
         const currentShift = shifts.find((s) => DateUtilities.isInSpan(h, s.start, s.end));
         if(!currentShift) rowData.push(BuildEmptyCell(h));
-        else if (currentShift.start.getTime() == h.getTime()) rowData.push(BuildShiftCell(currentShift, roles));
+        else if (currentShift.start.getTime() == h.getTime()) rowData.push(BuildShiftCell(currentShift, roles, planchers, plancherSelectionne));
     }
     return rowData;
 }
@@ -54,14 +54,14 @@ function BuildEmptyCell(hour){
     // return {content: " ", attributes:{style: "background-color: red;"}};
 }
 
-function BuildShiftCell(workShift, roles){
+function BuildShiftCell(workShift, roles, planchers, plancherSelectionne){
     const shiftCell = {};
-    const role = GetRole(workShift.idRoleUtilisateur, roles);
+    const role = GetById(workShift.idRoleUtilisateur, roles);
     shiftCell.id = workShift.id
     // shiftCell.attributes = {colspan: 2 * DateUtilities.getDurationH(workShift)};
     shiftCell.attributes = BuildShiftAttributes(workShift, role)
     // shiftCell.contentAttributes = BuildShiftAttributes(workShift, role)
-    shiftCell.content = GetShiftText(workShift, role)
+    shiftCell.content = GetShiftText(workShift, role, planchers, plancherSelectionne)
     return shiftCell;
 }
 
@@ -76,14 +76,18 @@ function BuildShiftAttributes(workShift, role){
     return attributes;
 }
 
-function GetRole(id ,roles){
+function GetById(id ,roles){
     return roles.find(r => r.id == id);
 }
 
-function GetShiftText(workShift, role){
+function GetShiftText(workShift, role, planchers, plancherSelectionne){
+    const plancher = GetById(workShift.idPlancher, planchers);
+    let text = "";
+    if (!!plancher && workShift.idPlancher != plancherSelectionne.id) text = `${plancher.nom} - `;
+    text += `${role.nom}`;
     if(DateUtilities.areSameDay(workShift.start, workShift.end))
-        return `${role.nom}: ${DateUtilities.dateToHoursString(workShift.start)} - ${DateUtilities.dateToHoursString(workShift.end)}`
-    return `${role.nom}: ${DateUtilities.dateToFullDateString(workShift.start)} - ${DateUtilities.dateToFullDateString(workShift.end)}`
+        return `${text}: ${DateUtilities.dateToHoursString(workShift.start)} - ${DateUtilities.dateToHoursString(workShift.end)}`
+    return `${text}: ${DateUtilities.dateToFullDateString(workShift.start)} - ${DateUtilities.dateToFullDateString(workShift.end)}`
 }
     
 

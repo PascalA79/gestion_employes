@@ -37,6 +37,10 @@ class QuartTravail{
         if(!data) return []
         return data.map(quart=>new QuartTravail(quart));
     }
+
+    static async getByUserDate(idUtilisateur, debut, fin){
+        return this.getByUser(idUtilisateur, debut.getTime(), fin.getTime())
+    }
     
     static async getByPlancher(idPlancher,date){
         return await QuartTravail.#DAL.getQuartsByPlancher(idPlancher,date)

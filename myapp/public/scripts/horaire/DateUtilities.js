@@ -1,5 +1,4 @@
-const DateError =require('../Error/DateError')
-module.exports = class DateUtilities{
+class DateUtilities{
     
     static getHours({year=0, month=0, day=0}){
         const hours = [];
@@ -51,20 +50,8 @@ module.exports = class DateUtilities{
         return testTime >= start.getTime() && testTime < end.getTime();
     }
 
-    static isInSpanTime(test, start, end){
-        return test >= start && test < end;
-    }
-
     static getDurationH({start, end}){
         return (end.getTime() - start.getTime()) / 36e5;
-    }
-
-    static getDurationHTime({start, end}){
-        return (end - start) / 36e5;
-    }
-
-    static areSameDayTime(t0, t1){
-        return this.areSameDay(new Date(t0), new Date(t1))
     }
 
     static areSameDay(d0, d1){
@@ -91,20 +78,12 @@ module.exports = class DateUtilities{
         return DateUtilities.isMidnightObj(DateUtilities.getObj(date));
     }
 
-    static isMidnightTime(time){
-        return DateUtilities.isMidnightDate(new Date(time));
-    }
-
     static objToHoursString(obj){
         return `${DateUtilities.addZeroes(obj.hour)}:${DateUtilities.addZeroes(obj.minute)}`
     }
 
     static dateToHoursString(date){
         return DateUtilities.objToHoursString(DateUtilities.getObj(date));
-    }
-
-    static timeToHoursString(time){
-        return DateUtilities.dateToHoursString(new Date(time));
     }
 
     static objToDateString(obj){
@@ -115,20 +94,12 @@ module.exports = class DateUtilities{
         return DateUtilities.objToDateString(DateUtilities.getObj(date));
     }
 
-    static timeToDateString(time){
-        return DateUtilities.dateToDateString(new Date(time));
-    }
-
     static objToFullDateString(obj){
         return `${DateUtilities.objToDateString(obj)} ${DateUtilities.objToHoursString(obj)}`
     }
 
     static dateToFullDateString(date){
         return DateUtilities.objToFullDateString(DateUtilities.getObj(date));
-    }
-
-    static timeToFullDateString(time){
-        return DateUtilities.dateToFullDateString(new Date(time));
     }
 
     static addZeroes(num){

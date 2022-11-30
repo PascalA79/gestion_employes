@@ -1,5 +1,18 @@
 var express = require('express');
 var router = express.Router();
+// var Utilisateur = require('../model/Utilisateur')
+// const Plancher = require('../model/Plancher');
+// const DAL = require('../class/DAL');
+// const QuartTravail = require('../model/QuartTravail');
+// const RoleUtilisateur = require('../model/RoleUtilisateur');
+// const ValidateurHoraire = require('../public/scripts/horaire/ValidateurHoraire');
+
+const UsersRouter = require("./API/UtilisateursRouter");
+const ShiftsRouter = require("./API/QuartTravailRouter");
+router.use("/users", UsersRouter);
+router.use("/shifts", ShiftsRouter);
+
+
 /*
 var Session=require('../class/Session');
 var ConnectionMYSQL=require('../class/ConnectionMYSQL');
