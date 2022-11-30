@@ -28,6 +28,18 @@
     display: block;
 
 }
+.col{
+  display: flex;
+  flex-direction: column;
+}
+p{
+  width: 100%;
+  overflow: auto;
+  margin: auto;
+}
+.col>*{
+  margin: auto;
+}
 
   body{
     height: 100vh;
