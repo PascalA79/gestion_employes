@@ -26,16 +26,14 @@
   }
 .container-dark p{
     display: block;
-
+    margin: auto;
 }
 .col{
   display: flex;
   flex-direction: column;
 }
 p{
-  width: 100%;
   overflow: auto;
-  margin: auto;
 }
 .col>*{
   margin: auto;
