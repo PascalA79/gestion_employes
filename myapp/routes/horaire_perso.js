@@ -58,7 +58,7 @@ router.use('/', async function(req, res, next) {
       end:DateUtilities.dateToDateString(DateUtilities.deltaDaysDate(end, -1)),
       prev: DateUtilities.dateToDateString(DateUtilities.deltaDaysDate(start, -7)),
       next: DateUtilities.dateToDateString(DateUtilities.deltaDaysDate(start, 7)),
-      id: user.id});
+      id: id});
     // res.render('horaire-perso',
     // {
     //   user:{alias:session.get('user')},
