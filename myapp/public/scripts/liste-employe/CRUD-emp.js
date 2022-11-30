@@ -53,6 +53,7 @@ function main(){
                 Actif
             </td>
             <tbody>`
+            debugger
         for(let num in dataJSON){
             let user=dataJSON[num];
             stringHTML+=`<tr class="clickable-medium" iduser=${user.id}>
