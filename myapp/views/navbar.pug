@@ -1,10 +1,10 @@
 
-mixin tuile(text, path, alert, selected)
+mixin tuile(text, path, alert, selected,_traget="_self")
     - classes = []
     if selected
         -classes.push("selected")
     li.nav-item
-        a(href=path class=classes).nav-link.tuile
+        a(href=path class=classes,target=_traget).nav-link.tuile
             p=text
             if alert
                 .alert
@@ -28,7 +28,7 @@ mixin navbar(user, alerts, selected)
             .navbar-nav.collapse.navbar-collapse#nav
                 +tuile(user.alias, "profil", null, selected == "profil")
                 +tuile("Horaire de travail", "horaire-perso", null, selected == "horaire-perso")
-                +tuile("À propos", "about.html", null, selected == "about")
+                +tuile("À propos", "about.html", null, selected == "about","_blank")
                 //- +tuile("Courriels", "#", alerts.courriels, selected == "courriels")
                 //- +tuile("Messages", "#", alerts.messages, selected == "messages")
                 +tuile("Déconnecter", "/disconnect")
