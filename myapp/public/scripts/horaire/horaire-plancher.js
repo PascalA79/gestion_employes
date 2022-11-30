@@ -19,6 +19,7 @@ const editShiftForm = new EditShiftForm(
 );
 
 editShiftForm.fillRoles(allRoles);
+editShiftForm.fillPlanchers(allPlanchers);
 
 if(editShiftData.showModal){
     editShiftForm.fillShift(editShiftData.workShift);

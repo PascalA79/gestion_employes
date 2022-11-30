@@ -200,7 +200,7 @@ async function ValidateWorkShift(workShift){
 
 function BuildTableData(data, date){
   const day = DateUtilities.getDateObj(date);
-  return BuildPlancherTableData(day, data.users, data.roles);
+  return BuildPlancherTableData(day, data.users, data.roles, data.planchers, data.plancherSelectionne);
 }
 
 async function GetPlanchers(currentUser){

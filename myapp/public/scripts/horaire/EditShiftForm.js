@@ -50,6 +50,7 @@ class EditShiftForm{
         this.selectRole.css("color", "");
     }
 
+
     fillRoles(roles){
         console.log(roles);
         const selectedRole = this.selectRole.val()
@@ -60,6 +61,15 @@ class EditShiftForm{
         this.setRole();
     }
 
+    fillPlanchers(planchers){
+        console.log(planchers);
+        const selectedPlancher = this.idPlancher.val()
+        this.idPlancher.empty();
+        for(let plancher of planchers){
+            this.idPlancher.append(`<option value=${plancher.id} ${selectedPlancher == plancher.id ? "selected" : ""}>${plancher.nom}</option>`);
+        }
+    }
+
     show(){
         $("#edit-shift-modal").modal("show");
     }
@@ -68,12 +78,13 @@ class EditShiftForm{
         $("#edit-shift-modal").modal("hide");
     }
 
-    fillShift(name, start, end, roleId){
+    fillShift(name, start, end, roleId, plancherId){
         this.inputName.val(name);
         this.fillDate(this.inputShiftStart, start);
         this.fillDate(this.inputShiftEnd, end);
         this.selectRole.val(roleId);
         this.setRole();
+        this.idPlancher.val(plancherId);
     }
 
     fillDate(input, date){
@@ -91,7 +102,7 @@ class EditShiftForm{
     empty(){
         this.oldShift = null;
         this.user = null;
-        this.fillShift("", null, null, -1);
+        this.fillShift("", null, null, -1, -1);
         this.fillErrors({});
         this.fillMsg();
         this.fillHidden({});
@@ -99,7 +110,7 @@ class EditShiftForm{
 
     fillHidden({idQuartTravail="", idPlancher="", idUtilisateur="", confirme=""}){
         this.idQuartTravail.val(idQuartTravail);
-        this.idPlancher.val(idPlancher);
+        // this.idPlancher.val(idPlancher);
         this.idUtilisateur.val(idUtilisateur);
         this.confirme.val(confirme);
     }
@@ -124,7 +135,7 @@ class EditShiftForm{
         this.empty();
         this.btnSend.val("Ajouter");
         this.user = user;
-        this.fillShift(this.getFullName(user), start, end);
+        this.fillShift(this.getFullName(user), start, end, -1, user.idPlancher);
         console.log(user);
         this.fillHidden({idUtilisateur: user.id, idPlancher: user.idPlancher});
         this.show();
@@ -134,7 +145,7 @@ class EditShiftForm{
         this.empty();
         this.btnSend.val("Ajouter");
         this.user = user;
-        this.fillShift(this.getFullName(user), new Date(ws.debut), new Date(ws.fin), ws.idRoleUtilisateur);
+        this.fillShift(this.getFullName(user), new Date(ws.debut), new Date(ws.fin), ws.idRoleUtilisateur, ws.idPlancher);
         this.fillHidden(ws);
         this.show();
     }
@@ -145,7 +156,7 @@ class EditShiftForm{
         this.btnSend.val("Modifier");
         this.user = user;
         this.oldShift = ws;
-        this.fillShift(this.getFullName(user), new Date(ws.debut), new Date(ws.fin), ws.idRoleUtilisateur);
+        this.fillShift(this.getFullName(user), new Date(ws.debut), new Date(ws.fin), ws.idRoleUtilisateur, ws.idPlancher);
         this.fillHidden(ws);
         this.show();
     }

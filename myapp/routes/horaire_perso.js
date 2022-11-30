@@ -86,9 +86,11 @@ async function GetData(userId, debut, fin){
   const quarts = await QuartTravail.getByUserDate(userId, debut, fin);
   Plancher.connect(myDAL);
   const planchers = await Plancher.getAllPlanchers();
+  Utilisateur.connect(myDAL);
+  const currentUser = await Utilisateur.getUserById(userId);
   // const quarts = await QuartTravail.getByUser(userId, debut, fin);
   myDAL.end()
-  return BuildUserTableData(roles, planchers, quarts, debut, fin);
+  return BuildUserTableData(roles, planchers, quarts, debut, fin, currentUser.idPlancher);
 } 
 
 module.exports = router;

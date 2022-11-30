@@ -46,7 +46,7 @@ block content
         form(action=`/horaire-plancher?${editShiftData.qs}` method="post")#edit-shift-form
           .modal-content.d-flex.flex-column.gap-2
             input(type="hidden" name="idQuartTravail")#idQuartTravail
-            input(type="hidden" name="idPlancher")#idPlancher
+            //- input(type="hidden" name="idPlancher")#idPlancher
             input(type="hidden" name="idUtilisateur")#idUtilisateur
             input(type="hidden" name="confirme")#confirme
             input.input-dark#inputUsername(type=text placeholder="Username..." readonly name="username")
@@ -56,6 +56,8 @@ block content
             +errorLabel(editShiftData.shiftErrors.errorEnd2, "errorEnd")
             select.input-dark#selectRole(name="idRoleUtilisateur")
             +errorLabel(editShiftData.shiftErrors.errorRole2, "errorRole")
+            select.input-dark#idPlancher(name="idPlancher")
+            +errorLabel(editShiftData.shiftErrors.errorPlancher2, "errorPlancher")
             span.lbl-confirm#confirmMsg
             .row.p-2.gap-2
               input(type="submit", value="Modifier").btn-dark.col#btnSend
@@ -76,6 +78,7 @@ block content
   script(src="./scripts/horaire/EditShiftForm.js") 
   script.
     const allRoles = !{JSON.stringify(data.allRoles)};
+    const allPlanchers = !{JSON.stringify(data.planchers)};
     const editShiftData = !{JSON.stringify(editShiftData)};
     const maUrl = `${!{JSON.stringify(data.url)}}`;
   script(src="./scripts/horaire/horaire-plancher.js" defer) 
