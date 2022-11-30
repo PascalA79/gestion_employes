@@ -7,6 +7,9 @@ const DateUtilities = require('../class/Utilities/DateUtilities');
 var DAL = require('../class/DAL');
 const Utilisateur = require('../model/Utilisateur');
 const loginValidation = require('../public/scripts/login');
+const Plancher = require('../model/Plancher');
+
+//console.log(ValiderUtilisateur(new Utilisateur({id:1,idTypeUtilisateur:2,idPlancher:0,alias:"pascala79"})))
 var session=new Session(router);
 router.get('/', get);
 async function get(req, res, next){
@@ -17,8 +20,11 @@ async function get(req, res, next){
     if(await redirect.access('user',(value)=>value,'/index')){
 
         // const DAL_PASCAL= new DAL();
-
         // Utilisateur.connect(DAL_PASCAL);
+        // Plancher.connect(DAL_PASCAL)
+        // let plancher=Plancher.getPlancherById(999)
+        // console.log(await plancher)
+        // DAL_PASCAL.end()
         // console.log((await Utilisateur.getSuperviseurOfPlancher(-1))[0].prenom);
 
         // const DateUtilities = require('../class/Utilities/DateUtilities')
@@ -42,6 +48,12 @@ async function get(req, res, next){
 
         // console.log(await DAL_PASCAL.getQuartsByPlancher(-1,DateUtilities.getDate('2022','09','14')))
         // console.log("res.render('login')");
+
+
+        
+
+
+        //res.render('plancher',{user:{alias:session.get('user')},alerts:{}});
         res.render('login'); 
     }
 
@@ -65,6 +77,8 @@ async function post(req, res, next){
             res.redirect('index')
         }
         else{
+            res.render('login', { username: username, errorPassword:loginValidation.ERROR_TEXTS.PASSWORD[loginValidation.ERROR_CODES.PASSWORD.UNKNOWN]});
+/*
             var {username,password}=validArray
             const errorUsername = loginValidation.getUsernameValidationText(username);
             const errorPassword = loginValidation.getPasswordValidationText(password);
@@ -84,7 +98,7 @@ async function post(req, res, next){
                 } else {
                     res.render('login', { username: username, errorPassword:loginValidation.ERROR_TEXTS.PASSWORD[loginValidation.ERROR_CODES.PASSWORD.UNKNOWN]});
                 }
-            }
+            }*/
         }
     }
     else{

@@ -39,7 +39,7 @@ class DAL{
         age,
         telephone,
         courriel,
-        actif FROM Utilisateurs${value?` WHERE ${champs} ${equation}'${value}'`:''}`;
+        actif FROM Utilisateurs${typeof(value)=='string'?` WHERE ${champs} ${equation}'${value}'`:''}`;
         let users= await this.#connectionMYSQL.excecuteSync(sqlUser);
         return users.map(user=>new Utilisateur(Utilities.getArray(user)))
     }
@@ -80,14 +80,18 @@ class DAL{
         await this.#connectionMYSQL.excecuteSync(`Call RemoveQuartTravail('${idQuartTravail}')`)
     }
 
-    async addUtilisateur({id,idTypeUtilisateur,idPlancher,prenom,nom,alias,telephone,courriel,actif}){
+    async addUtilisateur({idTypeUtilisateur,idPlancher,prenom,nom,alias,telephone,courriel,actif,age}){
         let utilisateur=await this.#connectionMYSQL.excecuteSync(
-            `Call AddUtilisateur('${id}','${idTypeUtilisateur}','${idPlancher}','${prenom}','${nom}','${alias}','${telephone}','${courriel}','${actif}}')`)
-        return Utilities.getArray(utilisateur[0][0]);
+            `Call AddUtilisateur('${prenom}','${nom}','${alias}','${courriel}',${parseInt(idTypeUtilisateur)},'${idPlancher}','${age}','${telephone}','${courriel}','${actif}')`)
+        return utilisateur;
+    }
+    async updatePassword(alias,newPassword){
+        let sql=`Call UpdatePassword('${alias}','${newPassword}')`
+        await this.#connectionMYSQL.excecuteSync(sql)
     }
     async updateUtilisateur({id,idTypeUtilisateur,idPlancher,prenom,nom,alias,telephone,courriel,actif}){
-        let utilisateur=await this.#connectionMYSQL.excecuteSync(`Call UpdateUtilisateur('${id}','${idTypeUtilisateur}','${idPlancher}','${prenom}','${nom}','${alias}','${telephone}','${courriel}','${actif}}')`)
-        return Utilities.getArray(utilisateur[0][0]);
+        let utilisateur=await this.#connectionMYSQL.excecuteSync(`Call UpdateUtilisateur(${id},'${idTypeUtilisateur}','${idPlancher}','${prenom}','${nom}','${alias}','${telephone}','${courriel}','${actif}')`)
+        return Utilities.getArray(utilisateur[0]);
     }
     async removeUtilisateur(id){
         await this.#connectionMYSQL.excecuteSync(`Call RemoveUtilisateur('${id}')`)
@@ -113,14 +117,81 @@ class DAL{
         return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`CALL GetPlanchersBySuperviseur('${idUtilisateur}');`))[0]).map(x => Utilities.getArray(x));
     }
     async getAllPlanchers(){
-        return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`CALL GetAllPlanchers();`))[0]).map(x => Utilities.getArray(x));
+        return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`CALL GetAllPlanchers();`))[0]).map(p=>Utilities.assiativeArrayToDict(p));
     }
     async getSuperviseurOfPlancher(idPlancher){
         return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`CALL getSuperviseurOfPlancher('${idPlancher}');`))[0]).map(x => Utilities.getArray(x));
     }
     async getListEmployes({id}){
-        return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`CALL GetListEmployes('${id}');`))[0]).map(x => Utilities.getArray(x));
-
+        return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`CALL GetListEmployes('${id}');`))[0]);
+    }
+    async getAllAlias(){
+        return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`
+        SELECT alias FROM Utilisateurs;
+        `))).map(a=>a.alias);
+    }
+    async getAliasById(id){
+        return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`
+        SELECT alias FROM Utilisateurs WHERE idUtilisateur=${id};
+        `)))[0]["alias"];
+    }
+    async getAllTypeUtilisateurs(){
+        return Utilities.getArray((await this.#connectionMYSQL.excecuteSync(`
+        SELECT idTypeUtilisateur,nomTypeUtilisateur  FROM TypesUtilisateurs;
+        `))).map(t=>Utilities.assiativeArrayToDict(t))
+    }
+    async getOrganisationPlancher(){
+        let result={};
+        let data=Utilities.getArray(await this.#connectionMYSQL.excecuteSync(`SELECT Utilisateurs.idUtilisateur,Utilisateurs.alias, Planchers.idPlancher,Planchers.nomPlancher FROM Utilisateurs
+        LEFT OUTER JOIN SuperviseursPlanchers ON SuperviseursPlanchers.idUtilisateur = Utilisateurs.idUtilisateur
+        LEFT OUTER JOIN Planchers ON SuperviseursPlanchers.idPlancher = Planchers.idPlancher
+        WHERE Utilisateurs.idTypeUtilisateur=1 ORDER BY Utilisateurs.idUtilisateur`));
+        data.forEach(o=>{
+            if(!result[o.alias])
+            {
+                result[o.alias]={}
+                result[o.alias]["idUtilisateur"]=o.idUtilisateur
+                result[o.alias]["planchers"]=[]
+            }
+            if(null != o.idPlancher){
+                delete o.idUtilisateur
+                result[o.alias]["planchers"].push(Utilities.assiativeArrayToDict(o))
+                delete o.alias
+            }
+        })
+        return result;
+    }
+    async updatePlancher({idPlancher,superviseurs,nomPlancher}){
+        await this.#connectionMYSQL.excecuteSync(`DELETE FROM SuperviseursPlanchers WHERE idPlancher="${idPlancher}"`)
+        try {
+            if(superviseurs.length>0){
+                let updateSuperviseurSQL=`INSERT INTO SuperviseursPlanchers (idPlancher, idUtilisateur) VALUES`
+                superviseurs.forEach((p)=>updateSuperviseurSQL+=` (${idPlancher},${p}),`)
+                updateSuperviseurSQL=updateSuperviseurSQL.slice(0, -1)
+                await this.#connectionMYSQL.excecuteSync(updateSuperviseurSQL)
+            }
+            let updateNomSQL=`UPDATE Planchers SET nomPlancher="${nomPlancher}" WHERE idPlancher=${idPlancher}`
+            await this.#connectionMYSQL.excecuteSync(updateNomSQL)
+        } catch (error) {
+            console.error(error)
+        }
+    }
+    async addPlancher({superviseurs,nomPlancher}){
+        try {
+            let addNomSQL=`INSERT INTO Planchers(nomPlancher) VALUES("${nomPlancher}")`
+            await this.#connectionMYSQL.excecuteSync(addNomSQL)
+            let idPlancherSQL="SELECT LAST_INSERT_ID() as id";
+            let test=await this.#connectionMYSQL.excecuteSync(idPlancherSQL)
+            let idPlancher=test[0]["id"]
+            if(superviseurs.length>0){
+                let updateSuperviseurSQL=`INSERT INTO SuperviseursPlanchers (idPlancher, idUtilisateur) VALUES`
+                superviseurs.forEach((p)=>updateSuperviseurSQL+=` (${idPlancher},${p}),`)
+                updateSuperviseurSQL=updateSuperviseurSQL.slice(0, -1)
+                await this.#connectionMYSQL.excecuteSync(updateSuperviseurSQL)
+            }
+        } catch (error) {
+            console.error(error)
+        }
     }
     
 }

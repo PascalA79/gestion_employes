@@ -3,15 +3,19 @@ var router = express.Router();
 var Session=require('../class/Session')
 var Redirect=require('../class/Redirect')
 var Utilities=require('../class/Utilities');
+const DateUtilities = require('../class/Utilities/DateUtilities');
 var DAL = require('../class/DAL');
 const Utilisateur = require('../model/Utilisateur');
 const loginValidation = require('../public/scripts/login');
 var session=new Session(router);
 router.get('/', get);
 async function get(req, res, next){
+
+    // DateUtilities.getDBDateStringFromString("");
     session.start(req);
     let redirect= new Redirect(session,res)
     if(await redirect.access('user',(value)=>value,'/index')){
+
         // const DAL_PASCAL= new DAL();
 
         // Utilisateur.connect(DAL_PASCAL);

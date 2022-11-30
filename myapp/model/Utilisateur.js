@@ -1,34 +1,99 @@
-var DAL = require('../class/DAL');
 const TYPE_UTILISATEUR = require('./TYPE_UTILISATEUR');
 const {TUILES, TITRES} = require("./TUILES");
 const Utilities = require('../class/Utilities');
-// var DAL = require('c:/Users/Pascal/OneDrive/Documents/Session5/projet/gestion_employes/gestion_employes/myapp/class/DAL');
+const {ValiderUtilisateur,ERREUR_UTILISATEUR}=require("../public/scripts/ValidationUtilisateur");
+const {validatePassword,ERROR_CODES,ERROR_TEXTS}=require("../public/scripts/login");
 class Utilisateur{
     static #DAL
+    static #UniqueKeys={}
+    static #ForeignKeys={}
+    static #Permis={}
+    
+    static getUniqueKeys(){
+        return (()=>Utilisateur.#UniqueKeys)()
+    }
+
+    static getForeignKeys(){
+        return (()=>Utilisateur.#ForeignKeys)()
+    }
+
+    static getPermis(){
+        return (()=>Utilisateur.#Permis)()
+    }
+
+    static addUniqueKey(champs,arrayValues){
+        Utilisateur.#UniqueKeys[champs]=arrayValues
+    }
+    
+    static addForeignKey(champs,arrayValues){
+        Utilisateur.#ForeignKeys[champs]=arrayValues
+    }
+    
+    static addPermis(champs,value){
+        Utilisateur.#Permis[champs]=value
+    }
+
+    static removeUniqueKey(champs){
+        return delete Utilisateur.#UniqueKeys[champs];
+    }
+
+    static removeForeignKey(champs){
+        return delete Utilisateur.#ForeignKeys[champs];
+    }
+
+    static removePermis(champs){
+        return delete Utilisateur.#Permis[champs];
+    }
+    
+    valider(){
+        return ValiderUtilisateur(this,Utilisateur.#UniqueKeys,Utilisateur.#ForeignKeys,Utilisateur.#Permis)
+    }
+
+
     static connect(DAL){
         Utilisateur.#DAL=DAL;
     }
-    constructor({id,idTypeUtilisateur,idPlancher,prenom,nom,alias,telephone,courriel,actif}){
+    constructor({id,idTypeUtilisateur,idPlancher,prenom,nom,age,alias,telephone,courriel,actif=1}){
         this.id=id?id:-1;
         this.idTypeUtilisateur=idTypeUtilisateur;
         this.idPlancher=idPlancher;
         this.prenom=prenom;
         this.nom=nom;
         this.alias=alias;
+        this.age=age;
         this.telephone=telephone;
         this.courriel=courriel;
-        this.actif=actif?actif:1;
+        this.actif=parseInt(actif);
     }
     async add(){
-        return await Utilisateur.#DAL.addUtilisateur({...this})
+        let validate=this.valider()
+        let validation=!Object.values(validate).filter(result=>result!=ERREUR_UTILISATEUR.OK)[0]
+        if(validation) await Utilisateur.#DAL.addUtilisateur({...this})
+        return validate;
     }
 
-    async update(){
-        return await Utilisateur.#DAL.updateUtilisateur({...this})
+    async update(updateur){
+        let validate=this.valider()
+        let validation=!Object.values(validate).filter(result=>result!=ERREUR_UTILISATEUR.OK)[0]
+        
+        if(validation) 
+        {
+            await updateur({...this})
+        }
+        return validate;
+    }
+    async updatePassword(newPassword){
+        let validate=validatePassword(newPassword)
+        if(validate==ERROR_CODES.PASSWORD.OK){
+            await Utilisateur.#DAL.updatePassword(this.alias,newPassword)
+        }
+        return {error:validate}
     }
 
     async delete(){
-        await QuartTravail.#DAL.removeUtilisateur(this.id)
+        const myDAL=new DAL()
+        await Utilisateur.#DAL.removeUtilisateur(this.id)
+        myDAL.end()
     }
     
 
@@ -103,32 +168,37 @@ class Utilisateur{
                 break
             }
             case TYPE_UTILISATEUR.EMPLOYÉ:{
-                acces.push(tuile[TITRES.HORAIRE_PERSO])
-                acces.push(tuile[TITRES.DISPONIBILITE])
+                // acces.push(tuile[TITRES.HORAIRE_PERSO])
+                // acces.push(tuile[TITRES.DISPONIBILITE])
                 break
             }
             case TYPE_UTILISATEUR.SUPERVISEUR:{
                 acces.push(tuile[TITRES.EMPLOYES])
-                acces.push(tuile[TITRES.HORAIRE_PERSO])
+                // acces.push(tuile[TITRES.HORAIRE_PERSO])
                 acces.push(tuile[TITRES.HORAIRE_PLANCHER])
-                acces.push(tuile[TITRES.PUNCH])
-                acces.push(tuile[TITRES.DEPENSES])
-                acces.push(tuile[TITRES.PLANCHERS])
+                // acces.push(tuile[TITRES.PUNCH])
+                // acces.push(tuile[TITRES.DEPENSES])
+                // acces.push(tuile[TITRES.PLANCHERS])
                 // acces.push(tuile['Planchers'])
                 break;
             }
-            case TYPE_UTILISATEUR.DIRECTEUR:
+            case TYPE_UTILISATEUR.DIRECTEUR:{
+                acces.push(tuile[TITRES.EMPLOYES])
+                acces.push(tuile[TITRES.HORAIRE_PLANCHER])
+                acces.push(tuile[TITRES.PLANCHERS])
+                break
+            }
             case TYPE_UTILISATEUR.ADMINISTRATEUR:{
                 acces.push(tuile[TITRES.EMPLOYES])
-                acces.push(tuile[TITRES.HORAIRE_PERSO])
                 acces.push(tuile[TITRES.HORAIRE_PLANCHER])
-                acces.push(tuile[TITRES.PUNCH])
-                acces.push(tuile[TITRES.DEPENSES])
                 acces.push(tuile[TITRES.PLANCHERS])
-                acces.push(tuile[TITRES.DISPONIBILITE])
-                acces.push(tuile[TITRES.UTILISATEURS])
-                acces.push(tuile[TITRES.DEPARTEMENTS])
-                acces.push(tuile[TITRES.PAIES])
+                // acces.push(tuile[TITRES.HORAIRE_PERSO])
+                // acces.push(tuile[TITRES.PUNCH])
+                // acces.push(tuile[TITRES.DEPENSES])
+                // acces.push(tuile[TITRES.DISPONIBILITE])
+                // acces.push(tuile[TITRES.UTILISATEURS])
+                // acces.push(tuile[TITRES.DEPARTEMENTS])
+                // acces.push(tuile[TITRES.PAIES])
                 // acces.push(tuile['Paies'])
                 break
             }

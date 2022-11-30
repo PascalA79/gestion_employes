@@ -1,0 +1,25 @@
+extends layout
+
+
+block content
+  include navbar
+  +navbar(user, alerts, "profil")
+  .container
+    #infoEmploye.formulaire
+    form#formEmploye.formulaire(method="POST",action="./profil/change_password" )
+        div 
+          h1 Modification du mot de passe
+        div 
+            label(for="newPassword") Mot de passe
+            input#newPassword(type="password" name="password")
+            .lbl-error.newPassword
+            label(for="password") Confirmation
+            input#confirmPassword(type="password")
+            .lbl-error#confirmation
+            .lbl-confirm
+            input(type="submit" value='Modifier')
+
+  script(src="./scripts/ajax.js")
+  script(src="./scripts/login.js") 
+
+  script(src="./scripts/profil/CRUD-profil.js",defer) 

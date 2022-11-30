@@ -28,26 +28,27 @@ INSERT INTO TypesUtilisateurs(idTypeUtilisateur, nomTypeUtilisateur) VALUES (2, 
 INSERT INTO TypesUtilisateurs(idTypeUtilisateur, nomTypeUtilisateur) VALUES (3, 'administrateur');
 
 -- AddUtilisateur(prenom, nom, alias, mot de passe, idTypeUtilisateur, idPlancher, age, telephone, courriel)
-CALL AddUtilisateur('Steve',     'Administrateur1',          'Admin1', 'Test123', 3, 3, 23, 1234567890, 'courriel@email.com'); --1
-CALL AddUtilisateur('Alexandre', 'Directeur1',               'Boss1',  'Test123', 2, 3, 23, 1234567890, 'courriel@email.com'); --2
-CALL AddUtilisateur('Étienne',   'SuperviseurCuisine',       'Super1', 'Test123', 1, 1, 23, 1234567890, 'courriel@email.com'); --3
-CALL AddUtilisateur('Alice',     'SuperviseurResto',         'Super2', 'Test123', 1, 2, 23, 1234567890, 'courriel@email.com'); --4
-CALL AddUtilisateur('Alice',     'SuperviseurCuisine&Resto', 'Super3', 'Test123', 1, 2, 23, 1234567890, 'courriel@email.com'); --5
-CALL AddUtilisateur('Sudo',      'Employé1',                 'Emp1',   'Test123', 0, 1, 23, 1234567890, 'courriel@email.com'); --6
-CALL AddUtilisateur('Sudo',      'Employé2',                 'Emp2',   'Test123', 0, 1, 23, 1234567890, 'courriel@email.com'); --7
-CALL AddUtilisateur('Sudo',      'Employé3',                 'Emp3',   'Test123', 0, 1, 23, 1234567890, 'courriel@email.com'); --8
-CALL AddUtilisateur('Sudo',      'Employé4',                 'Emp4',   'Test123', 0, 2, 23, 1234567890, 'courriel@email.com'); --9
-CALL AddUtilisateur('Sudo',      'Employé5',                 'Emp5',   'Test123', 0, 2, 23, 1234567890, 'courriel@email.com'); --10
-CALL AddUtilisateur('Sudo',      'Employé6',                 'Emp6',   'Test123', 0, 2, 23, 1234567890, 'courriel@email.com'); --11
-CALL AddUtilisateur('Sudo',      'Employé7',                 'Emp7',   'Test123', 0, 1, 23, 1234567890, 'courriel@email.com'); --12
-CALL AddUtilisateur('Sudo',      'Employé8',                 'Emp8',   'Test123', 0, 1, 23, 1234567890, 'courriel@email.com'); --13
-CALL AddUtilisateur('Sudo',      'Employé9',                 'Emp9',   'Test123', 0, 1, 23, 1234567890, 'courriel@email.com'); --14
-CALL AddUtilisateur('Sudo',      'Employé10',                'Emp10',  'Test123', 0, 1, 23, 1234567890, 'courriel@email.com'); --15
-CALL AddUtilisateur('Sudo',      'Employé11',                'Emp11',  'Test123', 0, 1, 23, 1234567890, 'courriel@email.com'); --16
-CALL AddUtilisateur('Sudo',      'Employé12',                'Emp12',  'Test123', 0, 1, 23, 1234567890, 'courriel@email.com'); --17
-CALL AddUtilisateur('Sudo',      'Employé13',                'Emp13',  'Test123', 0, 1, 23, 1234567890, 'courriel@email.com'); --18
-CALL AddUtilisateur('Sudo',      'Employé14',                'Emp14',  'Test123', 0, 1, 23, 1234567890, 'courriel@email.com'); --19
-CALL AddUtilisateur('Sudo',      'Employé15',                'Emp15',  'Test123', 0, 1, 23, 1234567890, 'courriel@email.com'); --20
+-- AddUtilisateur(prenom, nom, alias, mot de passe, idTypeUtilisateur, idPlancher, age, telephone, courriel,actif)
+CALL AddUtilisateur('Steve',     'Administrateur1',          'Admin1', 'Test123', 3, 3, 23, 1234567890, 'courriel@email.com', 1); --1
+CALL AddUtilisateur('Alexandre', 'Directeur1',               'Boss1',  'Test123', 2, 3, 23, 1234567890, 'courriel@email.com', 1); --2
+CALL AddUtilisateur('Étienne',   'SuperviseurCuisine',       'Super1', 'Test123', 1, 1, 23, 1234567890, 'courriel@email.com', 1); --3
+CALL AddUtilisateur('Alice',     'SuperviseurResto',         'Super2', 'Test123', 1, 2, 23, 1234567890, 'courriel@email.com', 1); --4
+CALL AddUtilisateur('Alice',     'SuperviseurCuisine&Resto', 'Super3', 'Test123', 1, 2, 23, 1234567890, 'courriel@email.com', 1); --5
+CALL AddUtilisateur('Sudo',      'Employé1',                 'Emp1',   'Test123', 0, 1, 23, 1234567890, 'courriel@email.com', 1); --6
+CALL AddUtilisateur('Sudo',      'Employé2',                 'Emp2',   'Test123', 0, 1, 23, 1234567890, 'courriel@email.com', 1); --7
+CALL AddUtilisateur('Sudo',      'Employé3',                 'Emp3',   'Test123', 0, 1, 23, 1234567890, 'courriel@email.com', 1); --8
+CALL AddUtilisateur('Sudo',      'Employé4',                 'Emp4',   'Test123', 0, 2, 23, 1234567890, 'courriel@email.com', 1); --9
+CALL AddUtilisateur('Sudo',      'Employé5',                 'Emp5',   'Test123', 0, 2, 23, 1234567890, 'courriel@email.com', 1); --10
+CALL AddUtilisateur('Sudo',      'Employé6',                 'Emp6',   'Test123', 0, 2, 23, 1234567890, 'courriel@email.com', 1); --11
+CALL AddUtilisateur('Sudo',      'Employé7',                 'Emp7',   'Test123', 0, 1, 23, 1234567890, 'courriel@email.com', 1); --12
+CALL AddUtilisateur('Sudo',      'Employé8',                 'Emp8',   'Test123', 0, 1, 23, 1234567890, 'courriel@email.com', 1); --13
+CALL AddUtilisateur('Sudo',      'Employé9',                 'Emp9',   'Test123', 0, 1, 23, 1234567890, 'courriel@email.com', 1); --14
+CALL AddUtilisateur('Sudo',      'Employé10',                'Emp10',  'Test123', 0, 1, 23, 1234567890, 'courriel@email.com', 1); --15
+CALL AddUtilisateur('Sudo',      'Employé11',                'Emp11',  'Test123', 0, 1, 23, 1234567890, 'courriel@email.com', 1); --16
+CALL AddUtilisateur('Sudo',      'Employé12',                'Emp12',  'Test123', 0, 1, 23, 1234567890, 'courriel@email.com', 1); --17
+CALL AddUtilisateur('Sudo',      'Employé13',                'Emp13',  'Test123', 0, 1, 23, 1234567890, 'courriel@email.com', 1); --18
+CALL AddUtilisateur('Sudo',      'Employé14',                'Emp14',  'Test123', 0, 1, 23, 1234567890, 'courriel@email.com', 1); --19
+CALL AddUtilisateur('Sudo',      'Employé15',                'Emp15',  'Test123', 0, 1, 23, 1234567890, 'courriel@email.com', 1); --20
 
 
 INSERT INTO SuperviseursPlanchers(idUtilisateur, idPlancher) VALUES (3, 1);

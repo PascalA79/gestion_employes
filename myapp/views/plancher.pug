@@ -3,6 +3,11 @@ extends layout
 
 block content
   include navbar
-  +navbar(user, alerts, "home")
-  h1 Plancher
+  +navbar(user, alerts, "")
+  #form-gestion.container 
+
+  script(src="./scripts/ajax.js") 
+  script(src="./scripts/ValidationPlancher.js") 
+  script(src="./scripts/plancher/CRUD-gestion.js",defer) 
+
   

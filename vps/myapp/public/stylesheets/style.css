@@ -358,7 +358,7 @@
   .table-container-emp table tbody tr:hover
   {
     background-color: var(--txt-light);
-    cursor: pointer;
+    /*cursor: pointer;*/
   }
 
   .table-container-emp table{

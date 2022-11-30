@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+    <script src="../myapp/public/scripts/ValidationUtilisateur.js"></script>
+    <script defer>
+        console.log("tous valide")
+        console.table(ValiderUtilisateur({id:0,idTypeUtilisateur:1,idPlancher:0,prenom:"Pascal",nom:"Ares",age:23,alias:"pascala79",telephone:"1234567890",courriel:"arespascal79@gmail.com",actif:0}))
+        console.log("tous manquant")
+        console.table(ValiderUtilisateur({}))
+        console.log("tous non-valide")
+        console.table(ValiderUtilisateur({id:"ggf",idTypeUtilisateur:"-1r",idPlancher:"-d1",prenom:"Pa^scal",nom:"Arès",age:"2-3",alias:"p;ascala79",telephone:"1234f567890",courriel:"arespascal79@gmailcom",actif:-3}))
+        console.log("tous trop court")
+        console.table(ValiderUtilisateur({id:1,idTypeUtilisateur:1,idPlancher:1,prenom:"P",nom:"A",age:1,alias:"zack",telephone:"1234567890",courriel:"arespascal79@gmail.com",actif:-1}))
+        console.log("tous trop long")
+        console.table(ValiderUtilisateur({id:1,idTypeUtilisateur:1,idPlancher:1,
+            prenom:"Ptryrtweiurtweuirywteriuwytyrtwyeruitweyirutewryuiwtertweirteutryuetrwertweirteiyruwerw",
+            nom:"grweyrgeirugeyiruewgrgeryuegryugreywgyruigweriyuwgerywgeirgweyruigeyurigeuyirgweiyrugweyrigeyrugeryuiwegruwygrerguweA",
+            age:3000,alias:"zaghdghjdgfhjdgsfdhsgfdshgdhkgsdhgkfdhkjfgdshjfkdghkjfdgfhkjdgfdhjskgfdhjkfgdskhghkjgdskfjhdck",
+            telephone:"1234567890",
+            courriel:"arespazaghdghjdgfhjdgsfdhsgfdshgdhkgsdhgkfdhkjfgdshjfkdghkjfdzaghdghjdgfhjdgsfdhsgfdshgdhkgsdhgkfdhkjfgdshjfkdghkjfdgfhkjdgfdhjskgfdhjkfgdskhghkjgdskfjhdckzaghdghjdgfhjdgsfdhsgfdshgdhkgsdhgkfdhkjfgdshjfkdghkjfdgfhkjdgfdhjskgfdhjkfgdskhghkjgdskfjhdckzaghdghjdgfhjdgsfdhsgfdshgdhkgsdhgkfdhkjfgdshjfkdghkjfdgfhkjdgfdhjskgfdhjkfgdskhghkjgdskfjhdckgfhkjdgfdhjskgfdhjkfgdskhghkjgdskfjhdckscal79@gmail.com",
+            actif:4}))
+        let uniqueKeys=["pascala79","pierre"]
+        console.log("alias clé unique",uniqueKeys)
+        console.table({"pascala79":ValiderUtilisateur({alias:"pascala79"},{alias:uniqueKeys})["alias"],
+        "pierre":ValiderUtilisateur({alias:"pierre"},{alias:uniqueKeys})["alias"],
+        "pascal":ValiderUtilisateur({alias:"pascal"},{alias:uniqueKeys})["alias"],
+        })
+        let foreignKey=[0,2,1,5,3,4]
+        console.log("tous foreign key valide",foreignKey)
+        console.table({"id:1":ValiderUtilisateur({idTypeUtilisateur:1},{},{idTypeUtilisateur:foreignKey})["idTypeUtilisateur"],
+        "id:5":ValiderUtilisateur({idTypeUtilisateur:3},{},{idTypeUtilisateur:foreignKey})["idTypeUtilisateur"],
+        "id:77":ValiderUtilisateur({idTypeUtilisateur:77},{},{idTypeUtilisateur:foreignKey})["idTypeUtilisateur"],
+        })
+        
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

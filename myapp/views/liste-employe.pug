@@ -1,69 +1,75 @@
 extends layout
-mixin buildCell(celldata)
+mixin buildForm(id, params={})
+  -let idElem=id
+  div.modal-emp
+    .modal-content-emp.container-dark
+      div#modal-title-emp Ajouter
+      div(id=idElem)
+        -Object.entries(params).forEach(elem=>{
+          -let name=elem[0];
+          -let text=elem[1].name;
+          -let type=elem[1].type;
+          -let errors=elem[1].error;
+          div
+            label(for=name)
+              -let display=`${text}:`
+              =display
+            -if(type=="select"){
+            -let data=elem[1].data
+              select(id=name).input-dark
+                - data.forEach(elem=>{
+                  option(value=elem['value'])
+                    =elem['name']
+                -})
+              -}
+            -else{
+              input(id=name,type=type).input-dark
+            -}
+            -errors.forEach(error=>{
+              -//console.log(error.name,error.value)
+              .lbl-error(hidden,class=error.name)
+                =error.value
+            -})
+        -})
+      .buttons
+        span
+        button#ok-button.btn-dark Ok
+        span
+        button#close.btn-dark Annuler
+        span  
 
-  td
-      =celldata.alias
-  td  
-      =celldata.prenom
-  td  
-      =celldata.nom
-  td  
-      =celldata.nomPlancher
-  td  
-      =celldata.nomTypeUtilisateur
-  td  
-      =celldata.courriel
-  td  
-      =celldata.telephone
-  td  
-    -if(celldata.actif[0]){
-      input(type="checkbox", disabled, checked)
-    -}
-    -else{
-      input(type="checkbox", disabled)
-    -}
-
-      
-    
-  
-mixin buildRow(rowdata)
-  tr.clickable-medium(iduser=rowdata.id) 
-    +buildCell(rowdata)
-  
-mixin buildTable(data)
-  -let values=Object.values(data)
-  table
-    thead
-      tr
-        td(colspan='100%',position='relative') 
-          h1 Liste des employés
-        tr 
-        td  Alias
-        td  Prenom
-        td  Nom
-        td  Nom du plancher
-        td  Type de l'utilisateur
-        td  Courriel
-        td  Téléphone
-        td  Actif
-    tbody 
-      -for(rowdata of values){
-        +buildRow(rowdata)
-        -}
- 
         
 
 block content
+  script(src="/scripts/ajax.js" defer) 
+  script(src="/scripts/ValidationUtilisateur.js" defer) 
+  script(src="/scripts/liste-employe/CRUD-emp.js" defer) 
   include navbar
   +navbar(user, alerts, "liste-employes")
-  
-  - const EMPLOYES=employes;
+  - console.log(planchers)
+  - console.log(typeUtilisateur)
+  +buildForm('formEmp',{ 
+                      alias:{name:'Alias',type:'text',required:true,error:
+                      [{name:'required',value:'requis'},{name:"min",value:"Alias est trop court"},{name:"max",value:"Alias est trop long"},{name:"invalid",value:"Alias invalide"},{name:"unique",value:"Alias doit être unique"}]},
+                      prenom:{name:'Prenom',type:'text',required:true,error:
+                      [{name:'required',value:'requis'},{name:"min",value:"Prenom est trop court"},{name:"max",value:"Prenom est trop long"},{name:"invalid",value:"Prenom invalide"}]},
+                      nom:{name:'Nom',type:'text',required:true,error:
+                      [{name:'required',value:'requis'},{name:"min",value:"Nom est trop court"},{name:"max",value:"Nom est trop long"},{name:"invalid",value:"Nom invalide"}]},
+                      idPlancher:{name:'Nom du plancher',type:'select',required:true,error:
+                      [{name:'required',value:'requis'},{name:"unfound",value:"Plancher doit exister"}],
+                      data:planchers},
+                      idTypeUtilisateur:{name:"Type d'utilisateur",type:'select',required:true,error:
+                      [{name:'required',value:'requis'},{name:"unfound",value:"Type d'utilisateur doit exister"}],
+                      data:typeUtilisateur},
+                      courriel:{name:'Courriel',type:'text',required:true,error:
+                      [{name:'required',value:'requis'},{name:"min",value:"Courriel est trop court"},{name:"max",value:"Courriel est trop long"},{name:"invalid",value:"Courriel invalide"}]},
+                      age:{name:'Age',type:'number',required:true,error:
+                      [{name:'required',value:'requis'},{name:"min",value:"Age est trop court"},{name:"max",value:"Age est trop grand"},{name:"invalid",value:"Age invalide"}]},
+                      telephone:{name:'Téléphone',type:'tel',required:true,error:
+                      [{name:'required',value:'requis'},{name:"min",value:"Téléphone est trop court"},{name:"max",value:"Téléphone est trop long"},{name:"invalid",value:"Téléphone invalide"}]},
+                      actif:{name:'Actif',type:'checkbox',required:true,error:
+                      [{name:'required',value:'requis'}]}
+                      }
+                      )
   .container.table-container-emp
-    +buildTable(EMPLOYES)
-    
-  script(defer).
-    $(".clickable-medium").click(e=>{
-      let idUser=$(e.target).parent('.clickable-medium').attr('iduser');
-      location.href=`/profil?idUser=${idUser}`;
-      })
    

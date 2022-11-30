@@ -6,7 +6,8 @@ class Redirect{
     // se connecter à la page cible si expr est true
     // access retourne 0 dans ce cas, sinon 1
     async access(key,expr=(value)=>!value,cible='/login'){
-        if(await expr(this.session.get(key))){
+        let value=this.session.get(key)
+        if(await expr(value)){
             await this.response.redirect(cible);
             return 0;
         }

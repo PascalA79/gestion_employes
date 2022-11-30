@@ -15,10 +15,10 @@ var session=new Session(router);
 router.use('/', async function(req, res, next) {
   session.start(req);
   let redirect= new Redirect(session,res);
-  let acces= await  redirect.access('user',async (userId)=>{
+  let acces= await  redirect.access('user',async (alias)=>{
     const DAL_PASCAL=new DAL()
     Utilisateur.connect(DAL_PASCAL)
-    let user=await Utilisateur.getUserByAlias(userId)
+    let user=await Utilisateur.getUserByAlias(alias)
     let idQueryString=parseInt(req.query.id);/* user.id==id QueryString */
     let isAdmin=user.isAdministrateur();
     let isDirecteur=user.isDirecteur();
