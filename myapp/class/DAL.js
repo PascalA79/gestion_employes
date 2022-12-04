@@ -89,8 +89,8 @@ class DAL{
         let sql=`Call UpdatePassword('${alias}','${newPassword}')`
         await this.#connectionMYSQL.excecuteSync(sql)
     }
-    async updateUtilisateur({id,idTypeUtilisateur,idPlancher,prenom,nom,alias,telephone,courriel,actif}){
-        let utilisateur=await this.#connectionMYSQL.excecuteSync(`Call UpdateUtilisateur(${id},'${idTypeUtilisateur}','${idPlancher}','${prenom}','${nom}','${alias}','${telephone}','${courriel}','${actif}')`)
+    async updateUtilisateur({id,idTypeUtilisateur,idPlancher,prenom,nom,alias,age,telephone,courriel,actif}){
+        let utilisateur=await this.#connectionMYSQL.excecuteSync(`Call UpdateUtilisateur(${id},'${idTypeUtilisateur}','${idPlancher}','${prenom}','${nom}','${alias}','${age}','${telephone}','${courriel}','${actif}')`)
         return Utilities.getArray(utilisateur[0]);
     }
     async removeUtilisateur(id){

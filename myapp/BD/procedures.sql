@@ -83,6 +83,12 @@ DECLARE hash_password varchar(255);
 SET hash_password=PASSWORD(_newPassword);
 UPDATE Utilisateurs SET motDePasse=hash_password WHERE alias=_alias;
 END$$
+
+DELIMITER ;
+CREATE OR REPLACE PROCEDURE `UpdateUtilisateur`(IN `_id` INT, IN `_idTypeUtilisateur` INT, IN `_idPlancher` INT, IN `_prenom` VARCHAR(45), IN `_nom` VARCHAR(45), IN `_alias` VARCHAR(45), IN `_age` INT, IN `_telephone` VARCHAR(11), IN `_courriel` VARCHAR(150), IN `_actif` TINYINT)
+    NO SQL
+UPDATE Utilisateurs SET idTypeUtilisateur=_idTypeUtilisateur, idPlancher=_idPlancher, prenomUtilisateur=_prenom,nomUtilisateur=_nom, alias=_alias, age=_age,telephone=_telephone, courriel=_courriel, actif=_actif
+WHERE idUtilisateur=_id$$
 DELIMITER ;
 --
 -- Trigger

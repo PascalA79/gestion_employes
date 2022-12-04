@@ -158,10 +158,10 @@ function main(){
         let alias=$('#alias').val();
         let prenom=$('#prenom').val();
         let nom=$('#nom').val();
-        let idPlancher=$('#idPlancher').val()
-        let idTypeUtilisateur=$('#idTypeUtilisateur').val();
+        let idPlancher=parseInt($('#idPlancher').val());
+        let idTypeUtilisateur=parseInt($('#idTypeUtilisateur').val());
         let telephone=$('#telephone').val();
-        let age=$('#age').val();
+        let age=parseInt($('#age').val());
         let courriel=$('#courriel').val();
         let actif=$('#actif').prop('checked')?1:0;
         let id=parseInt(currentId);
