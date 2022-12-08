@@ -71,7 +71,7 @@ function ValiderPlancher({idPlancher,nomPlancher,superviseurs=[]},uniqueKeys={},
         }
     }
     const isValidFKey=(name)=>{
-        if(isValid[name]==ERREUR_PLANCHER.OK && !!foreignKeys[name] && foreignKeys[name].length && !foreignKeys[name].includes(values[name])){
+        if(isValid[name]==ERREUR_PLANCHER.OK && !!foreignKeys[name] && foreignKeys[name].length && !values[name].every((v)=>foreignKeys[name].includes(v))){
             isValid[name]=ERREUR_PLANCHER.UNFOUND_KEY
         }
     }

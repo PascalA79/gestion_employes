@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+    <script src="../myapp/public/scripts/ValidationPlancher.js"></script>
+    <script defer>
+        console.log("tous valide")
+        console.table(ValiderPlancher({idPlancher:0,nomPlancher:"Plancher cuisine",superviseurs:[1,2,3]}))
+        console.log("tous manquant")
+        console.table(ValiderPlancher({}))
+        console.log("tous non-valide")
+        console.table(ValiderPlancher({idPlancher:"dd",nomPlancher:"Plancher cuisiéne",superviseurs:1}))
+        console.log("tous trop long")
+        console.table(ValiderPlancher({idPlancher:0,
+            nomPlancher:"Plancher cuisine cuisiant de la bonne bouffe videvidevidevidevidevidevidevidevidevidevidevidevidevidevidevidevidevidevidevidevidevidevidevidevidevidevidevidevidevidevide",
+            superviseurs:[1,2,3]}))
+        let uniqueKeys=["Plancher cuisine","Plancher restaurant"]
+        console.log("planchers clé unique",uniqueKeys)
+        console.table({"Plancher cuisine":ValiderPlancher({nomPlancher:"Plancher cuisine"},{nomPlancher:uniqueKeys})["nomPlancher"],
+        "Plancher restaurant":ValiderPlancher({nomPlancher:"Plancher restaurant"},{nomPlancher:uniqueKeys})["nomPlancher"],
+        "Plancher test":ValiderPlancher({nomPlancher:"Plancher test"},{nomPlancher:uniqueKeys})["nomPlancher"],
+        })
+        let foreignKey=[1,2,3,4,5]
+        console.log("tous superviseurs valides",foreignKey)
+        console.table({"id:1":ValiderPlancher({superviseurs:[1]},{},{superviseurs:foreignKey})["superviseurs"],
+        "id:3,4":ValiderPlancher({superviseurs:[3,4]},{},{superviseurs:foreignKey})["superviseurs"],
+        "id:77":ValiderPlancher({superviseurs:[1,2,77]},{},{superviseurs:foreignKey})["superviseurs"],
+        })
+        
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
